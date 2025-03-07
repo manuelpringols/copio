@@ -1,0 +1,69 @@
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Groups</h3>
+      <button (click)="openCreateGroupModal()">Aggiungi Gruppo</button>
+    </div>
+    <ul>
+      <li *ngFor="let group of groups" (click)="selectGroup(group)">
+        <span>{{ group.name }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contenuto principale -->
+  <div class="main-content">
+    <!-- Overlay quando la modale è aperta -->
+    <div *ngIf="showCreateGroupModal || showCreateSnippetModal" class="overlay" (click)="closeAllModals()"></div>
+
+    <!-- Modale per la creazione di un gruppo -->
+    <div *ngIf="showCreateGroupModal" class="create-group-modal">
+      <div class="modal-content">
+        <h2>Crea Gruppo</h2>
+        <input [(ngModel)]="newGroupName" placeholder="Nome del gruppo" />
+        <button (click)="createGroup()">Crea Gruppo</button>
+        <button class="close" (click)="closeCreateGroupModal()">Annulla</button>
+      </div>
+    </div>
+
+    <!-- Visualizza gli snippet del gruppo selezionato -->
+    <div *ngIf="selectedGroup" class="snippet-section">
+      <h2>Snippet di {{ selectedGroup.name }}</h2>
+      <div class="snippet-list">
+        <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
+        <div class="snippet-card">
+          <h3>Codice che fa cose</h3>
+          <pre>
+# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+print(greet('World'))
+          </pre>
+        </div>
+
+        <div *ngFor="let snippet of selectedGroup.snippets" class="snippet-card">
+          <h3>{{ snippet.title }}</h3>
+          <pre>{{ snippet.content }}</pre>
+        </div>
+      </div>
+
+      <!-- Pulsante "Crea Snippet" con lo stile aggiunto -->
+      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">Crea Snippet</button>
+
+      <!-- Modale per la creazione dello snippet -->
+      <div *ngIf="showCreateSnippetModal" class="create-snippet-modal">
+        <div class="modal-content">
+          <h2>Crea Snippet</h2>
+          <input [(ngModel)]="newSnippet.title" placeholder="Titolo dello snippet" />
+          <textarea [(ngModel)]="newSnippet.content" placeholder="Codice dello snippet"></textarea>
+          <button (click)="createSnippet()">Crea Snippet</button>
+          <button class="close" (click)="closeCreateSnippetModal()">Annulla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

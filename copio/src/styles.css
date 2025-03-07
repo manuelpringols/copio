@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+/* Importa il font simpatico per il titolo */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+body{
+    display: block;
+    height: 100vh;
+    background: linear-gradient(135deg,#1f1e1e,#000000, #04020e,#0b043a); /* Gradiente grigio scuro */
+    background-size: cover;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif; /* Font simpatico e dolce */
+}
