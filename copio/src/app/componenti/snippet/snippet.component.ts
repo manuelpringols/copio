@@ -13,11 +13,14 @@ export class SnippetComponent {
     { id: 2, name: 'JavaScript', snippets: [] },
     { id: 3, name: 'HTML', snippets: [] }
   ];
-  selectedGroup: any = this.groups[0]; // Impostiamo il primo gruppo come predefinito
+  selectedGroup: any = this.groups[1]; // Impostiamo il primo gruppo come predefinito
   showCreateGroupModal = false;
   showCreateSnippetModal = false;
   newGroupName = '';
   newSnippet = { title: '', content: '' };
+  snippet: any = {};
+
+  message: string = ''; // Messaggio da visualizzare
 
   constructor(private snippetService: SnippetService) { }
 
@@ -73,11 +76,36 @@ export class SnippetComponent {
           this.newSnippet = { title: '', content: '' };
           this.closeAllModals(); // Chiude tutte le modali dopo aver creato uno snippet
         },
-        (error: any) => {
-          // Gestisci gli errori, ad esempio un messaggio di errore
-          console.error('Errore durante la creazione dello snippet', error);
-        }
+        
       );
     }
   }
+
+
+
+
+  copyToClipboard(): void {
+    const preElement = document.getElementById('snippetContent'); // Prende l'elemento <pre>
+    if (preElement) {
+      const text = preElement.innerText; // Ottiene il testo all'interno di <pre>
+      navigator.clipboard.writeText(text).then(() => {
+        // Imposta il messaggio di successo
+        this.message = 'Testo copiato!';
+        // Dopo 5 secondi, rimuove il messaggio
+        setTimeout(() => {
+          this.message = ''; // Pulisce il messaggio
+        }, 5000); // 5000 ms = 5 secondi
+      }).catch(err => {
+        // Mostra l'errore sulla console
+        console.error('Errore nella copia del testo:', err);
+        // Imposta il messaggio di errore
+        this.message = 'Errore nella copia del testo';
+        // Dopo 5 secondi, rimuove il messaggio
+        setTimeout(() => {
+          this.message = ''; // Pulisce il messaggio
+        }, 3000); // 5000 ms = 5 secondi
+      });
+    }
+  }
+  
 }

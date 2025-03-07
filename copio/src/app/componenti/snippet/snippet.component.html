@@ -33,13 +33,75 @@
       <div class="snippet-list">
         <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
         <div class="snippet-card">
-          <h3>Codice che fa cose</h3>
+          
+          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
+
+          <pre  id="snippetContent">{{ snippet.content }}
+            <img src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
+
+
+          <div class="copied-message" *ngIf="message" [ngStyle]="{color: message === 'Testo copiato!' ? 'green' : 'red'}">
+            {{ message }}
+          </div>
+            <hr>
+
+          
+           
+# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+print(greet('World'))
+# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+print(greet('World'))# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+print(greet('World'))
+          </pre>
+        </div>
+
+             <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
+    
+                 <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
+        <div class="snippet-card">
+          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
           <pre>
 # Example of Python snippet
 def greet(name):
     return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
 
 print(greet('World'))
+# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+print(greet('World'))
+          </pre>
+        </div>
+
+        <div class="snippet-card">
+          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
+          <pre>
+# Example of Python snippet
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+
+          </pre>
+        </div>
+
+        <div class="snippet-card">
+          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
+          <pre>
+
+def greet(name):
+    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
+
+
           </pre>
         </div>
 
