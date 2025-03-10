@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SnippetService } from '../../servizi/snippet.service';
+import { GroupsService } from '../../servizi/groups.service'; // Importa il servizio dei gruppi
 
 @Component({
   selector: 'app-snippet',
@@ -7,105 +8,114 @@ import { SnippetService } from '../../servizi/snippet.service';
   templateUrl: './snippet.component.html',
   styleUrls: ['./snippet.component.css']
 })
-export class SnippetComponent {
-  groups = [
-    { id: 1, name: 'Python', snippets: [] },
-    { id: 2, name: 'JavaScript', snippets: [] },
-    { id: 3, name: 'HTML', snippets: [] }
-  ];
-  selectedGroup: any = this.groups[1]; // Impostiamo il primo gruppo come predefinito
+export class SnippetComponent implements OnInit {
+  groups: any[] = [];
+  snippets: any[] = [];  // Contiene tutti gli snippet
+  filteredSnippets: any[] = [];  // Contiene gli snippet filtrati per il gruppo selezionato
+  selectedGroup: any;
   showCreateGroupModal = false;
   showCreateSnippetModal = false;
   newGroupName = '';
   newSnippet = { title: '', content: '' };
-  snippet: any = {};
-
   message: string = ''; // Messaggio da visualizzare
 
-  constructor(private snippetService: SnippetService) { }
+  constructor(
+    private snippetService: SnippetService,
+    private groupService: GroupsService // Inietta il servizio dei gruppi
+  ) {}
 
-  // Apre la modale per creare un gruppo
+  ngOnInit() {
+    this.loadGroups();
+  }
+
+  loadGroups() {
+    this.groupService.getAllGroups().subscribe((data) => {
+      this.groups = data;
+      if (this.groups.length > 0) {
+        this.selectedGroup = this.groups[0];
+        this.filterSnippetsByGroup(this.selectedGroup.idGroup);
+      }
+    }, error => {
+      console.error("Errore nel caricamento dei gruppi:", error);
+    });
+  }
+
+  selectGroup(group: any) {
+    this.selectedGroup = group;
+    this.filterSnippetsByGroup(group.idGroup);
+  }
+
+  filterSnippetsByGroup(groupId: number) {
+    this.snippetService.getSnippets().subscribe((data) => {
+      this.snippets = data;
+      this.filteredSnippets = this.snippets.filter(snippet => snippet.idGroup && snippet.idGroup.idGroup === groupId);
+
+
+    }, error => {
+      console.error("Errore nel caricamento degli snippet:", error);
+    });
+  }
+
+  copyToClipboard() {
+    // Aggiungi la logica per copiare il contenuto negli appunti
+    this.message = 'Testo copiato!';
+    setTimeout(() => this.message == null, 2000);
+  }
+
   openCreateGroupModal() {
     this.showCreateGroupModal = true;
   }
 
-  // Chiude la modale per creare un gruppo
   closeCreateGroupModal() {
     this.showCreateGroupModal = false;
   }
 
-  // Apre la modale per creare uno snippet
-  openCreateSnippetModal() {
-    this.showCreateSnippetModal = true;
-  }
-
-  // Chiude la modale per creare uno snippet
-  closeCreateSnippetModal() {
-    this.showCreateSnippetModal = false;
-  }
-
-  // Funzione per chiudere tutte le modali
-  closeAllModals() {
-    this.showCreateGroupModal = false;
-    this.showCreateSnippetModal = false;
-  }
-
-  // Crea un nuovo gruppo
   createGroup() {
-    if (this.newGroupName.trim() !== '') {
-      const newGroup = { id: this.groups.length + 1, name: this.newGroupName, snippets: [] };
-      this.groups.push(newGroup);
-      this.newGroupName = '';
-      this.closeAllModals(); // Chiude tutte le modali dopo aver creato un gruppo
-    }
-  }
-
-  // Seleziona un gruppo dalla sidebar
-  selectGroup(group: any) {
-    this.selectedGroup = group;
-  }
-
-  // Crea uno snippet e lo aggiunge al gruppo selezionato (ora con backend)
-  createSnippet() {
-    if (this.newSnippet.title.trim() !== '' && this.newSnippet.content.trim() !== '') {
-      // Invio i dati al backend per creare uno snippet
-      this.snippetService.createSnippet(this.newSnippet).subscribe(
-        (response: any) => {
-          // Gestisci la risposta dal backend (ad esempio, aggiungi lo snippet alla lista)
-          this.selectedGroup.snippets.push({ title: this.newSnippet.title, content: this.newSnippet.content });
-          this.newSnippet = { title: '', content: '' };
-          this.closeAllModals(); // Chiude tutte le modali dopo aver creato uno snippet
-        },
-
-      );
-    }
-  }
-
-
-
-
-  copyToClipboard(): void {
-    const preElement = document.getElementById('snippetContent'); // Prende l'elemento <pre>
-    if (preElement) {
-      const text = preElement.innerText; // Ottiene il testo all'interno di <pre>
-      navigator.clipboard.writeText(text).then(() => {
-        // Imposta il messaggio di successo
-        this.message = 'Testo copiato!';
-        // Dopo 5 secondi, rimuove il messaggio
-        setTimeout(() => {
-          this.message = ''; // Pulisce il messaggio
-        }, 5000); // 5000 ms = 5 secondi
-      }).catch(err => {
-        // Mostra l'errore sulla console
-        console.error('Errore nella copia del testo:', err);
-        // Imposta il messaggio di errore
-        this.message = 'Errore nella copia del testo';
-        // Dopo 5 secondi, rimuove il messaggio
-        setTimeout(() => {
-          this.message = ''; // Pulisce il messaggio
-        }, 3000); // 5000 ms = 5 secondi
+    if (this.newGroupName.trim()) {
+      this.groupService.createGroup({ name: this.newGroupName }).subscribe(() => {
+        this.loadGroups();  // Ricarica i gruppi dopo aver creato uno nuovo
+        this.closeCreateGroupModal();
+      }, error => {
+        console.error("Errore nella creazione del gruppo:", error);
       });
     }
   }
 
+  openCreateSnippetModal() {
+    this.showCreateSnippetModal = true;
+  }
+
+  closeCreateSnippetModal() {
+    this.showCreateSnippetModal = false;
+  }
+
+  createSnippet() {
+    if (this.newSnippet.title.trim() && this.newSnippet.content.trim()) {
+      this.snippetService.createSnippet(this.newSnippet).subscribe(() => {
+        this.filterSnippetsByGroup(this.selectedGroup.idGroup); // Ricarica gli snippet per il gruppo selezionato
+        this.closeCreateSnippetModal();
+      }, error => {
+        console.error("Errore nella creazione dello snippet:", error);
+      });
+    }
+  }
+
+   // Funzione per chiudere tutte le modali
+   closeAllModals() {
+    this.showCreateGroupModal = false;
+    this.showCreateSnippetModal = false;
+  }
+
+  escapeHtml(text: string): string {
+    return text.replace(/[&<>"']/g, function (char) {
+      switch (char) {
+        case '&': return '&amp;';
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '"': return '&quot;';
+        case "'": return '&#39;';
+        default: return char;
+      }
+    });
+  }
 }

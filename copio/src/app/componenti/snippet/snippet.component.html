@@ -29,89 +29,33 @@
 
     <!-- Visualizza gli snippet del gruppo selezionato -->
     <div *ngIf="selectedGroup" class="snippet-section">
-      <h2>Snippet di {{ selectedGroup.name }}</h2>
-      <div class="snippet-list">
-        <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
-        <div class="snippet-card">
+      <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
+      <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
+        <div *ngFor="let snippet of filteredSnippets" class="snippet-card">
+          <h3 style="font-family:'Courier New', Courier, monospace;">
 
-          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
-
-          <pre  id="snippetContent">{{ snippet.content }}
+            <u>{{ snippet.title }}</u>
             <img src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
-
-
-          <div class="copied-message" *ngIf="message" [ngStyle]="{color: message === 'Testo copiato!' ? 'green' : 'red'}">
-            {{ message }}
-          </div>
-            <hr>
-
-
-
-# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-print(greet('World'))
-# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-print(greet('World'))# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-print(greet('World'))
-          </pre>
-        </div>
-
-             <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
-
-                 <!-- Card di esempio hard-coded per mostrare come apparirà una card -->
-        <div class="snippet-card">
-          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
-          <pre>
-# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-print(greet('World'))
-# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-print(greet('World'))
-          </pre>
-        </div>
-
-        <div class="snippet-card">
-          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
-          <pre>
-# Example of Python snippet
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
+          </h3>
+          <pre class="code-block" ><code>{{ snippet.content }}</code>
 
           </pre>
+
+
+          <hr>
         </div>
 
-        <div class="snippet-card">
-          <h3 style="font-family:'Courier New', Courier, monospace;"><u>Codisce che fa cose</u></h3>
-          <pre>
 
-def greet(name):
-    return f"Hello, "{{ '{' }}"name"{{ '}' }}"!"
-
-
-          </pre>
-        </div>
-
-        <div *ngFor="let snippet of selectedGroup.snippets" class="snippet-card">
-          <h3>{{ snippet.title }}</h3>
-          <pre>{{ snippet.content }}</pre>
-        </div>
       </div>
 
-      <!-- Pulsante "Crea Snippet" con lo stile aggiunto -->
+
+
+      <!-- Template in caso di nessuno snippet -->
+      <ng-template #noSnippets>
+        <p>No snippets found for the selected group.</p>
+      </ng-template>
+
+      <!-- Pulsante "Crea Snippet" -->
       <button class="create-snippet-btn" (click)="openCreateSnippetModal()">Crea Snippet</button>
 
       <!-- Modale per la creazione dello snippet -->
@@ -127,5 +71,3 @@ def greet(name):
     </div>
   </div>
 </div>
-
-
