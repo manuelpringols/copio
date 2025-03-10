@@ -1,4 +1,5 @@
-package com.copio.entity;
+package com.copio.copio.entity;
+
 
 import java.util.List;
 
@@ -12,18 +13,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+@Table(name = "groupy")
+
 @Entity
-@Table(name = "groups")
 @Data // Lombok genererà automaticamente getter, setter, toString, hashCode e equals
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer idGroup;
     
     private String name;
-    
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Snippet> snippets; // La lista di snippets appartenenti al gruppo
+   
 }
 
 

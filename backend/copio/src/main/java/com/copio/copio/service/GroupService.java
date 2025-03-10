@@ -1,4 +1,5 @@
-package com.service;
+package com.copio.copio.service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.copio.entity.Group;
-import com.copio.repository.GroupRepository;
+import com.copio.copio.entity.Group;
+import com.copio.copio.repository.GroupRepository;
+
+
 
 @Service
 public class GroupService {
@@ -21,7 +24,7 @@ public class GroupService {
     }
 
     // Ottieni un gruppo per ID
-    public Group getGroupById(Long id) {
+    public Group getGroupById(Integer id) {
         Optional<Group> group = groupRepository.findById(id);
         return group.orElse(null);
     }
@@ -32,16 +35,16 @@ public class GroupService {
     }
 
     // Aggiorna un gruppo esistente
-    public Group updateGroup(Long id, Group group) {
+    public Group updateGroup(Integer id, Group group) {
         if (groupRepository.existsById(id)) {
-            group.setId(id);
+            group.setIdGroup(id);
             return groupRepository.save(group);
         }
         return null;
     }
 
     // Elimina un gruppo
-    public boolean deleteGroup(Long id) {
+    public boolean deleteGroup(Integer id) {
         if (groupRepository.existsById(id)) {
             groupRepository.deleteById(id);
             return true;

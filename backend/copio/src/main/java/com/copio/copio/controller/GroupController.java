@@ -1,4 +1,5 @@
-package com.copio.controller;
+package com.copio.copio.controller;
+
 
 import java.util.List;
 
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.copio.entity.Group;
-import com.service.GroupService;
+import com.copio.copio.entity.Group;
+import com.copio.copio.service.GroupService;
+
+
 
 @RestController
 @RequestMapping("/api/groups")
@@ -33,7 +36,7 @@ public class GroupController {
 
     // GET: Ottieni un gruppo per ID
     @GetMapping("/{id}")
-    public ResponseEntity<Group> getGroupById(@PathVariable Long id) {
+    public ResponseEntity<Group> getGroupById(@PathVariable Integer id) {
         Group group = groupService.getGroupById(id);
         if (group != null) {
             return new ResponseEntity<>(group, HttpStatus.OK);
@@ -54,7 +57,7 @@ public class GroupController {
 
     // PUT: Aggiorna un gruppo esistente
     @PutMapping("/{id}")
-    public ResponseEntity<Group> updateGroup(@PathVariable Long id, @RequestBody Group group) {
+    public ResponseEntity<Group> updateGroup(@PathVariable Integer id, @RequestBody Group group) {
         Group updatedGroup = groupService.updateGroup(id, group);
         if (updatedGroup != null) {
             return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
@@ -64,7 +67,7 @@ public class GroupController {
 
     // DELETE: Elimina un gruppo
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGroup(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteGroup(@PathVariable Integer id) {
         boolean isDeleted = groupService.deleteGroup(id);
         if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

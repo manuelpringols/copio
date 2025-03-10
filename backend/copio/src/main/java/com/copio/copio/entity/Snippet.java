@@ -1,12 +1,19 @@
-package com.copio.entity;
+package com.copio.copio.entity;
+
+
+
+
+import org.hibernate.engine.internal.ForeignKeys;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.ForeignKey;
 import lombok.Data;
 
 @Entity
@@ -15,13 +22,14 @@ import lombok.Data;
 public class Snippet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     private String title;
     
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    private Group group; // Riferimento al gruppo a cui appartiene lo snippet
+   @ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(foreignKey=@ForeignKey(name = "snippet_fk_group")
+,name="idGroup",referencedColumnName="idGroup")
+    private Group idGroup; // Riferimento al gruppo a cui appartiene lo snippet
 }
