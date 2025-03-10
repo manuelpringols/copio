@@ -17,7 +17,7 @@ export class SnippetService {
 
   // Ottieni tutti gli snippet
   getSnippets(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(`${this.apiUrl}/all`);
   }
 
   // Ottieni gli snippet di un gruppo specifico
