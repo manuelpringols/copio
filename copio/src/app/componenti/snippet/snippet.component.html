@@ -1,0 +1,73 @@
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Groups</h3>
+      <button (click)="openCreateGroupModal()">Aggiungi Gruppo</button>
+    </div>
+    <ul>
+      <li *ngFor="let group of groups" (click)="selectGroup(group)">
+        <span>{{ group.name }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Contenuto principale -->
+  <div class="main-content">
+    <!-- Overlay quando la modale è aperta -->
+    <div *ngIf="showCreateGroupModal || showCreateSnippetModal" class="overlay" (click)="closeAllModals()"></div>
+
+    <!-- Modale per la creazione di un gruppo -->
+    <div *ngIf="showCreateGroupModal" class="create-group-modal">
+      <div class="modal-content">
+        <h2>Crea Gruppo</h2>
+        <input [(ngModel)]="newGroupName" placeholder="Nome del gruppo" />
+        <button (click)="createGroup()">Crea Gruppo</button>
+        <button class="close" (click)="closeCreateGroupModal()">Annulla</button>
+      </div>
+    </div>
+
+    <!-- Visualizza gli snippet del gruppo selezionato -->
+    <div *ngIf="selectedGroup" class="snippet-section">
+      <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
+      <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
+        <div *ngFor="let snippet of filteredSnippets" class="snippet-card">
+          <h3 style="font-family:'Courier New', Courier, monospace;">
+
+            <u>{{ snippet.title }}</u>
+            <img src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
+          </h3>
+          <pre class="code-block" ><code>{{ snippet.content }}</code>
+
+          </pre>
+
+
+          <hr>
+        </div>
+
+
+      </div>
+
+
+
+      <!-- Template in caso di nessuno snippet -->
+      <ng-template #noSnippets>
+        <p>No snippets found for the selected group.</p>
+      </ng-template>
+
+      <!-- Pulsante "Crea Snippet" -->
+      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">Crea Snippet</button>
+
+      <!-- Modale per la creazione dello snippet -->
+      <div *ngIf="showCreateSnippetModal" class="create-snippet-modal">
+        <div class="modal-content">
+          <h2>Crea Snippet</h2>
+          <input [(ngModel)]="newSnippet.title" placeholder="Titolo dello snippet" />
+          <textarea [(ngModel)]="newSnippet.content" placeholder="Codice dello snippet"></textarea>
+          <button (click)="createSnippet()">Crea Snippet</button>
+          <button class="close" (click)="closeCreateSnippetModal()">Annulla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
