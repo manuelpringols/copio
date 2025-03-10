@@ -76,7 +76,7 @@ export class SnippetComponent {
           this.newSnippet = { title: '', content: '' };
           this.closeAllModals(); // Chiude tutte le modali dopo aver creato uno snippet
         },
-        
+
       );
     }
   }
@@ -107,5 +107,5 @@ export class SnippetComponent {
       });
     }
   }
-  
+
 }
