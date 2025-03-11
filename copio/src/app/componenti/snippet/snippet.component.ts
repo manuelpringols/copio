@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SnippetService } from '../../servizi/snippet.service';
 import { GroupsService } from '../../servizi/groups.service'; // Importa il servizio dei gruppi
+import Prism from 'prismjs';
+import 'prismjs/components/prism-java';
+
 
 @Component({
   selector: 'app-snippet',
@@ -28,6 +31,12 @@ export class SnippetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+
+    if (typeof window !== 'undefined') {
+      import('prismjs').then(Prism => {
+        Prism.highlightAll();  // Evidenzia tutto il codice sulla pagina
+      });
+    }
     this.loadGroups();
   }
 
@@ -48,12 +57,20 @@ export class SnippetComponent implements OnInit {
     this.filterSnippetsByGroup(group.idGroup);
   }
 
-  filterSnippetsByGroup(groupId: number) {
+  async filterSnippetsByGroup(groupId: number) {
     this.snippetService.getSnippets().subscribe((data) => {
       this.snippets = data;
-      this.filteredSnippets = this.snippets.filter(snippet => snippet.idGroup && snippet.idGroup.idGroup === groupId);
 
-      // Ricalcola il totale delle pagine dopo aver filtrato gli snippet
+      // Filtra gli snippet per gruppo
+      this.filteredSnippets = this.snippets
+        .filter(snippet => snippet.idGroup && snippet.idGroup.idGroup === groupId)
+        .map((snippet) => {
+          // Rileva il linguaggio in base al tipo di snippet o definisci un linguaggio predefinito
+          const language = this.getLanguageForSnippet(snippet);
+          const formattedContent = Prism.highlight(snippet.content, Prism.languages[language], language);
+          return { ...snippet, content: formattedContent, language };  // Salva anche il linguaggio usato
+        });
+
       this.updateTotalPages();
     }, error => {
       console.error("Errore nel caricamento degli snippet:", error);
@@ -135,4 +152,28 @@ export class SnippetComponent implements OnInit {
       this.currentPage++;
     }
   }
+
+  formatCode(code: string): string {
+    return Prism.highlight(code, Prism.languages['javascript'], 'javascript');
+  }
+
+
+  // Funzione per determinare il linguaggio (esempio di base)
+getLanguageForSnippet(snippet: any): string {
+  // Controllo per JavaScript/TypeScript
+  if (snippet.content.includes('function') || snippet.content.includes('const') || snippet.content.includes('let')) {
+    return 'javascript';  // Se è codice JS o TypeScript
+  } else if (snippet.content.includes('<html>')) {
+    return 'html';  // Se è codice HTML
+  } else if (snippet.content.includes('import')) {
+    return 'typescript';  // Se è codice TypeScript
+  } else if (snippet.content.includes('class') || snippet.content.includes('public') || snippet.content.includes('void')) {
+    return 'java';  // Se è codice Java
+  } else {
+    return 'plaintext';  // Linguaggio predefinito
+  }
+}
+
+
+
 }

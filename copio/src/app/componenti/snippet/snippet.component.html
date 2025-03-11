@@ -32,11 +32,13 @@
       <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
       <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
         <div *ngFor="let snippet of filteredSnippets | slice:(currentPage - 1) * snippetsPerPage : currentPage * snippetsPerPage" class="snippet-card">
-          <h3 style="font-family:'Courier New', Courier, monospace; font-style: italic; font-size: 1.4rem;">
+          <h3 style="font-family: 'Roboto', sans-serif; color: #060a47; font-size: 1.6rem; font-weight: 500;">
             <u>{{ snippet.title }}</u>
-            <img src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
+            <span style="display: inline-flex; align-items: center; margin-left: 8px;">
+              <img style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
+            </span>
           </h3>
-          <pre class="code-block"><code>{{ snippet.content }}</code></pre>
+          <pre><code [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code></pre>
           <hr>
         </div>
       </div>
