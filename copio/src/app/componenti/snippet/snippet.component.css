@@ -191,7 +191,7 @@
 
 /* Pulsante copia */
 .copy-icon {
-  position: absolute;
+  position: relative;
   top: 10px;
   left: 10px;
   width: 55px;
@@ -222,11 +222,29 @@ button.create-snippet-btn:hover {
   background-color: #d35400;
 }
 
-/* Stili aggiuntivi per il messaggio */
-.copied-message {
-  position: relative;
-  top: -61px;
-  left: -61px;
-  font-weight: bold;
-  display: inline;
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.pagination button:disabled {
+  background-color: #7f8c8d;
+}
+
+.pagination span {
+  display: inline-block;
+  padding: 10px;
+  font-size: 1.2rem;
 }

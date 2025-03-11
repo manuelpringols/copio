@@ -9,8 +9,11 @@ import { GroupsService } from '../../servizi/groups.service'; // Importa il serv
   styleUrls: ['./snippet.component.css']
 })
 export class SnippetComponent implements OnInit {
-  groups: any[] = [];
   snippets: any[] = [];  // Contiene tutti gli snippet
+  currentPage = 1;
+  snippetsPerPage = 5;
+  totalPages = Math.ceil(this.snippets.length / this.snippetsPerPage);
+  groups: any[] = [];
   filteredSnippets: any[] = [];  // Contiene gli snippet filtrati per il gruppo selezionato
   selectedGroup: any;
   showCreateGroupModal = false;
@@ -50,7 +53,8 @@ export class SnippetComponent implements OnInit {
       this.snippets = data;
       this.filteredSnippets = this.snippets.filter(snippet => snippet.idGroup && snippet.idGroup.idGroup === groupId);
 
-
+      // Ricalcola il totale delle pagine dopo aver filtrato gli snippet
+      this.updateTotalPages();
     }, error => {
       console.error("Errore nel caricamento degli snippet:", error);
     });
@@ -117,5 +121,18 @@ export class SnippetComponent implements OnInit {
         default: return char;
       }
     });
+  }
+
+  updateTotalPages() {
+    this.totalPages = Math.ceil(this.filteredSnippets.length / this.snippetsPerPage);
+  }
+
+
+  changePage(direction: string) {
+    if (direction === 'prev' && this.currentPage > 1) {
+      this.currentPage--;
+    } else if (direction === 'next' && this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
   }
 }
