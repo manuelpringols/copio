@@ -1,0 +1,183 @@
+/* Impostazioni generali per la pagina */
+.pagina-div {
+  height: 100vh;
+  background-color: #660066;
+  border-radius: 1vw;
+}
+
+
+
+.docs-container {
+  max-width: 1200px;
+  margin: 0 auto;
+
+}
+
+.doc-header h1 {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  padding: 10px;
+
+}
+
+.content-container {
+  display: flex;
+  gap: 20px;
+  height: 100%; /* Per far sì che il contenitore occupi tutta l'altezza disponibile */
+
+}
+
+/* Side navigation */
+.sidenav {
+  width: 200px; /* Larghezza fissa per la sidenav */
+  background-color: #333;
+  color: #b3a1c9;
+  padding: 15px;
+  border-radius: 10px;
+  flex-shrink: 0; /* Evita che la sidenav si riduca in larghezza */
+  box-shadow: 2px 2px 12px 3px rgba(35, 83, 74, 0.747);
+
+}
+
+.sidenav:hover{
+  box-shadow: 3px 3px 14px 3px rgba(0, 0, 0, 0.541);
+
+}
+
+.sidenav h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-family: "Titillium Web", sans-serif;
+
+}
+
+.sidenav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidenav li {
+  cursor: pointer;
+  padding: 5px 0;
+  transition: 0.3s;
+}
+
+.sidenav li:hover {
+  color: #fff;
+  background-color: #75147569;
+  padding: 10px;
+  border-radius: 0.3vw;
+}
+
+/* Contenuto principale */
+.group-content {
+  width: 700px;
+  padding: 15px;
+  background-color: #9b85adb0;
+  border-radius: 5px;
+  box-shadow: 3px 3px 16px 5px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow-y: auto; /* Attiva lo scroll verticale quando necessario */
+  max-height: 80vh; /* Limita l'altezza del contenitore al 80% della viewport */
+  z-index: 1;
+
+
+}
+
+/* Pulsante */
+.group-content button {
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5vh;
+  margin-right: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.group-content button:hover {
+  background-color: #660066;
+  color: #e21ca7;
+  border-color: #e21ca7;
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
+}
+
+.group-content button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(225, 0, 255, 0.89);
+}
+
+.group-content button:disabled {
+  background-color: #444;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Contenuto del gruppo */
+.group-content textarea {
+  width: 100%; /* Rende il textarea largo quanto il suo contenitore */
+  height: auto; /* L'altezza si adatterà automaticamente */
+  min-height: 200px; /* Imposta un'altezza minima per evitare che diventi troppo piccolo */
+  padding: 12px; /* Aumenta il padding per una spaziatura più confortevole */
+  font-size: 1rem; /* Mantenimento della dimensione del font */
+  line-height: 1.6; /* Aumenta la spaziatura tra le righe per una lettura migliore */
+  border: 1px solid #ccc; /* Colore del bordo del textarea */
+  border-radius: 5px;
+  background-color: rgba(190, 114, 171, 0.527); /* Colore di sfondo chiaro */
+  color: #333; /* Colore del testo */
+  resize: vertical; /* Permette all'utente di ridimensionare solo in verticale */
+  box-sizing: border-box; /* Include il padding e il bordo nel calcolo della larghezza */
+  transition: all 0.3s ease; /* Transizione fluida */
+  font-family: 'Arial', sans-serif; /* Usa un font leggibile */
+  outline: none; /* Rimuove l'effetto di outline di default al focus */
+  text-align: left; /* Allinea il testo a sinistra */
+  box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.795);
+   /* Disabilita il controllo ortografico e rimuove il trattino rosso */
+}
+
+.group-content textarea:focus {
+  border-color: #660066; /* Colore del bordo quando il textarea è in focus */
+  box-shadow: 0 0 10px rgba(102, 0, 102, 0.6); /* Effetto di focus */
+  background-color: #b6adad9a; /* Colore di sfondo chiaro */
+
+}
+
+
+.group-content textarea::placeholder {
+  color: #aaa; /* Colore del placeholder */
+  font-style: italic; /* Rende il testo del placeholder in corsivo */
+}
+
+
+
+/* Per Chrome, Safari e Edge */
+.group-content::-webkit-scrollbar {
+  width: 12px; /* Larghezza della scrollbar */
+  border-radius: 10px;
+}
+
+.group-content::-webkit-scrollbar-thumb {
+  background-color: #660066; /* Colore del pollice della scrollbar */
+  border-radius: 6px; /* Rende il pollice della scrollbar arrotondato */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Aggiunge un'ombra al pollice */
+}
+
+.group-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2); /* Colore di sfondo della traccia */
+  border-radius: 6px; /* Rende la traccia arrotondata */
+}
+
+/* Per Firefox */
+.group-content {
+  scrollbar-width: thin; /* Imposta la larghezza della scrollbar a "sottile" */
+  scrollbar-color: #660066 rgba(255, 255, 255, 0.2); /* Imposta il colore della parte attiva (pollice) e della traccia */
+}

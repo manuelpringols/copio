@@ -23,8 +23,10 @@
     "@angular/ssr": "^19.1.7",
     "@standard-configs/prettier-plugin-babel": "^1.0.5",
     "express": "^4.18.2",
+    "ngx-quill": "^27.0.1",
     "prism-themes": "^1.9.0",
     "prismjs": "^1.30.0",
+    "quill": "^2.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

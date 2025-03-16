@@ -1,0 +1,106 @@
+/* Stile per la pagina di documentazione */
+.pagina-doc {
+  height: 100vh;
+  background-color: #660066; /* Sfondo viola */
+  border-radius: 1vw;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Header centrato */
+.doc-header {
+  text-align: center;
+  background-color: #333;
+  border-radius: 1vw;
+  width: 60%;
+  max-width: 750px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
+  animation: fadeInDown 0.8s ease-in-out;
+}
+
+/* Testo del titolo */
+.doc-header h1 {
+  font-size: 2.5rem;
+  color: #b3a1c9;
+}
+
+/* Container dei gruppi con stile a griglia */
+.group-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 1200px;
+  padding: 10px;
+}
+
+/* Stile delle card */
+.group-item {
+  padding: 20px;
+  background: linear-gradient(145deg, #ddd9d9, #979797);
+  border: 1px solid #000000;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Effetto hover delle card */
+.group-item:hover {
+  background: linear-gradient(145deg, #b6b4b4, #bdbcbc);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Testo delle card */
+.group-item h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Aggiungiamo un'animazione leggera per un tocco moderno */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+/* Pulsante */
+ button {
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5vh;
+  margin-right: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+button:hover {
+  background-color: #660066;
+  color: #e21ca7;
+  border-color: #e21ca7;
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
+}

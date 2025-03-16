@@ -7,17 +7,23 @@ import { HomeComponent } from './componenti/home/home.component';
 import { SnippetComponent } from './componenti/snippet/snippet.component';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { provideHttpClient } from '@angular/common/http';
+import { DocComponent } from './componenti/doc/doc.component';
+import { PageComponent } from './componenti/doc/page/page.component';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SnippetComponent
+    SnippetComponent,
+    DocComponent,
+    PageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    QuillModule.forRoot()
   ],
   providers: [
     provideClientHydration(withEventReplay(),

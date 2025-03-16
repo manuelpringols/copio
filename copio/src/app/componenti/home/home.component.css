@@ -1,51 +1,47 @@
-
-
-/* Stile delle card */
-/* Titolo centrato */
+/* Stile del titolo */
 .title {
-font-size: 10.5rem;
-text-align: center;
-color: #18bbbb;
-font-weight: 600;
-letter-spacing: 1px;
-text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Leggero ombreggiamento per migliorare la visibilità */
-background: linear-gradient(125deg, #ff0000, #631fbd); /* Gradient dal lilla al blu */
-background-clip: text;
-color:transparent;
-font-family: "Titillium Web", sans-serif;
-font-weight: 200;
-font-style: italic;
-
+  font-size: 10.5rem;
+  text-align: center;
+  color: #18bbbb;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Leggero ombreggiamento per migliorare la visibilità */
+  background: linear-gradient(125deg, #ff0000, #631fbd); /* Gradient dal lilla al blu */
+  background-clip: text;
+  color: transparent;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 200;
+  font-style: italic;
 }
 
 /* Contenitore delle card */
 .home-container {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-fit e colonna minima di 250px */
-gap: 20px;
-justify-items: center;
-margin-top: 30px;
-padding: 10px;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-fit e colonna minima di 250px */
+  gap: 20px;
+  justify-items: center;
+  margin-top: 30px;
+  padding: 10px;
 }
 
 /* Stile delle card */
 .card {
   background: linear-gradient(125deg, #000000, #0e0a8d); /* Gradient dal lilla al blu */
   border-radius: 15px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra per dare profondità */
-padding: 60px;
-width: 100%;
-max-width: 320px;
-min-height: 250px; /* Card più lunghe */
-cursor: pointer;
-text-align: center;
-position: relative; /* Per gestire l'overlay */
-overflow: hidden; /* Nasconde l'overlay che esce fuori */
-transition: transform 3.4s ease, box-shadow 0.4s ease; /* Transizione graduale senza background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra per dare profondità */
+  padding: 60px;
+  width: 100%;
+  max-width: 320px;
+  min-height: 250px; /* Card più lunghe */
+  cursor: pointer;
+  text-align: center;
+  position: relative; /* Per gestire l'overlay */
+  overflow: hidden; /* Nasconde l'overlay che esce fuori */
+  transition: transform 3.4s ease, box-shadow 0.4s ease; /* Transizione graduale senza background */
+}
 
 /* Un overlay semi-trasparente */
-&::before {
+.card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -58,22 +54,25 @@ transition: transform 3.4s ease, box-shadow 0.4s ease; /* Transizione graduale s
   border-radius: 15px;
 }
 
-&:hover {
+/* Hover effetti delle card */
+.card:hover {
   transform: translateY(-15px); /* Leggera animazione in traslazione */
-  box-shadow: 0 8px 16px rgba(73, 16, 179, 0.644); /* Ombra più evidenti durante l'hover */
+  box-shadow: 0 10px 14px #630191ab; /* Ombra più evidenti durante l'hover */
 }
 
-&:hover::before {
+.card:hover::before {
   opacity: 0.8;
   background: linear-gradient(135deg, #15025a75, #330101);
 }
 
+/* Icona della card */
 .card-icon {
   font-size: 40px;
   color: #4CAF50; /* Colore iniziale verde rilassante per l'icona */
   transition: color 0.4s ease; /* Transizione morbida per il colore dell'icona */
 }
 
+/* Titolo della card */
 .card-title {
   font-family: "Titillium Web", sans-serif;
   font-size: 1.9rem;
@@ -84,73 +83,73 @@ transition: transform 3.4s ease, box-shadow 0.4s ease; /* Transizione graduale s
   transition: color 0.4s ease; /* Transizione morbida per il colore del titolo */
 }
 
+/* Descrizione della card */
 .card-description {
   font-size: 1.5rem;
   color: #e0e0e0; /* Grigio chiaro per la descrizione */
 }
 
 /* Cambiamenti morbidi su hover per l'icona, il titolo e la descrizione */
-&:hover .card-icon {
+.card:hover .card-icon {
   color: #81C784; /* Cambia lentamente il colore dell'icona */
 }
 
-&:hover .card-title {
+.card:hover .card-title {
   color: #ffffff; /* Cambia il colore del titolo lentamente */
 }
 
-&:hover .card-description {
+.card:hover .card-description {
   color: #eeeeee; /* Cambia il colore della descrizione lentamente */
-}
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-.title {
-  font-size: 2rem; /* Riduce la dimensione del titolo sui dispositivi più piccoli */
-}
+  .title {
+    font-size: 2rem; /* Riduce la dimensione del titolo sui dispositivi più piccoli */
+  }
 
-.home-container {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonne più strette sui dispositivi più piccoli */
-}
+  .home-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonne più strette sui dispositivi più piccoli */
+  }
 
-.card {
-  padding: 20px; /* Riduce il padding delle card per adattarsi meglio su schermi piccoli */
-  max-width: 280px; /* Limita la larghezza massima delle card */
-  min-height: 200px; /* Riduce l'altezza minima delle card */
-}
+  .card {
+    padding: 20px; /* Riduce il padding delle card per adattarsi meglio su schermi piccoli */
+    max-width: 280px; /* Limita la larghezza massima delle card */
+    min-height: 200px; /* Riduce l'altezza minima delle card */
+  }
 
-.card-icon {
-  font-size: 30px; /* Riduce la dimensione dell'icona su schermi più piccoli */
-}
+  .card-icon {
+    font-size: 30px; /* Riduce la dimensione dell'icona su schermi più piccoli */
+  }
 
-.card-title {
-  font-size: 1.2rem; /* Riduce la dimensione del titolo */
-}
+  .card-title {
+    font-size: 1.2rem; /* Riduce la dimensione del titolo */
+  }
 
-.card-description {
-  font-size: 0.9rem; /* Riduce la dimensione della descrizione */
-}
+  .card-description {
+    font-size: 0.9rem; /* Riduce la dimensione della descrizione */
+  }
 }
 
 @media (max-width: 480px) {
-.title {
-  font-size: 1.8rem; /* Ulteriore riduzione della dimensione del titolo per dispositivi molto piccoli */
-}
+  .title {
+    font-size: 1.8rem; /* Ulteriore riduzione della dimensione del titolo per dispositivi molto piccoli */
+  }
 
-.card {
-  max-width: 100%; /* Le card occuperanno tutta la larghezza disponibile */
-  min-height: 220px; /* Altezza minima maggiore per visibilità */
-}
+  .card {
+    max-width: 100%; /* Le card occuperanno tutta la larghezza disponibile */
+    min-height: 220px; /* Altezza minima maggiore per visibilità */
+  }
 
-.card-icon {
-  font-size: 28px; /* Riduce l'icona ulteriormente */
-}
+  .card-icon {
+    font-size: 28px; /* Riduce l'icona ulteriormente */
+  }
 
-.card-title {
-  font-size: 1rem; /* Riduce ulteriormente la dimensione del titolo */
-}
+  .card-title {
+    font-size: 1rem; /* Riduce ulteriormente la dimensione del titolo */
+  }
 
-.card-description {
-  font-size: 0.8rem; /* Riduce ulteriormente la descrizione */
-}
+  .card-description {
+    font-size: 0.8rem; /* Riduce ulteriormente la descrizione */
+  }
 }

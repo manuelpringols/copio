@@ -1,0 +1,14 @@
+<div class="pagina-doc">
+  <div class="doc-header">
+    <h1>Gruppi Documentazione</h1>
+
+  </div>
+  <button (click)="goBack()">Torna indietro</button>
+
+  <div class="group-list">
+    <div *ngFor="let group of groups" class="group-item" (click)="selectGroup(group)">
+      <h3> {{group.name}}</h3>
+    </div>
+  </div>
+
+</div>
