@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.copio.copio.entity.Group;
@@ -46,9 +47,11 @@ public class GroupController {
 
  // Endpoint per creare un nuovo gruppo
  @PostMapping("/save")
- public ResponseEntity<Group> createGroup(@RequestBody Group group) {
+ public ResponseEntity<Group> createGroup(@RequestParam String groupName) {
      try {
-         Group savedGroup = groupService.createGroup(group);  // Salva il gruppo nel database
+         Group savedGroup = new Group();  // Salva il gruppo nel database
+         savedGroup.setName(groupName);
+         this.groupService.createGroup(savedGroup);
          return ResponseEntity.status(HttpStatus.CREATED).body(savedGroup); // Risposta con il gruppo creato
      } catch (Exception e) {
          return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Gestisce gli errori

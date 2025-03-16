@@ -1,49 +1,53 @@
-const extensionId = chrome.runtime.id;
+
+const api = typeof browser !== 'undefined' ? browser : chrome;
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Verifica che l'API del browser sia disponibile
+  const api = typeof browser !== 'undefined' ? browser : (typeof chrome !== 'undefined' ? chrome : null);
+
+  if (!api) {
+    console.error('Neither chrome nor browser API is available');
+    return; // Esci dal codice se non sei in un ambiente di estensione
+  }
+
   // Recupera il testo selezionato dal background script
-  chrome.storage.local.get("selectedText", function (data) {
+  api.storage.local.get("selectedText", function (data) {
     const selectedText = data.selectedText || ""; // Se non c'è testo selezionato, metti una stringa vuota
     document.getElementById("content").value = selectedText; // Inserisci il testo nel campo "content"
   });
 
   // Popola i gruppi nel select effettuando una chiamata GET al backend
-  fetch('http://localhost:8080/api/groups', {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Extension-ID': extensionId,  // Aggiungi l'ID dell'estensione come header
-    }
-  })
-  .then(response => response.json()) // Risponde con un array di gruppi
-  .then(groups => {
-    const groupSelect = document.getElementById("groupSelect");
+  fetch('http://localhost:8080/api/groups')
+    .then(response => response.json()) // Risponde con un array di gruppi
+    .then(groups => {
+      const groupSelect = document.getElementById("groupSelect");
 
-    if (groups && groups.length > 0) {
-      const groupMapping = {};
+      if (groups && groups.length > 0) {
+        const groupMapping = {};
 
-      // Mappa ogni gruppo con il suo ID come chiave e il nome come valore
-      groups.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group.idGroup;  // Cambia da group.id a group.idGroup
-        option.textContent = group.name;  // Il nome del gruppo è il testo visibile
-        groupSelect.appendChild(option);
-        groupMapping[group.name] = group.idGroup;  // Aggiungi alla mappatura con idGroup
-      });
+        // Mappa ogni gruppo con il suo ID come chiave e il nome come valore
+        groups.forEach(group => {
+          const option = document.createElement("option");
+          option.value = group.idGroup;  // Cambia da group.id a group.idGroup
+          option.textContent = group.name;  // Il nome del gruppo è il testo visibile
+          groupSelect.appendChild(option);
+          groupMapping[group.name] = group.idGroup;  // Aggiungi alla mappatura con idGroup
+        });
 
-      // Salva la mappatura aggiornata in chrome.storage
-      chrome.storage.local.set({ groupMapping: groupMapping });
+        // Salva la mappatura aggiornata in chrome.storage
+        api.storage.local.set({ groupMapping: groupMapping });
 
-      // Verifica se i gruppi sono stati aggiunti correttamente
-      console.log("Groups populated in select:", groups);
-    } else {
-      console.error("No groups found in the API response!");
-      alert("No groups available.");
-    }
-  })
-  .catch(error => {
-    console.error("Error fetching groups:", error);
-    alert("Error fetching groups: " + error.message);
-  });
+        // Verifica se i gruppi sono stati aggiunti correttamente
+        console.log("Groups populated in select:", groups);
+      } else {
+        console.error("No groups found in the API response!");
+        alert("No groups available.");
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching groups:", error);
+      alert("Error fetching groups: " + error.message);
+    });
 
   // Gestisci il click del pulsante "Save"
   document.getElementById("saveBtn").addEventListener("click", function () {
@@ -90,3 +94,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+

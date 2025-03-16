@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { group } from 'node:console';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,8 +12,8 @@ export class SnippetService {
   constructor(private http: HttpClient) { }
 
   // Crea un nuovo snippet
-  createSnippet(snippet: { title: string, content: string }): Observable<any> {
-    return this.http.post(this.apiUrl, snippet);
+  createSnippet(snippet: { title: string, content: string, groupId:any }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/create?groupId=${snippet.groupId}`, snippet,);
   }
 
   // Ottieni tutti gli snippet

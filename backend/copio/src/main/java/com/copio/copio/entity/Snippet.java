@@ -5,6 +5,7 @@ package com.copio.copio.entity;
 
 import org.hibernate.engine.internal.ForeignKeys;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class Snippet {
     
     private String title;
     
+    @Column( columnDefinition = "TEXT")
     private String content;
 
    @ManyToOne(fetch = FetchType.EAGER)

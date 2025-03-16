@@ -204,6 +204,11 @@
   transform: scale(1.1);
 }
 
+.copy-icon.copied {
+  filter: brightness(1.4); /* Aumenta la luminosità per segnalarlo */
+  box-shadow: 1px 1px 6px 1px rgb(123, 255, 15) !important;
+}
+
 /* Pulsante per creare snippet */
 button.create-snippet-btn {
   background-color: #e67e22;

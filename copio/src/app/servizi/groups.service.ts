@@ -22,8 +22,8 @@ export class GroupsService {
   }
 
   // Crea un nuovo gruppo
-  createGroup(group: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/save`, group);
+  createGroup(groupName: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/save?groupName=${groupName}`, groupName);
   }
 
   // Aggiorna un gruppo esistente

@@ -2,7 +2,7 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <h3>Groups</h3>
+      <h3>Groupy</h3>
       <button (click)="openCreateGroupModal()">Aggiungi Gruppo</button>
     </div>
     <ul>
@@ -32,10 +32,10 @@
       <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
       <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
         <div *ngFor="let snippet of filteredSnippets | slice:(currentPage - 1) * snippetsPerPage : currentPage * snippetsPerPage" class="snippet-card">
-          <h3 style="font-family: 'Roboto', sans-serif; color: #060a47; font-size: 1.6rem; font-weight: 500;">
-            <u>{{ snippet.title }}</u>
+          <h3 style="font-family: 'Quicksand', sans-serif; color: #15bb15e3; font-size: 1.9rem; font-weight: 700;">
+            <u>{{ snippet.title }}</u> :
             <span style="display: inline-flex; align-items: center; margin-left: 8px;">
-              <img style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard()">
+              <img [ngClass]="{'copied': isCopied}"   style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard(snippet.content)">
             </span>
           </h3>
           <pre><code [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code></pre>

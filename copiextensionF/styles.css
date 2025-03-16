@@ -1,0 +1,88 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #444; /* Grigio scuro per lo sfondo */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.popup-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  background: #2d2d2d; /* Grigio scuro */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+  display: block;
+  border: 2px solid #ff9800; /* Aggiungi un bordo arancione */
+}
+
+.close-btn {
+  font-size: 24px;
+  color: #ff9800; /* Arancione per il pulsante di chiusura */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.close-btn:hover {
+  color: #ff5722; /* Arancione scuro quando si passa sopra */
+}
+
+h3 {
+  text-align: center;
+  color: #ff9800; /* Arancione caldo */
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #bbb; /* Grigio chiaro per il testo */
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 5px;
+  background: #333; /* Grigio scuro per gli input */
+  color: white;
+}
+
+textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff; /* Blu moderno per il pulsante */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0056b3; /* Blu più scuro al passaggio del mouse */
+}
+
+button:focus {
+  outline: none; /* Rimuovi il bordo blu di focus */
+}
