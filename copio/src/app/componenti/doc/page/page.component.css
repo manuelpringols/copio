@@ -26,22 +26,43 @@
 
 .content-container {
   display: flex;
-  gap: 20px;
-  height: 100%; /* Per far sì che il contenitore occupi tutta l'altezza disponibile */
 
 }
-
 /* Side navigation */
 .sidenav {
   width: 200px; /* Larghezza fissa per la sidenav */
   background-color: #333;
   color: #b3a1c9;
+  max-height: 500px;
   padding: 15px;
   border-radius: 10px;
   flex-shrink: 0; /* Evita che la sidenav si riduca in larghezza */
   box-shadow: 2px 2px 12px 3px rgba(35, 83, 74, 0.747);
+  border-top-right-radius: 0;
+  overflow: auto;
 
-}
+    /* Miglioramento scrollbar Chrome/Safari */
+    scrollbar-width: thin;
+    scrollbar-color: #660066 #333;
+  }
+
+  /* Scroll personalizzato per Chrome/Safari */
+  .sidenav::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .sidenav::-webkit-scrollbar-thumb {
+    background-color: #b3a1c9;
+    border-radius: 10px;
+  }
+
+  .sidenav::-webkit-scrollbar-track {
+    background: #333;
+
+  }
+
+
+
 
 .sidenav:hover{
   box-shadow: 3px 3px 14px 3px rgba(0, 0, 0, 0.541);
@@ -64,7 +85,14 @@
   cursor: pointer;
   padding: 5px 0;
   transition: 0.3s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linea sottile e semi-trasparente */
 }
+
+/* Rimuoviamo la linea dall'ultimo elemento per estetica */
+.sidenav li:last-child {
+  border-bottom: none;
+}
+
 
 .sidenav li:hover {
   color: #fff;
@@ -76,6 +104,7 @@
 /* Contenuto principale */
 .group-content {
   width: 700px;
+  max-height: 500px;
   padding: 15px;
   background-color: #9b85adb0;
   border-radius: 5px;
@@ -84,6 +113,7 @@
   overflow-y: auto; /* Attiva lo scroll verticale quando necessario */
   max-height: 80vh; /* Limita l'altezza del contenitore al 80% della viewport */
   z-index: 1;
+  border-top-left-radius: 0;
 
 
 }
@@ -178,6 +208,6 @@
 
 /* Per Firefox */
 .group-content {
-  scrollbar-width: thin; /* Imposta la larghezza della scrollbar a "sottile" */
+  scrollbar-width: thick; /* Imposta la larghezza della scrollbar a "sottile" */
   scrollbar-color: #660066 rgba(255, 255, 255, 0.2); /* Imposta il colore della parte attiva (pollice) e della traccia */
 }

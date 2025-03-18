@@ -10,15 +10,21 @@
         <div class="sidenav">
           <h3>Altre Pagine</h3>
           <ul>
-            <li *ngFor="let g of groups" (click)="navigateToGroup(g.id)">
-              {{ g.name }}
+            <li (click)="changePage(i)" *ngFor="let g of pages; index as i">
+              {{ g.pageTitle }}
             </li>
           </ul>
         </div>
 
         <!-- Contenuto del documento -->
-        <div class="group-content">
-          <textarea spellcheck="false" [(ngModel)]="group.content" [style]="{height: '400px'}" (input)="onTextChange()"></textarea>
+        <div class="group-content" *ngIf="groupName">
+          <h2>{{ page.pageTitle }}</h2>
+          <textarea
+            spellcheck="false"
+            [(ngModel)]="page.content"
+            [style.height]="'400px'"
+            (input)="onTextChange()"
+          ></textarea>
 
           <!-- Pulsante salva documento -->
           <button *ngIf="isModified" (click)="saveDocument()">Salva Documento</button>

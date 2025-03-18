@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { GroupPageService } from '../../servizi/group-page.service';
 
 @Component({
   selector: 'app-doc',
@@ -9,22 +10,20 @@ import { Router } from '@angular/router';
   styleUrl: './doc.component.css'
 })
 export class DocComponent {
-
-  groups = [
-    { id: 1, name: 'Doc Angular', description: 'Introduzione e componenti' },
-    { id: 2, name: 'Doc Java', description: 'Spring Boot e REST API' },
-    { id: 3, name: 'Doc Docker', description: 'Container e deploy' },
-    { id: 4, name: 'Doc Javascript', description: 'Introduzione e componenti' },
-    { id: 5, name: 'Doc Java', description: 'Spring Boot e REST API' },
-    { id: 6, name: 'Doc Docker', description: 'Container e deploy' }
-  ];
-
+  groups = [{title : ""}]; // Variabile per contenere i gruppi
   activeTab: string = 'angular'; // Imposta la tab iniziale
 
-  constructor(private router: Router) {}
+  constructor(
+    private groupPageService: GroupPageService, // Iniettiamo il servizio
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    console.log('DocComponent caricato!');
+    // Recuperiamo i gruppi dal servizio
+    this.groupPageService.getAllGroupPages().subscribe(groups => {
+      this.groups = groups; // Assegniamo i gruppi ricevuti dal backend
+      console.log('Gruppi caricati:', this.groups); // Verifica i gruppi caricati
+    });
   }
 
   // Metodo per cambiare la tab attiva
@@ -34,11 +33,12 @@ export class DocComponent {
 
   // Metodo per navigare verso una pagina di gruppo
   selectGroup(group: any): void {
+    // Naviga alla pagina del gruppo
     this.router.navigate(['/doc/page', group.id]);
   }
 
   goBack() {
-    this.router.navigate(["/"])
-    }
+    // Torna alla pagina principale
+    this.router.navigate(["/"]);
+  }
 }
-

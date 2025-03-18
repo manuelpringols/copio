@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CopioApplication<copio>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.copio.copio.CopioApplication",
+            "projectName": "copio",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
