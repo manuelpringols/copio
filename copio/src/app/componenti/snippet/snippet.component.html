@@ -9,6 +9,7 @@
       <li *ngFor="let group of groups" (click)="selectGroup(group)">
         <span>{{ group.name }}</span>
       </li>
+
     </ul>
   </div>
 
@@ -29,16 +30,28 @@
 
     <!-- Visualizza gli snippet del gruppo selezionato -->
     <div *ngIf="selectedGroup" class="snippet-section">
-      <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
+      <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>       
+
+      <button (click)="goBack()">Torna indietro</button>
+
       <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
-        <div *ngFor="let snippet of filteredSnippets | slice:(currentPage - 1) * snippetsPerPage : currentPage * snippetsPerPage" class="snippet-card">
+        <div *ngFor="let snippet of filteredSnippets | slice:(currentPage - 1) * snippetsPerPage : currentPage * snippetsPerPage; index as i" class="snippet-card" [ngClass]="{'expanded': isExpanded(i)}">
           <h3 style="font-family: 'Quicksand', sans-serif; color: #15bb15e3; font-size: 1.9rem; font-weight: 700;">
-            <u>{{ snippet.title }}</u> :
+            <u></u> 
             <span style="display: inline-flex; align-items: center; margin-left: 8px;">
+              {{ snippet.title }} :
               <img [ngClass]="{'copied': isCopied}"   style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard(snippet.content)">
+              
             </span>
           </h3>
-          <pre><code [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code></pre>
+        
+  
+          <pre [class.expanded]="isExpanded(i)"><code [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code>
+            <img 
+          src="https://img.icons8.com/ios-filled/50/000000/expand-arrow.png"
+          alt="Toggle Overflow" 
+          class="toggle-icon" 
+          (click)="toggleOverflow(i)"></pre>
           <hr>
         </div>
       </div>

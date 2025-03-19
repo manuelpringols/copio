@@ -3,6 +3,7 @@
   display: flex;
   min-height: 100vh;
   transition: margin-left 0.3s ease;
+
 }
 
 /* Sidebar */
@@ -164,12 +165,16 @@
 
 /* Stili Snippet */
 .snippet-card {
-  background-color: #5a5a5a;
+  background: rgb(36,36,36);
+  background: linear-gradient(0deg, rgba(36, 36, 36, 0.719) 0%, rgb(43, 39, 39) 48%, rgb(26, 21, 21) 100%);
   padding: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
+  overflow: auto;
+  max-height: 500px;
+
 }
 
 .snippet-card h3 {
@@ -255,3 +260,45 @@ button.create-snippet-btn:hover {
 }
 
 
+
+.toggle-icon {
+  position: absolute;
+  top: 10px;    /* distanza dal top */
+  right :10px;   /* distanza dal lato sinistro */
+  cursor: pointer;
+  width: 24px;  /* larghezza dell'icona */
+  height: 24px; /* altezza dell'icona */
+  transition: transform 0.3s ease, color 0.3s ease; /* Animazione fluida per il colore e l'ingrandimento */
+
+}
+
+.toggle-icon:hover {
+  transform: scale(1.3); /* Ingrandisce l'icona al 120% */
+}
+
+.snippet-card.expanded {
+  max-height: none; /* Rimuovi il limite di altezza quando è espansa */
+  overflow: none; /* Permetti la visualizzazione completa */
+  background-color: rgb(255, 0, 0);
+}
+
+
+
+pre.expanded {
+  white-space: pre-wrap; /* Rendi il testo più leggibile */
+  word-wrap: break-word;
+}
+
+button {
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1vh;
+}

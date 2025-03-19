@@ -6,6 +6,7 @@ import 'prismjs/components/prism-java';
 import 'prismjs';
 import 'prismjs/components/prism-typescript.min.js';  // Aggiungi questa linea
 import 'prismjs/components/prism-python.min.js';  // Aggiungi il supporto per Python
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,6 +16,8 @@ import 'prismjs/components/prism-python.min.js';  // Aggiungi il supporto per Py
   styleUrls: ['./snippet.component.css']
 })
 export class SnippetComponent implements OnInit {
+    expandedCards: boolean[] = [];
+
   snippets: any[] = [];  // Contiene tutti gli snippet
   currentPage = 1;
   snippetsPerPage = 5;
@@ -31,7 +34,8 @@ export class SnippetComponent implements OnInit {
 
   constructor(
     private snippetService: SnippetService,
-    private groupService: GroupsService // Inietta il servizio dei gruppi
+    private groupService: GroupsService,
+    private router:Router // Inietta il servizio dei gruppi
   ) {}
 
   ngOnInit() {
@@ -200,7 +204,20 @@ export class SnippetComponent implements OnInit {
     }
   }
 
+  toggleOverflow(index: number) {
+    this.expandedCards[index] = !this.expandedCards[index];
+    console.log("metodo toggleOverflow chiamato")
+  }
 
+  // Metodo per verificare se la card è espansa
+  isExpanded(index: number): boolean {
+    return this.expandedCards[index];
+  }
 
+  
+  goBack() {
+    // Torna alla pagina principale
+    this.router.navigate(["/"]);
+  }
 
 }
