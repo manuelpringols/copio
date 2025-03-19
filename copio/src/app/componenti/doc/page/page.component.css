@@ -1,7 +1,8 @@
 /* Impostazioni generali per la pagina */
 .pagina-div {
   height: 100vh;
-  background-color: #660066;
+background: rgb(102,0,102);
+background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgba(219,196,78,1) 100%);
   border-radius: 1vw;
 }
 
@@ -163,11 +164,12 @@
   border: 1px solid #ccc; /* Colore del bordo del textarea */
   border-radius: 5px;
   background-color: rgba(190, 114, 171, 0.527); /* Colore di sfondo chiaro */
-  color: #333; /* Colore del testo */
+  color: #ebebeb; /* Colore del testo */
   resize: vertical; /* Permette all'utente di ridimensionare solo in verticale */
   box-sizing: border-box; /* Include il padding e il bordo nel calcolo della larghezza */
   transition: all 0.3s ease; /* Transizione fluida */
-  font-family: 'Arial', sans-serif; /* Usa un font leggibile */
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 350;
   outline: none; /* Rimuove l'effetto di outline di default al focus */
   text-align: left; /* Allinea il testo a sinistra */
   box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.795);

@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   postgresql:
-    image: bitnami/postgresql:15.4.0
+    image: bitnami/postgresql:15
     environment:
       POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
       POSTGRESQL_USERNAME: ${POSTGRESQL_USERNAME}
@@ -13,7 +13,17 @@ services:
     volumes:
       - copioDb:/bitnami/postgresql
 
-
+  backend:
+    build:
+      context: ./backend/copio
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/${POSTGRESQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRESQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRESQL_PASSWORD}
 
 volumes:
-  copioDb:
+ copioDb:

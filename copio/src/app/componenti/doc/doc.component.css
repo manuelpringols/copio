@@ -1,9 +1,10 @@
 /* Stile per la pagina di documentazione */
 .pagina-doc {
   height: 100vh;
-  background-color: #660066; /* Sfondo viola */
-  border-radius: 1vw;
+  background: rgb(102,0,102);
+background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgba(219,196,78,1) 100%);
   padding: 5px;
+  border-radius: 1vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
