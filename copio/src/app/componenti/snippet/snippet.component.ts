@@ -214,10 +214,19 @@ export class SnippetComponent implements OnInit {
     return this.expandedCards[index];
   }
 
-  
+
   goBack() {
     // Torna alla pagina principale
     this.router.navigate(["/"]);
   }
+
+
+  copyCode(index: number) {
+    const codeBlock = document.getElementById('codeBlock-' + index)?.textContent;
+    if (codeBlock) {
+      navigator.clipboard.writeText(codeBlock.trim());
+    }
+  }
+
 
 }

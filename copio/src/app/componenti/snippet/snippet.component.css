@@ -201,17 +201,19 @@ background-color: #2f1d7e79;
 
 /* Pulsante copia */
 .copy-icon {
-  position: relative;
-  top: 10px;
-  left: 10px;
-  width: 55px;
-  height: 55px;
+  position: absolute;
+  top: 10px;    /* distanza dal top */
+  right :40px;   /* distanza dal lato sinistro */
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  width: 42px;  /* larghezza dell'icona */
+  height: 42px; /* altezza dell'icona */
+  transition: transform 0.3s ease, color 0.3s ease; /* Animazione fluida per il colore e l'ingrandimento */
 }
 
 .copy-icon:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
+  filter: brightness(1.2); /* Effetto al passaggio del mouse */
+
 }
 
 .copy-icon.copied {
