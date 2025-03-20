@@ -15,7 +15,7 @@ services:
 
   backend:
     build:
-      context: ./backend/copio
+      context: ./backend/copio  # Sostituisci con il path giusto per il tuo backend
     ports:
       - "8080:8080"
     depends_on:
@@ -25,5 +25,13 @@ services:
       SPRING_DATASOURCE_USERNAME: ${POSTGRESQL_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRESQL_PASSWORD}
 
+  frontend:
+    image: copio-fe:1.0  # Usa l'immagine che hai buildato per il frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
 volumes:
- copioDb:
+  copioDb:
+

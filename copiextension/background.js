@@ -39,7 +39,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const groupId = message.groupId;
 
     // Correzione del link nel fetch
-    fetch(`http://localhost:8080/api/snippets/create?groupId=${groupId}`, {
+    fetch(`http://192.168.1.111:8080/api/snippets/create?groupId=${groupId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

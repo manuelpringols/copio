@@ -19,11 +19,15 @@ export class DocComponent {
   ) {}
 
   ngOnInit(): void {
-    // Recuperiamo i gruppi dal servizio
     this.groupPageService.getAllGroupPages().subscribe(groups => {
       this.groups = groups; // Assegniamo i gruppi ricevuti dal backend
       console.log('Gruppi caricati:', this.groups); // Verifica i gruppi caricati
     });
+
+  }
+
+  ngAfterViewInit(){
+
   }
 
   // Metodo per cambiare la tab attiva

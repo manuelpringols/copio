@@ -7,8 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class GroupsService {
 
-  private apiUrl = "http://localhost:8080/api/groups"; // URL base dell'API
+  private apiUrl = "http://192.168.1.111:8080/api/groups"; // URL mini-pc dell'API
 
+   private apiUrlLocal = "http://localhost:8080/api/groups"; // URL base dell'API
   constructor(private http: HttpClient) { }
 
   // Ottieni tutti i gruppi

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageService } from '../../../servizi/page.service';
 import { GroupsService } from '../../../servizi/groups.service';
 import { GroupPageService } from '../../../servizi/group-page.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-page',
@@ -25,31 +26,42 @@ export class PageComponent implements OnInit {
     private route: ActivatedRoute,
     private pageService: PageService,
     private groupPageService: GroupPageService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
+
   ) {}
 
-  ngOnInit(): void {
-    this.page = { content: '' }; // Inizializziamo per prevenire l'errore subito
+ ngOnInit(): void {
 
-    // Prende l'ID del gruppo dall'URL
-    this.groupId = Number(this.route.snapshot.paramMap.get('id'));
+  this.page = { content: '' };
 
-    // Otteniamo le pagine per il gruppo selezionato
-    if (this.groupId !== null) {
-      this.pageService.getPagesByGroupId(this.groupId).subscribe({
-        next: (data: any) => {
-          console.log('Pagine ricevute:', data);
-          this.pages = data; // Assegna le pagine filtrate
-          this.page = this.pages.length ? this.pages[0] : { content: 'Nessuna pagina disponibile per questo gruppo.' }; // Imposta la pagina di default
-          this.pageId = this.page?.id; // Assegna l'ID della pagina selezionata
-        },
-        error: () => {
-          this.pages = [];
-          this.page = { content: 'Errore nel caricamento delle pagine.' };
-        }
+  this.groupId = Number(this.route.snapshot.paramMap.get('id'));
+
+  if (this.groupId !== null) {
+    firstValueFrom(this.pageService.getPagesByGroupId(this.groupId))
+      .then(data => {
+        this.pages = data;
+        this.page = this.pages.length ? this.pages[0] : { content: 'Nessuna pagina disponibile per questo gruppo.' };
+        this.pageId = this.page?.id;
+        this.cdr.detectChanges();
+
+      })
+      .catch(() => {
+        this.pages = [];
+        this.page = { content: 'Errore nel caricamento delle pagine.' };
       });
-    }
   }
+
+}
+
+ngAfterViewInit(){
+
+
+
+}
+
+
+
 
   // Seleziona una pagina diversa
   selectPage(page: any): void {

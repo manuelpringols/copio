@@ -1,79 +1,84 @@
 /* Layout generale */
 .container {
-  display: flex;
-  min-height: 100vh;
-  transition: margin-left 0.3s ease;
-
+display: flex;
+min-height: 100vh;
+transition: margin-left 0.3s ease;
+flex-wrap: wrap;
+box-sizing: border-box;
+max-width: 100%;
+overflow-x: hidden;
 }
 
 /* Sidebar */
 .sidebar {
-  width: 220px;
-  border: 1px solid black;
-  border-radius: 1vw;
-  background-color: #2c3e50;
-  color: white;
-  padding: 20px;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease-in-out;
+width: 220px;
+border: 1px solid black;
+border-radius: 1vw;
+background-color: #2c3e50;
+color: white;
+padding: 20px;
+position: fixed;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+transition: transform 0.3s ease-in-out;
+box-sizing: border-box;
 }
 
 .sidebar-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 20px;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+margin-bottom: 20px;
 }
 
 .sidebar-header h3 {
-  margin-bottom: 10px;
-  font-style: italic;
+margin-bottom: 10px;
+font-style: italic;
 }
 
 .sidebar-header button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  text-align: center;
-  transition: background-color 0.3s;
+background-color: #660066;
+color: white;
+border: 1px solid rgba(255, 255, 255, 0.541);
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+text-align: center;
+transition: background-color 0.3s;
 }
 
 .sidebar-header button:hover {
-  background-color: #2980b9;
+  background-color: #660066bb;
 }
 
 .sidebar ul {
-  list-style: none;
-  padding: 0;
+list-style: none;
+padding: 0;
 }
 
 .sidebar ul li {
-  padding: 10px 0;
-  cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s;
+padding: 10px ;
+border-radius: 0.5vh;
+cursor: pointer;
+font-size: 18px;
+transition: background-color 0.3s;
 }
 
 .sidebar ul li:hover {
-  background-color: #34495e;
+background-color: #2f1d7e79;
 }
-
 /* Main content area */
 .main-content {
   margin-left: 270px;
   padding: 20px;
-  width: 100%;
+  width: calc(100% - 270px);
   transition: margin-left 0.3s ease;
   font-family: "Titillium Web", sans-serif;
   font-weight: 200;
   font-style: italic;
+  box-sizing: border-box;
 }
 
 .main-content h2 {
@@ -240,7 +245,7 @@ button.create-snippet-btn:hover {
 }
 
 .pagination button {
-  background-color: #3498db;
+  background-color: #660066;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -287,6 +292,83 @@ button.create-snippet-btn:hover {
 pre.expanded {
   white-space: pre-wrap; /* Rendi il testo più leggibile */
   word-wrap: break-word;
+}
+
+button {
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 0.5vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1vh;
+}
+
+button:hover {
+  background-color: #660066bb;
+
+}
+
+/* Media Query per schermi piccoli */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    padding: 10px;
+  }
+
+  .main-content h2 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Overlay per la modale */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;
+  animation: fadeInOverlay 0.3s ease;
+}
+
+@keyframes fadeInOverlay {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Aggiunta per evitare testo troppo largo */
+.snippet-card pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
 button {

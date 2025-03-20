@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Popola i gruppi nel select effettuando una chiamata GET al backend
-  fetch('http://localhost:8080/api/groups', {
+  fetch('http://192.168.1.111:8080/api/groups', {
     headers: {
       'Content-Type': 'application/json',
       'X-Extension-ID': extensionId,  // Aggiungi l'ID dell'estensione come header
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Invia la richiesta al backend per salvare lo snippet
-    fetch(`http://localhost:8080/api/snippets/create?groupId=${selectedGroupId}`, {
+    fetch(`http://192.168.1.111:8080/api/snippets/create?groupId=${selectedGroupId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

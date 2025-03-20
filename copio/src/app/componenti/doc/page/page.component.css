@@ -36,11 +36,13 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   color: #b3a1c9;
   max-height: 500px;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 5px;
   flex-shrink: 0; /* Evita che la sidenav si riduca in larghezza */
   box-shadow: 2px 2px 12px 3px rgba(35, 83, 74, 0.747);
   border-top-right-radius: 0;
+  margin-right: -0.2vw;
   overflow: auto;
+
 
     /* Miglioramento scrollbar Chrome/Safari */
     scrollbar-width: thin;
@@ -126,7 +128,9 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   border: 1px solid #b3a1c9;
   padding: 10px 20px;
   font-size: 1rem;
-  border-radius: 5px;
+
+  border-radius: 10px;
+
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1.5vh;

@@ -153,3 +153,36 @@
     font-size: 0.8rem; /* Riduce ulteriormente la descrizione */
   }
 }
+
+
+.unavailable-card {
+  position: relative;
+  filter: grayscale(100%) brightness(0.6); /* Effetto "disabilitato" */
+  pointer-events: none; /* Impedisce interazioni */
+  background: linear-gradient(125deg, #ad5c5c, #0e0a8d); /* Gradient dal lilla al blu */
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra per dare profondità */
+  padding: 60px;
+  width: 100%;
+  max-width: 320px;
+  min-height: 250px; /* Card più lunghe */
+  cursor: pointer;
+  text-align: center;
+  position: relative; /* Per gestire l'overlay */
+  overflow: hidden; /* Nasconde l'overlay che esce fuori */
+  transition: transform 3.4s ease, box-shadow 0.4s ease;
+}
+
+.unavailable-card::after {
+  content: "Coming Soon";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
