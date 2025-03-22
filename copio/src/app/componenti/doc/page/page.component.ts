@@ -13,6 +13,8 @@ import { firstValueFrom } from 'rxjs';
 })
 export class PageComponent implements OnInit {
 
+
+
   namePages: any[] = []; // Lista completa dei gruppi
   selectedGroupId: number | null = null; // ID del gruppo selezionato
   pages: any[] = []; // Pagine filtrate
@@ -21,6 +23,13 @@ export class PageComponent implements OnInit {
   groupName: string = 'Caricamento...'; // Nome del gruppo selezionato (iniziale)
   groupId: number = 1;
   pageId: any; // ID della pagina selezionata
+isModalOpen = false;
+isConfirmationModalOpen = false;
+
+newContent = '';
+newTitle = '';
+showModal: any;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -33,11 +42,39 @@ export class PageComponent implements OnInit {
 
  ngOnInit(): void {
 
+  console.log("Group Id Selezionato",  this.groupId)
+
   this.page = { content: '' };
 
   this.groupId = Number(this.route.snapshot.paramMap.get('id'));
 
   if (this.groupId !== null) {
+    firstValueFrom(this.groupPageService.getGroupById(this.groupId)).then(groupData => {
+      this.groupName = groupData.name; // Supponiamo che `name` sia il campo che contiene il nome del gruppo
+      console.log("Nome del gruppo:", this.groupName);
+    }).catch(() => {
+      this.groupName = 'Gruppo non trovato';
+      console.error('Errore nel recupero del nome del gruppo');
+    });
+  }
+
+
+
+  if (this.groupId) {
+    // Verifica che il codice sia in esecuzione nel browser
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('groupId', this.groupId.toString()); // Salva come stringa
+      console.log("Group ID salvato nel localStorage:", this.groupId);
+    }
+  } else {
+    console.error('Errore: groupId non valido');
+  }
+
+  console.log("Group Id Selezionato",  this.groupId)
+
+
+  if (this.groupId !== null) {
+
     firstValueFrom(this.pageService.getPagesByGroupId(this.groupId))
       .then(data => {
         this.pages = data;
@@ -45,10 +82,12 @@ export class PageComponent implements OnInit {
         this.pageId = this.page?.id;
         this.cdr.detectChanges();
 
+
+
       })
       .catch(() => {
         this.pages = [];
-        this.page = { content: 'Errore nel caricamento delle pagine.' };
+        this.page = { content: 'Nessuna pagina disponibile per questo gruppo.' };
       });
   }
 
@@ -109,6 +148,78 @@ ngAfterViewInit(){
       this.selectPage(selectedPage);
     } else {
       console.error('Pagina non trovata!');
+    }
+  }
+
+  deletePage(idPage: number) {
+      this.pageService.deletePage(idPage).subscribe((data)=>{
+        console.log("mammeta")
+        this.closeConfirmModal()
+
+      })
+
+
+  }
+
+
+  openConfirmationModal() {
+    this.isConfirmationModalOpen = true;
+    console.log("asdas",this.isConfirmationModalOpen)
+  }
+
+  closeConfirmModal() {
+    this.isConfirmationModalOpen = false;
+    }
+
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.newContent = '';
+  }
+
+  saveNewContent() {
+    // Verifica se siamo nel client (browser)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      // Recupera il groupId salvato nel localStorage
+      const storedGroupId = localStorage.getItem('groupId');
+
+      // Verifica che groupId non sia null o undefined e che newContent non sia vuoto
+      if (storedGroupId !== null && storedGroupId !== undefined && this.newContent.trim() !== '') {
+        // Converti il valore recuperato dal localStorage in numero
+        const groupIdFromLocalStorage = Number(storedGroupId);
+
+        if (!isNaN(groupIdFromLocalStorage)) {
+          console.log('Salvataggio del nuovo contenuto per la pagina ID:', groupIdFromLocalStorage);
+
+          // Ora userai groupIdFromLocalStorage come il groupPageId corretto
+          const page = {
+            pageTitle: this.newTitle,
+            content: this.newContent,
+            groupPage: {
+              id: groupIdFromLocalStorage,
+              title: this.groupName // Aggiungi il titolo del gruppo, se necessario
+            }
+          };
+
+          this.pageService.createPage(page).subscribe(
+            (data) => {
+              console.log('Contenuto salvato:', data);
+              this.closeModal();
+            },
+            (error) => console.error('Errore nel salvataggio:', error)
+          );
+        } else {
+          console.error('Errore: groupId recuperato non valido!');
+        }
+      } else {
+        console.error('Errore: ID gruppo pagina non definito o contenuto vuoto!');
+      }
+    } else {
+      console.error('Errore: localStorage non disponibile!');
     }
   }
 }

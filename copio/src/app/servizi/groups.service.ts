@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class GroupsService {
 
-  private apiUrlLocal = "http://188.245.185.96:9000/api/groups"; // URL mini-pc dell'API
+  private apiUrlLocal = "https://copio.online:9000/api/groups"; // URL mini-pc dell'API
 
    private apiUrl = "https://copio.online:9000/api/groups"; // URL base dell'API
   constructor(private http: HttpClient) { }

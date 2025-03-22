@@ -121,6 +121,13 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 
 }
 
+.group-content h2 {
+  font-family: 'Quicksand', sans-serif;
+  font-style: italic;
+  font-weight: 200;
+  font-size: 2rem;
+}
+
 /* Pulsante */
 .group-content button {
   background-color: #660066;
@@ -216,4 +223,242 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 .group-content {
   scrollbar-width: thick; /* Imposta la larghezza della scrollbar a "sottile" */
   scrollbar-color: #660066 rgba(255, 255, 255, 0.2); /* Imposta il colore della parte attiva (pollice) e della traccia */
+}
+
+
+/* Modale - Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Maggiore opacità per l'overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Assicurati che sia sopra gli altri contenuti */
+  transform: translateY(-50px); /* La modale inizia leggermente sopra la visualizzazione */
+  transition: opacity 0.4s ease, transform 0.4s ease; /* Aggiungi transizione per opacità e trasformazione */
+
+
+}
+
+
+.modal-overlay.show {
+  opacity: 1; /* Aumenta l'opacità a 1 quando la modale appare */
+  transform: translateY(0); /* Riposiziona la modale nella posizione corretta */
+}
+
+.openModalButton{
+  z-index: 1000;
+  width: 100%;
+  background-color: #660066;
+  border-radius: 0.3vw;
+  height: 2.7vh;
+  box-shadow: 0 4px 12px rgba(61, 0, 70, 0.6); /* Aggiungi una sfumatura più accentuata */
+
+
+
+
+}
+.openModalButton:hover{
+  cursor: pointer;
+  background-color: #751475; /* Sfuma il colore di background durante l'hover */
+  color: #e21ca7; /* Colore del testo al passaggio del mouse */
+  border-color: #e21ca7a9; /* Colore del bordo durante l'hover */
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.5); /* Aggiungi una sfumatura più accentuata */
+}
+
+/* Modale */
+.modal {
+  background: rgb(40, 0, 85);
+background: linear-gradient(90deg, rgb(22, 15, 54) 19%, rgba(41,9,121,0.9416141456582633) 56%, rgb(124, 0, 173) 100%);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Ombra più forte */
+  width: 400px; /* Imposta una larghezza fissa per la modale */
+  max-width: 90%; /* Evita che diventi troppo larga su schermi piccoli */
+  text-align: center;
+  z-index: 1002; /* Assicurati che la modale sia sopra l'overlay */
+  animation: modalFadeIn 0.5s ease-out; /* Aggiungi un'animazione di fade-in */
+  border: 1px solid #660066 ;
+}
+
+@keyframes modalFadeIn {
+  0% {
+    transform: scale(0.9); /* Inizia la modale leggermente ridotta */
+    opacity: 0; /* Inizia completamente invisibile */
+  }
+  100% {
+    transform: scale(1); /* Ritorna alla dimensione originale */
+    opacity: 1; /* Diventa completamente visibile */
+  }
+}
+
+
+
+/* Modale - Titolo */
+.modal h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #7e037e; /* Colore personalizzato per il titolo */
+  font-family: 'Source Code Pro', monospace;
+
+}
+
+/* Modale - Input */
+.modal input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #444;
+
+
+}
+
+/* Cambia colore al focus dell'input */
+.modal input:focus {
+  border-color: #660066;
+  outline: none;
+}
+
+/* Bottoni della modale */
+.modal button {
+  background-color: #660066; /* Colore principale */
+  color: #b3a1c9; /* Colore del testo, simile alla tua palette */
+  border: 1px solid #b3a1c9; /* Colore del bordo */
+  padding: 10px 20px;
+  border-radius: 10px; /* Rende il bordo arrotondato */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 5px;
+  font-size: 1rem;
+  width: 120px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Aggiungi ombra per profondità */
+}
+
+/* Hover */
+.modal button:hover {
+  background-color: #751475; /* Sfuma il colore di background durante l'hover */
+  color: #e21ca7; /* Colore del testo al passaggio del mouse */
+  border-color: #e21ca7; /* Colore del bordo durante l'hover */
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6); /* Aggiungi una sfumatura più accentuata */
+}
+
+/* Stato attivo */
+.modal button:active {
+  transform: scale(0.95); /* Effetto di riduzione al click */
+  box-shadow: 0 2px 6px rgba(225, 0, 255, 0.89); /* Ombra accentuata */
+
+}
+
+/* Stato disabilitato */
+.modal button:disabled {
+  background-color: #444;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+/* Icona del cestino */
+.delete-button {
+  position: absolute;
+  top: 30px;  /* Posiziona l'icona in alto */
+  right: 10px;  /* Posiziona l'icona a destra */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff0000;  /* Colore rosso per il cestino */
+  font-size: 24px;  /* Dimensione dell'icona */
+  transition: transform 0.2s, color 0.2s; /* Effetto di transizione */
+}
+
+.delete-button:hover {
+  color: #e60000;  /* Colore rosso più intenso al passaggio del mouse */
+  transform: scale(1.2); /* Effetto di ingrandimento */
+}
+
+.delete-button i {
+  pointer-events: none;  /* Evita che il clic venga intercettato dall'icona */
+}
+
+/* Aggiungi un'animazione di fade-in per l'icona */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.delete-button {
+  animation: fadeIn 0.5s ease-out;  /* Aggiungi l'animazione */
+}
+
+.textarea-container textarea {
+  width: 100%;
+  height: 400px;
+  padding-right: 30px; /* Aggiunge spazio per l'icona */
+}
+/* Modale di conferma */
+/* Modale di conferma */
+.modal-confirmation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* sfondo semi-trasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-confirmation-content {
+  background: linear-gradient(135deg, #5e0844, #9c1b68); /* sfumatura tra due tonalità */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-confirmation h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #fff; /* Colore del testo per maggiore contrasto */
+}
+
+.modal-confirmation button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-confirmation button:nth-child(1) {
+  background: linear-gradient(135deg, #ff5722, #f44336); /* sfumatura per il pulsante 'Elimina' */
+  color: white;
+}
+
+.modal-confirmation button:nth-child(2) {
+  background: linear-gradient(135deg, #9e9e9e, #757575); /* sfumatura per il pulsante 'Annulla' */
+  color: white;
+}
+
+.modal-confirmation button:hover {
+  opacity: 0.8;
 }

@@ -203,7 +203,7 @@ background-color: #2f1d7e79;
 .copy-icon {
   position: absolute;
   top: 10px;    /* distanza dal top */
-  right :40px;   /* distanza dal lato sinistro */
+  right :50px;   /* distanza dal lato sinistro */
   cursor: pointer;
   width: 42px;  /* larghezza dell'icona */
   height: 42px; /* altezza dell'icona */

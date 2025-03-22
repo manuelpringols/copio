@@ -2,35 +2,66 @@
   <div class="pagina-doc">
     <div class="docs-container">
       <div class="doc-header">
-        <h1>Doc Pages</h1>
+        <h1></h1>
       </div>
 
       <div class="content-container">
         <!-- Side navigation -->
         <div class="sidenav">
           <h3>Altre Pagine</h3>
+          <button class="openModalButton" (click)="openModal()">+</button>
           <ul>
             <li (click)="changePage(i)" *ngFor="let g of pages; index as i">
-              {{ g.pageTitle }} 
+              {{ g.pageTitle }}
             </li>
-            
+
           </ul>
         </div>
+
+
+        <!-- Modal -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal">
+    <h3>Aggiungi Contenuto</h3>
+    <input [(ngModel)]="newContent" placeholder="Inserisci il contenuto" />
+    <input [(ngModel)]="newTitle" placeholder="Inserisci il Titolo" />
+    <button (click)="saveNewContent()">Salva</button>
+    <button (click)="closeModal()">Chiudi</button>
+  </div>
+</div>
+
+
 
         <!-- Contenuto del documento -->
         <div class="group-content" *ngIf="groupName">
           <h2>{{ page.pageTitle }}</h2>
-          <textarea
-            spellcheck="false"
-            [(ngModel)]="page.content"
-            [style.height]="'400px'"
-            (input)="onTextChange()"
-          ></textarea>
+          <div class="textarea-container">
+            <!-- Icona del cestino -->
+            <button (click)="openConfirmationModal()" class="delete-button" >
+              <i class="fas fa-trash-alt"></i> <!-- Icona del cestino -->
+            </button>
+            <!-- Textarea -->
+            <textarea
+              spellcheck="false"
+              [(ngModel)]="page.content"
+              [style.height]="'400px'"
+              (input)="onTextChange()"
+            ></textarea>
+          </div>
 
           <!-- Pulsante salva documento -->
           <button *ngIf="isModified" (click)="saveDocument()">Salva Documento</button>
           <button (click)="goBack()">Torna indietro</button>
         </div>
+
+        <div *ngIf="isConfirmationModalOpen" class="modal-confirmation">
+          <div class="modal-confirmation-content">
+            <h3>Sei sicuro di voler eliminare questa pagina?</h3>
+            <button (click)="deletePage(pageId)">Elimina</button>
+            <button (click)="closeConfirmModal()">Annulla</button>
+          </div>
+
+
       </div>
     </div>
   </div>

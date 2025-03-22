@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PageService {
-  private apiUrlLocal = `http://192.168.1.111:8080/api/pages`; // Modifica il path se necessario
+  private apiUrlLocal = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
 
   private apiUrl = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
 
@@ -32,5 +32,12 @@ export class PageService {
   saveModify(id: number, page: any): Observable<any>{
     return this.http.put(`${this.apiUrl}/${id}`, page);
   }
+
+   // Elimina una pagina
+   deletePage(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+
 
 }

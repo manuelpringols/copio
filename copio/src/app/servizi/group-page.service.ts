@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class GroupPageService {
 
-  private apiUrlLocal = `http://188.245.185.96:9000/api/groupPages`; // Modifica il path se necessario
+  private apiUrlLocal = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
 
   private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se neces>
 
@@ -21,6 +21,10 @@ export class GroupPageService {
   // Crea un nuovo GroupPage
   createGroupPage(groupPage: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, groupPage);
+  }
+
+  getGroupById(groupId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/groups/${groupId}`);
   }
 
 

@@ -9,7 +9,7 @@ services:
       POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
       POSTGRESQL_POSTGRES_PASSWORD: ${POSTGRESQL_POSTGRES_PASSWORD}
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
       - copioDb:/bitnami/postgresql
     

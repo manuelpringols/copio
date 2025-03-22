@@ -39,4 +39,12 @@ public class GroupPageService {
         }
         return null;
     }
+
+
+    public Optional<GroupPage> findById(Integer groupId) {
+        return groupPageRepository.findById(groupId);
+    }
+
+
+   
 }

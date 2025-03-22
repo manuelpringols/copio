@@ -47,4 +47,11 @@ public class GroupPageController {
         groupPageService.deleteGroupPage(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GroupPage> getGroupById(@PathVariable("id") Long groupId) {
+        Optional<GroupPage> group = groupPageService.findById(groupId);
+        return group.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
