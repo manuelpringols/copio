@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PageService {
-  private apiUrl = `http://192.168.1.111:8080/api/pages`; // Modifica il path se necessario
+  private apiUrlLocal = `http://192.168.1.111:8080/api/pages`; // Modifica il path se necessario
 
-  private apiUrlLocal = `http://localhost:8080/api/pages`; // Modifica il path se necessario
+  private apiUrl = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
 
 
   constructor(private http: HttpClient) {}

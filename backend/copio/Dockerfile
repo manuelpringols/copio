@@ -7,8 +7,11 @@ WORKDIR /app
 # Copia tutto il progetto nella directory di lavoro del container
 COPY ./ /app
 
+# Copia anche il file .env
+COPY .env /app/.env
+
 # Espone la porta su cui Spring Boot sarà in ascolto
-EXPOSE 8080
+EXPOSE 9000
 
 # Comando per avviare l'applicazione Spring Boot
 CMD ["./mvnw", "spring-boot:run"] 

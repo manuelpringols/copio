@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class GroupPageService {
 
-  private apiUrl = `http://192.168.1.111:8080/api/groupPages`; // Modifica il path se necessario
+  private apiUrlLocal = `http://188.245.185.96:9000/api/groupPages`; // Modifica il path se necessario
 
-  private apiUrlLocal = `http://localhost:8080/api/groupPages`; // Modifica il path se neces>
+  private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se neces>
 
   constructor(private http: HttpClient) {}
 
