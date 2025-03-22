@@ -41,7 +41,7 @@ public class GroupPageService {
     }
 
 
-    public Optional<String> findById(Integer groupId) {
+    public Optional<String> getGroupNameFromId(Integer groupId) {
         return  groupPageRepository.findGroupNameById(groupId);
     }
 
