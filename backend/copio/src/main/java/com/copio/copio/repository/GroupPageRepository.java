@@ -12,6 +12,6 @@ import com.copio.copio.entity.GroupPage;
 @Repository
 public interface GroupPageRepository extends JpaRepository<GroupPage,Integer> {
 
-     @Query("SELECT gp.name FROM GroupPage gp WHERE gp.id = :groupId")
+    @Query(value = "SELECT title FROM public.group_page WHERE id = :groupId", nativeQuery = true)
     Optional<String> findGroupNameById(@Param("groupId") Integer groupId);
 }
