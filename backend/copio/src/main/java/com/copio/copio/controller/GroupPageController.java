@@ -50,7 +50,7 @@ public class GroupPageController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupPage> getGroupById(@PathVariable("id") Integer groupId) {
+    public ResponseEntity<GroupPage> getGroupNameById(@PathVariable("id") Integer groupId) {
         Optional<GroupPage> group = groupPageService.findById(groupId);
         return group.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
