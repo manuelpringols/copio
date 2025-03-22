@@ -27,5 +27,11 @@ export class GroupPageService {
     return this.http.get<any>(`${this.apiUrl}/groups/${groupId}`);
   }
 
+  getGroupNameById(groupId: number): Observable<string> {
+    return this.http.get<string>(`https://copio.online:9000/api/groupPages/getGroupName/${groupId}`, {
+      responseType: 'text' as 'json'  // Specifica che la risposta è di tipo testo
+    });
+  }
+
 
 }

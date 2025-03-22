@@ -2,7 +2,7 @@
   <div class="pagina-doc">
     <div class="docs-container">
       <div class="doc-header">
-        <h1></h1>
+        <h1>{{this.groupName}}</h1>
       </div>
 
       <div class="content-container">
@@ -23,8 +23,7 @@
 <div *ngIf="isModalOpen" class="modal-overlay">
   <div class="modal">
     <h3>Aggiungi Contenuto</h3>
-    <input [(ngModel)]="newContent" placeholder="Inserisci il contenuto" />
-    <input [(ngModel)]="newTitle" placeholder="Inserisci il Titolo" />
+    <input [(ngModel)]="newTitle" placeholder="Inserisci il Titolo " />
     <button (click)="saveNewContent()">Salva</button>
     <button (click)="closeModal()">Chiudi</button>
   </div>
@@ -41,12 +40,13 @@
               <i class="fas fa-trash-alt"></i> <!-- Icona del cestino -->
             </button>
             <!-- Textarea -->
-            <textarea
+            <textarea  #codeTextArea
               spellcheck="false"
               [(ngModel)]="page.content"
               [style.height]="'400px'"
               (input)="onTextChange()"
             ></textarea>
+
           </div>
 
           <!-- Pulsante salva documento -->
