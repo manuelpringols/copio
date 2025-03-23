@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -20,9 +20,10 @@ export class GroupPageService {
 
   // Crea un nuovo GroupPage
   createGroupPage(groupPage: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, groupPage);
+    return this.http.post<any>(`${this.apiUrl}`, groupPage, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
   getGroupById(groupId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/groups/${groupId}`);
   }

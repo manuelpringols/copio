@@ -5,6 +5,23 @@
   </div>
   <button (click)="goBack()">Torna indietro</button>
 
+  <!-- Modale Aggiungi Gruppo -->
+  <div class="modal" [ngClass]="{'show': isModalVisible}">
+    <div class="modal-content">
+      <!-- X per chiudere la modale -->
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Aggiungi Gruppo</h2>
+      <form (ngSubmit)="submitGroup()">
+        <label for="groupName">Nome Gruppo:</label>
+        <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" placeholder="Inserisci nome gruppo" required />
+        <button type="submit">Aggiungi</button>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="addGroup" (click)="addGroup()">+</div>
+
   <div class="group-list">
     <div *ngFor="let group of groups" class="group-item" (click)="selectGroup(group)">
       <h3> {{group.title}}</h3>

@@ -2,7 +2,7 @@
 .pagina-doc {
   height: 100vh;
   background: rgb(102,0,102);
-background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
+  background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   padding: 5px;
   border-radius: 1vw;
   display: flex;
@@ -10,6 +10,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   justify-content: flex-start;
   align-items: center;
   gap: 20px;
+  font-family: 'Roboto', sans-serif; /* Font principale per il corpo */
 }
 
 /* Header centrato */
@@ -26,6 +27,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   margin-top: 20px;
   animation: fadeInDown 0.8s ease-in-out;
+  font-family: 'Pacifico', cursive; /* Font per il titolo */
 }
 
 /* Testo del titolo */
@@ -42,6 +44,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   width: 90%;
   max-width: 1200px;
   padding: 10px;
+  font-family: 'Quicksand', sans-serif; /* Font moderno per i gruppi */
 }
 
 /* Stile delle card */
@@ -70,7 +73,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   color: #333;
 }
 
-/* Aggiungiamo un'animazione leggera per un tocco moderno */
+/* Animazione per l'header */
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -82,10 +85,8 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   }
 }
 
-
-
 /* Pulsante */
- button {
+button {
   background-color: #660066;
   color: #b3a1c9;
   border: 1px solid #b3a1c9;
@@ -97,6 +98,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
   margin-top: 1.5vh;
   margin-right: 0.5vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  font-family: 'Quicksand', sans-serif; /* Font per i pulsanti */
 }
 
 button:hover {
@@ -104,4 +106,163 @@ button:hover {
   color: #e21ca7;
   border-color: #e21ca7;
   box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
+}
+
+/* Stile per il pulsante di aggiunta del gruppo */
+.addGroup {
+  width: 100px;
+  height: 100px;
+  background-color: #660066;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 20px;
+  position: relative;
+  font-family: 'Pacifico', cursive; /* Font distintivo per il pulsante */
+}
+
+/* Aggiungi hover per l'effetto */
+.addGroup:hover {
+  background-color: #e21ca7;
+  box-shadow: 0 6px 15px rgba(225, 0, 255, 0.6);
+  transform: scale(1.1);
+}
+
+/* Animazione di rimbalzo al passaggio del mouse */
+.addGroup:active {
+  animation: bounce 0.3s ease-out;
+}
+
+/* Animazione di rimbalzo */
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+/* Per il simbolo "+" */
+.addGroup::before {
+  content: "+";
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Per includere un'immagine (opzionale) */
+.addGroup img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+/* Stile per la modale */
+.modal {
+  display: none; /* Nascondi per default */
+  position: fixed;
+  z-index: 1; /* Sotto gli altri elementi */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Sfondo grigio trasparente */
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Stile per quando la modale è visibile */
+.modal.show {
+  display: flex; /* Mostra la modale */
+}
+
+/* Contenuto della modale */
+.modal-content {
+  position: relative;
+  background-color: rgba(119, 8, 104, 0.753);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 10px rgb(185, 10, 92);
+  font-family: 'Inconsolata', monospace; /* Font per la modale */
+}
+
+/* Bottone di chiusura */
+.close {
+  font-size: 2rem;
+  color: #660066;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: all 0.3s ease;
+}
+
+.close:hover {
+  color: #e21ca7;
+}
+
+/* Titolo della modale */
+.modal-content h2 {
+  font-size: 1.8rem;
+  color: white;
+  font-family: 'Jersey 15', serif; /* Font distintivo per il titolo della modale */
+}
+
+/* Campo di input */
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: 1px solid #9616518c;
+  font-size: 1rem;
+  color: #660066;
+  font-family: 'Inconsolata', monospace; /* Font per gli input */
+}
+
+/* Pulsante di invio nella modale */
+button {
+  background-color: #660066;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Quicksand', sans-serif; /* Font per i pulsanti nella modale */
+}
+
+button:hover {
+  background-color: #e21ca7bb;
+  color: black;
+}
+
+/* X per chiudere la modale */
+.close {
+  font-size: 2rem;
+  color: #000000;
+  cursor: pointer;
+  position: absolute;
+
+  transition: all 0.3s ease;
+}
+
+.close:hover {
+  color: #e21ca7;
 }

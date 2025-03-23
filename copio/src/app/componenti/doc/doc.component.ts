@@ -13,6 +13,16 @@ export class DocComponent {
   groups = [{title : ""}]; // Variabile per contenere i gruppi
   activeTab: string = 'angular'; // Imposta la tab iniziale
 
+  isModalVisible: boolean = false;
+  newGroupName = { title: "" };
+
+  submitGroup() {
+    this.groupPageService.createGroupPage(this.newGroupName).subscribe({
+      next: (response) => console.log("Nuovo gruppo creato:", response),
+      error: (error) => console.error("Errore:", error),
+    });
+  }
+
   constructor(
     private groupPageService: GroupPageService, // Iniettiamo il servizio
     private router: Router
@@ -45,4 +55,19 @@ export class DocComponent {
     // Torna alla pagina principale
     this.router.navigate(["/"]);
   }
+
+  addGroup(){
+    this.isModalVisible = true;
+    console.log("mario")
+
+  }
+
+   // Metodo per chiudere la modale
+   closeModal() {
+    this.isModalVisible = false;
+  }
+
+  // Metodo per gestire il submit del form
+ 
+
 }
