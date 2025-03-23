@@ -19,12 +19,21 @@
     </div>
   </div>
 
+  <div *ngIf="isDeleteModalVisible" class="custom-modal">
+    <div class="custom-modal-content">
+      <span class="custom-close" (click)="closeDeleteModal()">&times;</span>
+      <h2>Sei sicuro di voler eliminare il gruppo "{{groupToDelete?.title}}"?</h2>
+      <button (click)="deleteGroup()">Conferma</button>
+      <button (click)="closeDeleteModal()">Annulla</button>
+    </div>
+  </div>
 
   <div class="addGroup" (click)="addGroup()">+</div>
 
   <div class="group-list">
-    <div *ngFor="let group of groups" class="group-item" (click)="selectGroup(group)">
-      <h3> {{group.title}}</h3>
+    <div *ngFor="let group of groups" class="group-item" >
+      <h3 (click)="selectGroup(group)">{{ group.title }}</h3>
+      <span class="close-btn" (click)="openDeleteModal(); $event.stopPropagation()">&#10005;</span> <!-- La X -->
     </div>
   </div>
 

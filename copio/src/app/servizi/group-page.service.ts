@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,26 +8,55 @@ import { Observable } from 'rxjs';
 export class GroupPageService {
 
   private apiUrlLocal = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
+  private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
 
-  private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se neces>
 
-  constructor(private http: HttpClient) {}
+  private groupPagesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public groupPage$ = this.groupPagesSubject.asObservable();
 
-  // Ottieni tutti i GroupPage
-  getAllGroupPages(): Observable<any> {
-    return this.http.get<any[]>(this.apiUrl);
+  constructor(private http: HttpClient) {
+    // Carica inizialmente la lista dei gruppi quando il servizio viene creato
+    this.loadGroupPages();
   }
 
-  // Crea un nuovo GroupPage
-  createGroupPage(groupPage: any): Observable<any> {
+  // Ottieni tutti i GroupPage (con comportamento dinamico)
+   // Restituisci un Observable della lista dei gruppi
+    getAllGroupPages(): Observable<any[]> {
+    return this.groupPage$;
+  }
+
+  // Crea un nuovo GroupPage e aggiorna la lista dei gruppi
+   // Crea un nuovo GroupPage e aggiorna la lista dei gruppi
+   createGroupPage(groupPage: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, groupPage, {
       headers: { 'Content-Type': 'application/json' },
-    });
+    }).pipe(
+      tap(() => {
+        // Dopo aver creato il gruppo, ricarica la lista
+        this.loadGroupPages();
+      })
+    );
   }
+
+
+    // Carica la lista dei gruppi e aggiorna il BehaviorSubject
+    private loadGroupPages(): void {
+      this.http.get<any[]>(this.apiUrl).subscribe(
+        (groupPages) => {
+          this.groupPagesSubject.next(groupPages); // Aggiorna il BehaviorSubject
+        },
+        (error) => {
+          console.error('Errore nel caricare i gruppi', error);
+        }
+      );
+    }
+
+  // Ottieni un gruppo specifico per ID
   getGroupById(groupId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/groups/${groupId}`);
   }
 
+  // Ottieni il nome di un gruppo per ID
   getGroupNameById(groupId: number): Observable<string> {
     return this.http.get<string>(`https://copio.online:9000/api/groupPages/getGroupName/${groupId}`, {
       responseType: 'text' as 'json'  // Specifica che la risposta è di tipo testo

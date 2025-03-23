@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupPageService } from '../../servizi/group-page.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-doc',
@@ -10,18 +11,20 @@ import { GroupPageService } from '../../servizi/group-page.service';
   styleUrl: './doc.component.css'
 })
 export class DocComponent {
+
   groups = [{title : ""}]; // Variabile per contenere i gruppi
   activeTab: string = 'angular'; // Imposta la tab iniziale
 
-  isModalVisible: boolean = false;
-  newGroupName = { title: "" };
+  groupToDelete: any;
 
-  submitGroup() {
-    this.groupPageService.createGroupPage(this.newGroupName).subscribe({
-      next: (response) => console.log("Nuovo gruppo creato:", response),
-      error: (error) => console.error("Errore:", error),
-    });
-  }
+
+  isModalVisible: boolean = false;
+  newGroupName :string = "";
+  private groupPagesSubscription: Subscription = new Subscription(); // Subscription per il listener
+isDeleteModalVisible: any;
+
+
+
 
   constructor(
     private groupPageService: GroupPageService, // Iniettiamo il servizio
@@ -29,12 +32,20 @@ export class DocComponent {
   ) {}
 
   ngOnInit(): void {
-    this.groupPageService.getAllGroupPages().subscribe(groups => {
-      this.groups = groups; // Assegniamo i gruppi ricevuti dal backend
-      console.log('Gruppi caricati:', this.groups); // Verifica i gruppi caricati
+    // Iscriviti al flusso dei gruppi
+    this.groupPagesSubscription = this.groupPageService.getAllGroupPages().subscribe(groups => {
+      this.groups = groups; // Aggiorna i gruppi in tempo reale
+      console.log('Gruppi aggiornati:', this.groups); // Verifica i gruppi caricati
     });
-
   }
+
+  ngOnDestroy(): void {
+    // Assicurati di annullare l'abbonamento quando il componente viene distrutto
+    if (this.groupPagesSubscription) {
+      this.groupPagesSubscription.unsubscribe();
+    }
+  }
+
 
   ngAfterViewInit(){
 
@@ -67,7 +78,33 @@ export class DocComponent {
     this.isModalVisible = false;
   }
 
-  // Metodo per gestire il submit del form
- 
+  // Metodo per creare un gruppo
+  submitGroup(): void {
+    const newGroup = { title: this.newGroupName };
+    this.groupPageService.createGroupPage(newGroup).subscribe({
+      next: (response) => {
+        console.log('Nuovo gruppo creato:', response);
+        this.newGroupName = ''; // Resetta il nome del gruppo
+        this.isModalVisible = false; // Chiude la modale
+      },
+      error: (error) => {
+        console.error('Errore:', error);
+      },
+    });
+  }
+
+  deleteGroup() {
+
+  }
+
+  openDeleteModal() {
+    this.isDeleteModalVisible=true;
+  }
+
+
+    closeDeleteModal() {
+      this.isDeleteModalVisible=false;
+    }
+
 
 }
