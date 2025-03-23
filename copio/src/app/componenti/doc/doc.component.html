@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div *ngIf="isDeleteModalVisible" class="custom-modal">
+  <div *ngIf="isDeleteModalVisible" class="custom-modal" >
     <div class="custom-modal-content">
       <span class="custom-close" (click)="closeDeleteModal()">&times;</span>
       <h2>Sei sicuro di voler eliminare il gruppo "{{groupToDelete?.title}}"?</h2>
@@ -31,9 +31,9 @@
   <div class="addGroup" (click)="addGroup()">+</div>
 
   <div class="group-list">
-    <div *ngFor="let group of groups" class="group-item" >
+    <div *ngFor="let group of groups; index as i" class="group-item; "  >
       <h3 (click)="selectGroup(group)">{{ group.title }}</h3>
-      <span class="close-btn" (click)="openDeleteModal(); $event.stopPropagation()">&#10005;</span> <!-- La X -->
+      <span class="close-btn" (click)="openDeleteModal(i); $event.stopPropagation()">&#10005;</span> <!-- La X -->
     </div>
   </div>
 

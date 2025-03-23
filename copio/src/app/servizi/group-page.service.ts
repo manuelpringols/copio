@@ -64,4 +64,15 @@ export class GroupPageService {
   }
 
 
+   // Metodo per eliminare un GroupPage
+   deleteGroupPage(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        // Dopo aver eliminato il gruppo, ricarica la lista dei gruppi
+        this.loadGroupPages();
+      })
+    );
+  }
+
+
 }

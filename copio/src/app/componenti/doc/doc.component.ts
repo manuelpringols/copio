@@ -11,8 +11,9 @@ import { Subscription } from 'rxjs';
   styleUrl: './doc.component.css'
 })
 export class DocComponent {
+  groupToDeleteId: number | null = null; // Salviamo solo l'ID del gruppo da eliminare
 
-  groups = [{title : ""}]; // Variabile per contenere i gruppi
+  groups = [{ id : null , title : ""}]; // Variabile per contenere i gruppi
   activeTab: string = 'angular'; // Imposta la tab iniziale
 
   groupToDelete: any;
@@ -93,12 +94,24 @@ isDeleteModalVisible: any;
     });
   }
 
-  deleteGroup() {
-
+  deleteGroup(): void {
+    if (this.groupToDeleteId !== null) {
+      this.groupPageService.deleteGroupPage(this.groupToDeleteId).subscribe(
+        () => {
+          // Rimuovi il gruppo dalla lista usando l'ID
+          this.groups = this.groups.filter(group => group.id !== this.groupToDeleteId);
+          this.closeDeleteModal();
+        },
+        (error) => {
+          console.error('Error deleting group', error);
+        }
+      );
+    }
   }
 
-  openDeleteModal() {
-    this.isDeleteModalVisible=true;
+  openDeleteModal(groupId: number): void {
+    this.groupToDeleteId = groupId; // Salva solo l'ID del gruppo da eliminare
+    this.isDeleteModalVisible = true;
   }
 
 
