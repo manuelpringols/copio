@@ -24,7 +24,7 @@ public class GroupPage {
     
     
     // Relazione uno a molti con Page
-    @OneToMany(mappedBy = "groupPage",cascade = CascadeType.ALL, orphanRemoval = true) // MappedBy è il nome del campo nella classe Page
+    @OneToMany(mappedBy = "groupPage", orphanRemoval = true) // MappedBy è il nome del campo nella classe Page
     @JsonManagedReference
     private List<Page> pages;
 
