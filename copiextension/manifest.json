@@ -1,8 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Copio Extension",
-  "version": "1.0",
-  "permissions": ["contextMenus", "storage", "activeTab", "scripting"],
+  "version": "1.1",
+  "description": "Copia testo formattato e incollalo direttamente nel popup!",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "clipboardWrite", 
+    "scripting"
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -13,7 +20,7 @@
     }
   ],
   "host_permissions": [
-    "http://192.168.1.111:8080/*"
+    "<all_urls>"  
   ],
   "action": {
     "default_popup": "popup.html",
@@ -24,3 +31,4 @@
     }
   }
 }
+

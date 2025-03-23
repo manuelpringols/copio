@@ -2,13 +2,20 @@ const extensionId = chrome.runtime.id;
 
 document.addEventListener("DOMContentLoaded", function () {
   // Recupera il testo selezionato dal background script
-  chrome.storage.local.get("selectedText", function (data) {
-    const selectedText = data.selectedText || ""; // Se non c'è testo selezionato, metti una stringa vuota
-    document.getElementById("content").value = selectedText; // Inserisci il testo nel campo "content"
-  });
+// Quando il popup si apre, inserisci il testo selezionato nella textarea
+chrome.storage.local.get("selectedText", (data) => {
+  const text = data.selectedText || "Nessun testo copiato";
+  const contentArea = document.getElementById("content");
+
+  // Inserisce il testo formattato nella textarea
+  contentArea.value = text;
+
+  // Pulizia del testo salvato dopo averlo usato
+  chrome.storage.local.remove("selectedText");
+});
 
   // Popola i gruppi nel select effettuando una chiamata GET al backend
-  fetch('http://192.168.1.111:8080/api/groups', {
+  fetch('https://copio.online:9000/api/groups', {
     headers: {
       'Content-Type': 'application/json',
       'X-Extension-ID': extensionId,  // Aggiungi l'ID dell'estensione come header
@@ -61,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Invia la richiesta al backend per salvare lo snippet
-    fetch(`http://192.168.1.111:8080/api/snippets/create?groupId=${selectedGroupId}`, {
+    fetch(`https://copio.online:9000/api/snippets/create?groupId=${selectedGroupId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,3 +97,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+
+
+
+// Aggiungi funzionalità per salvare lo snippet
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const title = document.getElementById('title').value;
+  const content = document.getElementById('content').value;
+  const group = document.getElementById('groupSelect').value;
+
+  // Salva lo snippet (puoi inviarlo al tuo server o gestirlo localmente)
+  console.log("Saving Snippet", { title, content, group });
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeButton = document.getElementById("closeBtn");
+
+  if (closeButton) {
+    // Aggiunge l'event listener al click
+    closeButton.addEventListener("click", () => {
+      console.log("Popup chiuso!");
+      window.close(); // Chiude il popup
+    });
+  } else {
+    console.error("Bottone di chiusura non trovato!");
+  }
+});
+
