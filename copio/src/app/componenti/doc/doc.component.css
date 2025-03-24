@@ -328,17 +328,22 @@ button {
   background-color: #660066;
   color: white;
   padding: 10px 20px;
-  border: none;
+  border: 1px solid #660066 ;
+
   border-radius: 5px;
   margin-top: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-family: 'Quicksand', sans-serif; /* Font per i pulsanti nella modale */
+
 }
 
 button:hover {
   background-color: #e21ca7bb;
   color: black;
+ border: 1px solid ;
+ border-color: #5d0a46;
+
 }
 
 .close-btn {

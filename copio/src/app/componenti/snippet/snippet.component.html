@@ -1,3 +1,6 @@
+
+
+
 <div class="container">
   <!-- Sidebar -->
   <div class="sidebar">
@@ -9,14 +12,17 @@
       <li *ngFor="let group of groups" (click)="selectGroup(group)">
         <span>{{ group.name }}</span>
       </li>
-
     </ul>
   </div>
 
   <!-- Contenuto principale -->
   <div class="main-content">
     <!-- Overlay quando la modale è aperta -->
-    <div *ngIf="showCreateGroupModal || showCreateSnippetModal" class="overlay" (click)="closeAllModals()"></div>
+    <div
+      *ngIf="showCreateGroupModal || showCreateSnippetModal"
+      class="overlay"
+      (click)="closeAllModals()"
+    ></div>
 
     <!-- Modale per la creazione di un gruppo -->
     <div *ngIf="showCreateGroupModal" class="create-group-modal">
@@ -28,22 +34,61 @@
       </div>
     </div>
 
+    <div *ngIf="isDeleteModalVisible" class="custom-modal" >
+      <div class="custom-modal-content">
+        <span class="custom-close" (click)="closeDeleteModal()">&times;</span>
+        <h2>Sei sicuro di voler eliminare lo snippet "{{snippetToDeleteName}}"  ?</h2>
+        <button (click)="selectedGroup()">Conferma</button>
+        <button (click)="closeDeleteModal()">Annulla</button>
+      </div>
+    </div>
+
+
+
+
+    
+
     <!-- Visualizza gli snippet del gruppo selezionato -->
     <div *ngIf="selectedGroup" class="snippet-section">
       <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
 
       <button (click)="goBack()">Torna indietro</button>
 
-      <div *ngIf="filteredSnippets.length > 0; else noSnippets" class="snippet-list">
-        <div *ngFor="let snippet of filteredSnippets | slice:(currentPage - 1) * snippetsPerPage : currentPage * snippetsPerPage; index as i" class="snippet-card" [ngClass]="{'expanded': isExpanded(i)}">
-          <h3 style="font-family: 'Quicksand', sans-serif; color: #15bb15e3; font-size: 1.9rem; font-weight: 700;">
+      <div
+        *ngIf="filteredSnippets.length > 0; else noSnippets"
+        class="snippet-list"
+      >
+        <div
+          *ngFor="
+            let snippet of filteredSnippets
+              | slice
+                : (currentPage - 1) * snippetsPerPage
+                : currentPage * snippetsPerPage;
+            index as i
+          "
+          class="snippet-card"
+          [ngClass]="{ expanded: isExpanded(i) }"
+        >
+          <h3
+            style="
+              font-family: 'Quicksand', sans-serif;
+              color: #15bb15e3;
+              font-size: 1.9rem;
+              font-weight: 700;
+            "
+          >
             <u></u>
-            <span style="display: inline-flex; align-items: center; margin-left: 8px;">
+            <span
+              style="
+                display: inline-flex;
+                align-items: center;
+                margin-left: 8px;
+              "
+            >
               {{ snippet.title }} :
               <!-- <img [ngClass]="{'copied': isCopied}"   style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard(snippet.content)"> -->
             </span>
           </h3>
-
 
           <pre [class.expanded]="isExpanded(i)">
             <code id="codeBlock-{{i}}" [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code>
@@ -52,37 +97,58 @@
                  alt="Toggle Overflow"
                  class="toggle-icon"
                  (click)="toggleOverflow(i)">
-            <img src="https://img.icons8.com/ios/50/000000/clipboard.png" alt="Copia" class="copy-icon" (click)="copyCode(i)">
+             <!-- Icona per Copiare il Codice -->
+      <i class="fas fa-copy copy-icon" style="font-size: 24px;" (click)="copyCode(i)" aria-label="Copia codice"></i>
+
+<!-- Icona per Eliminare lo Snippet -->
+<i class="fas fa-trash-alt delete-icon" style="font-size: 24px;" (click)="openDeleteModal(snippets.id, i)" aria-label="Elimina snippet"></i>
 
 
           </pre>
-          <hr>
+          <hr />
         </div>
       </div>
 
       <!-- Template in caso di nessuno snippet -->
       <ng-template #noSnippets>
-        <p style="color: brown;">No snippets found for the selected group.</p>
+        <p style="color: brown">No snippets found for the selected group.</p>
       </ng-template>
 
       <!-- Navigazione tra pagine -->
       <div class="pagination">
-        <button (click)="changePage('prev')" [disabled]="currentPage === 1">◀</button>
+        <button (click)="changePage('prev')" [disabled]="currentPage === 1">
+          ◀
+        </button>
         <span>{{ currentPage }} / {{ totalPages }}</span>
-        <button (click)="changePage('next')" [disabled]="currentPage === totalPages">▶</button>
+        <button
+          (click)="changePage('next')"
+          [disabled]="currentPage === totalPages"
+        >
+          ▶
+        </button>
       </div>
 
       <!-- Pulsante "Crea Snippet" -->
-      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">Crea Snippet</button>
+      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">
+        Crea Snippet
+      </button>
 
       <!-- Modale per la creazione dello snippet -->
       <div *ngIf="showCreateSnippetModal" class="create-snippet-modal">
         <div class="modal-content">
           <h2>Crea Snippet</h2>
-          <input [(ngModel)]="newSnippet.title" placeholder="Titolo dello snippet" />
-          <textarea [(ngModel)]="newSnippet.content" placeholder="Codice dello snippet"></textarea>
+          <input
+            [(ngModel)]="newSnippet.title"
+            placeholder="Titolo dello snippet"
+          />
+          <textarea
+            [(ngModel)]="newSnippet.content"
+            placeholder="Codice dello snippet"
+          ></textarea>
           <button (click)="createSnippet()">Crea Snippet</button>
-          <button class="close" (click)="closeCreateSnippetModal()">Annulla</button>
+          <button class="close" (click)="closeCreateSnippetModal()">
+            Annulla
+          </button>
         </div>
       </div>
     </div>

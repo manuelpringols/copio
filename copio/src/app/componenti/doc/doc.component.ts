@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './doc.component.css'
 })
 export class DocComponent {
-  groupToDeleteId: number | null = null; // Salviamo solo l'ID del gruppo da eliminare
+  groupToDeleteId: number | any = null; // Salviamo solo l'ID del gruppo da eliminare
 
   //group = { id: 0, title: "" }; // Oggetto vuoto per il nuovo gruppo
   groups : any = []; // Lista di gruppi
@@ -21,6 +21,7 @@ export class DocComponent {
   newGroupName: string = "";
   private groupPagesSubscription: Subscription = new Subscription(); // Subscription per il listener
   isDeleteModalVisible: boolean = false; // Gestione della visibilità della modale di eliminazione
+  groupToDeleteName: any;
 
   constructor(
     private groupPageService: GroupPageService, // Servizio per gestire i gruppi
@@ -29,10 +30,14 @@ export class DocComponent {
 
   ngOnInit(): void {
     // Carica i gruppi all'inizio
+
     this.groupPagesSubscription = this.groupPageService.getAllGroupPages().subscribe(groups => {
       this.groups = groups; // Aggiorna i gruppi in tempo reale
       console.log('Gruppi aggiornati:', this.groups); // Verifica i gruppi caricati
     });
+
+
+
   }
 
   ngOnDestroy(): void {
@@ -94,9 +99,14 @@ export class DocComponent {
   }
 
   // Apre la modale di eliminazione e salva l'ID del gruppo da eliminare
-  openDeleteModal(groupId: number): void {
+  openDeleteModal(groupId: number,i:number): void {
+    console.log("id iteratore : ",i )
+
     this.groupToDeleteId = groupId; // Salva l'ID del gruppo da eliminare
+    this.groupToDeleteName = this.groups[i].title;
     console.log("id da eliminare : ", this.groupToDeleteId)
+    console.log("gruppi da eliminare : ", this.groupToDeleteName)
+
     this.isDeleteModalVisible = true; // Mostra la modale di eliminazione
   }
 

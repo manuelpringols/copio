@@ -16,9 +16,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./snippet.component.css']
 })
 export class SnippetComponent implements OnInit {
+
+
     expandedCards: boolean[] = [];
 
-  snippets: any[] = [];  // Contiene tutti gli snippet
+  snippets: any = [];  // Contiene tutti gli snippet
   currentPage = 1;
   snippetsPerPage = 5;
   totalPages = Math.ceil(this.snippets.length / this.snippetsPerPage);
@@ -31,6 +33,10 @@ export class SnippetComponent implements OnInit {
   isCopied = false
   newSnippet = { title: '', content: '' , groupId: 0};
   message: string = ''; // Messaggio da visualizzare
+isDeleteModalVisible: boolean = false;
+snippetToDeleteName: any;
+  snippetToDeleteId: any;
+
 
   constructor(
     private snippetService: SnippetService,
@@ -72,8 +78,8 @@ export class SnippetComponent implements OnInit {
       this.snippets = data;
 
       this.filteredSnippets = this.snippets
-        .filter(snippet => snippet.idGroup && snippet.idGroup.idGroup === groupId)
-        .map((snippet) => {
+        .filter((snippet: { idGroup: { idGroup: number; }; }) => snippet.idGroup && snippet.idGroup.idGroup === groupId)
+        .map((snippet: { content: string; }) => {
           const language = this.getLanguageForSnippet(snippet);
           const formattedContent = Prism.highlight(snippet.content, Prism.languages[language], language);
           return { ...snippet, content: formattedContent, language };
@@ -146,6 +152,12 @@ export class SnippetComponent implements OnInit {
         console.error("Errore nella creazione dello snippet:", error);
       });
     }
+  }
+
+
+  deleteSnippet(){
+
+
   }
 
 
@@ -223,10 +235,30 @@ export class SnippetComponent implements OnInit {
 
   copyCode(index: number) {
     const codeBlock = document.getElementById('codeBlock-' + index)?.textContent;
+    console.log(codeBlock);  // Verifica che l'elemento venga trovato correttamente
     if (codeBlock) {
-      navigator.clipboard.writeText(codeBlock.trim());
+      navigator.clipboard.writeText(codeBlock.trim()).then(() => {
+        console.log('Contenuto copiato con successo!');
+      }).catch((err) => {
+        console.error('Errore nella copia: ', err);
+      });
+    } else {
+      console.error('Elemento non trovato');
     }
   }
+
+ 
+
+    openDeleteModal(snippetsId : number, i : number) {
+      this.snippetToDeleteId = snippetsId;
+      this.snippetToDeleteName = this.snippets[i].title;
+      this.isDeleteModalVisible = true;
+      console.log(this.isDeleteModalVisible)
+      }
+
+    closeDeleteModal() {
+      this.isDeleteModalVisible = false;
+      }
 
 
 }

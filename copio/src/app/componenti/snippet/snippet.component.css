@@ -199,6 +199,22 @@
   position: relative;
 }
 
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  transition: transform 0.3s ease, color 0.3s ease;
+  color: #1a1919;
+}
+
+.delete-icon:hover {
+  transform: scale(1.3); /* Aumenta leggermente la dimensione al passaggio del mouse */
+  color: #95083e;
+}
+
 /* Pulsante copia */
 .copy-icon {
   position: absolute;
@@ -208,11 +224,14 @@
   width: 42px;
   height: 42px;
   transition: transform 0.3s ease, color 0.3s ease;
+  color: #1a1919;
 }
 
 .copy-icon:hover {
   transform: scale(1.2);
   filter: brightness(1.2);
+  color: #4f0f5e;
+
 }
 
 .copy-icon.copied {
@@ -348,4 +367,80 @@ button:hover {
 .snippet-card pre {
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+
+/* Impostazioni generali per la modale */
+/* Impostazioni generali per la modale */
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8); /* Inizia con una scala più piccola */
+  background-color: rgba(0, 0, 0, 0.5); /* Sfondo semi-trasparente */
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  transition: transform 0.3s ease; /* Solo la trasformazione con un effetto fluido */
+}
+
+
+
+
+
+/* Quando l'overlay è visibile */
+
+
+/* Contenuto della modale personalizzato */
+.custom-modal-content {
+  position: relative;
+  background-color: rgba(119, 8, 104, 0.753);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 10px rgb(185, 10, 92);
+  font-family: 'Inconsolata', monospace;
+}
+
+/* Bottone di chiusura personalizzato */
+.custom-close {
+  font-size: 2rem;
+  color: #660066;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: color 0.3s ease;
+}
+
+.custom-close:hover {
+  color: #e21ca7;
+}
+
+/* Titolo della modale */
+.custom-modal-content h2 {
+  font-size: 1.8rem;
+  color: white;
+  font-family: 'Jersey 15', serif;
+}
+
+/* Pulsante di invio */
+button {
+  background-color: #660066;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e21ca7bb;
+  color: black;
 }
