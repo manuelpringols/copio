@@ -4,27 +4,34 @@ import { HomeComponent } from './componenti/home/home.component';
 import { SnippetComponent } from './componenti/snippet/snippet.component';
 import { DocComponent } from './componenti/doc/doc.component';
 import { PageComponent } from './componenti/doc/page/page.component';
+import { LoginComponent } from './componenti/login/login.component';
+import { RegisterComponent } from './componenti/login/register/register.component';
 
 const routes: Routes = [
   {
-    path : "", component:HomeComponent,
-
+    path: '',
+    component: HomeComponent,
   },
 
   {
-    path : "snippet", component:SnippetComponent,
-
+    path: 'snippet',
+    component: SnippetComponent,
   },
   { path: 'doc', component: DocComponent },
+
   { path: 'doc/page/:id', component: PageComponent },
 
+  { path: 'login', component: LoginComponent },
 
+  { path: 'register', component: RegisterComponent },
 
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }, // fallback route
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

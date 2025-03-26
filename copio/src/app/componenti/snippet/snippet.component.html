@@ -34,6 +34,11 @@
       </div>
     </div>
 
+
+
+
+
+
     <div *ngIf="isDeleteModalVisible" class="custom-modal" >
       <div class="custom-modal-content">
         <span class="custom-close" (click)="closeDeleteModal()">&times;</span>
@@ -42,11 +47,6 @@
         <button (click)="closeDeleteModal()">Annulla</button>
       </div>
     </div>
-
-
-
-
-    
 
     <!-- Visualizza gli snippet del gruppo selezionato -->
     <div *ngIf="selectedGroup" class="snippet-section">
@@ -101,7 +101,7 @@
       <i class="fas fa-copy copy-icon" style="font-size: 24px;" (click)="copyCode(i)" aria-label="Copia codice"></i>
 
 <!-- Icona per Eliminare lo Snippet -->
-<i class="fas fa-trash-alt delete-icon" style="font-size: 24px;" (click)="openDeleteModal(snippets.id, i)" aria-label="Elimina snippet"></i>
+<i class="fas fa-trash-alt delete-icon" style="font-size: 24px;" (click)="openDeleteModal(snippet.id, i)" aria-label="Elimina snippet"></i>
 
 
           </pre>

@@ -9,7 +9,9 @@ import { FormsModule } from '@angular/forms'; // Importa FormsModule
 import { provideHttpClient } from '@angular/common/http';
 import { DocComponent } from './componenti/doc/doc.component';
 import { PageComponent } from './componenti/doc/page/page.component';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
+import { LoginComponent } from './componenti/login/login.component';
+import { RegisterComponent } from './componenti/login/register/register.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { QuillModule } from 'ngx-quill'
     HomeComponent,
     SnippetComponent,
     DocComponent,
-    PageComponent
+    PageComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

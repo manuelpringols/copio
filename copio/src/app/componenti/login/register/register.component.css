@@ -1,0 +1,109 @@
+/* Container principale per l'autenticazione */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(102, 0, 102, 1) 0%, rgba(6, 50, 52, 1) 100%);
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+  }
+  
+  /* Box dell'autenticazione (Login/Registrazione) */
+  .auth-box {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  /* Stile per il titolo */
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  /* Gruppi di input */
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ccc;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 5px;
+    border: 1px solid #4e4e4e;
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .input-group input:focus {
+    outline: none;
+    border-color: #9f7bca;
+  }
+  
+
+  /* Stile per i gruppi di input con icone */
+.input-icon {
+  position: relative;
+  width: 100%;
+}
+
+.input-icon i {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9f7bca;
+  font-size: 16px;
+}
+
+
+
+.input-group input:focus {
+  outline: none;
+  border-color: #9f7bca;
+}
+  /* Pulsante di Registrazione */
+  .auth-btn {
+    background: #9f7bca;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .auth-btn:hover {
+    background: #660066;
+  }
+  
+  /* Link per il cambio tra Login/Registrazione */
+  .switch-link {
+    margin-top: 15px;
+  }
+  
+  .switch-link a {
+    color: #9f7bca;
+    text-decoration: none;
+  }
+  
+  .switch-link a:hover {
+    text-decoration: underline;
+  }
+  

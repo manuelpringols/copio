@@ -73,22 +73,39 @@ snippetToDeleteName: any;
   }
 
   async filterSnippetsByGroup(groupId: number) {
-    console.log("Filtrando snippet per gruppo con ID:", groupId);  // Debug
-    this.snippetService.getSnippets().subscribe((data) => {
-      this.snippets = data;
-
-      this.filteredSnippets = this.snippets
-        .filter((snippet: { idGroup: { idGroup: number; }; }) => snippet.idGroup && snippet.idGroup.idGroup === groupId)
-        .map((snippet: { content: string; }) => {
-          const language = this.getLanguageForSnippet(snippet);
-          const formattedContent = Prism.highlight(snippet.content, Prism.languages[language], language);
-          return { ...snippet, content: formattedContent, language };
-        });
-
-      console.log("Snippets filtrati:", this.filteredSnippets);  // Verifica che contenga gli snippet giusti
-      this.updateTotalPages();
-    }, error => {
-      console.error("Errore nel caricamento degli snippet:", error);
+    this.snippetService.getSnippets().subscribe({
+      next: (data) => {
+        this.snippets = data;
+        
+        this.filteredSnippets = this.snippets
+          .filter((snippet: { idGroup: { idGroup: number } }) => 
+            snippet.idGroup && snippet.idGroup.idGroup === groupId
+          )
+          .map((snippet: any) => {
+            const language = this.getLanguageForSnippet(snippet);
+            const formattedContent = Prism.highlight(
+              snippet.content, 
+              Prism.languages[language], 
+              language
+            );
+            return { 
+              ...snippet, 
+              content: formattedContent, 
+              language 
+            };
+          });
+  
+        this.updateTotalPages();
+        
+        // Se non ci sono snippet nella pagina corrente, torna all'ultima pagina disponibile
+        if (this.filteredSnippets.length > 0 && 
+            this.currentPage > Math.ceil(this.filteredSnippets.length / this.snippetsPerPage)) {
+          this.currentPage = Math.ceil(this.filteredSnippets.length / this.snippetsPerPage);
+        }
+      },
+      error: (error) => {
+        console.error("Errore nel caricamento degli snippet:", error);
+      }
     });
   }
 
@@ -113,6 +130,8 @@ snippetToDeleteName: any;
 
   openCreateGroupModal() {
     this.showCreateGroupModal = true;
+    
+    
   }
 
   closeCreateGroupModal() {
@@ -141,15 +160,36 @@ snippetToDeleteName: any;
 
   createSnippet() {
     if (this.newSnippet.title.trim() && this.newSnippet.content.trim()) {
-      // Aggiungi l'ID del gruppo selezionato all'oggetto newSnippet
-      this.newSnippet['groupId'] = this.selectedGroup.idGroup;// Aggiungi l'ID del gruppo
-      console.log("O SNIPPET NUOV : " , this.newSnippet)
-      // Ora passa newSnippet al servizio
-      this.snippetService.createSnippet(this.newSnippet).subscribe(() => {
-        this.filterSnippetsByGroup(this.selectedGroup.groupId); // Ricarica gli snippet per il gruppo selezionato
-        this.closeCreateSnippetModal();
-      }, error => {
-        console.error("Errore nella creazione dello snippet:", error);
+      this.newSnippet['groupId'] = this.selectedGroup.idGroup;
+      
+      this.snippetService.createSnippet(this.newSnippet).subscribe({
+        next: (newSnippet) => {
+          // Formatta il contenuto con Prism
+          const language = this.getLanguageForSnippet(newSnippet);
+          const formattedContent = Prism.highlight(
+            newSnippet.content, 
+            Prism.languages[language], 
+            language
+          );
+          
+          // Aggiungi il nuovo snippet all'array filteredSnippets
+          this.filteredSnippets = [
+            ...this.filteredSnippets,
+            {
+              ...newSnippet,
+              content: formattedContent,
+              language
+            }
+          ];
+          
+          // Resetta il form e chiudi la modale
+          this.newSnippet = { title: '', content: '', groupId: 0 };
+          this.closeCreateSnippetModal();
+          this.updateTotalPages();
+        },
+        error: (error) => {
+          console.error("Errore nella creazione dello snippet:", error);
+        }
       });
     }
   }
@@ -157,16 +197,27 @@ snippetToDeleteName: any;
 
   deleteSnippet(): void {
     if (this.snippetToDeleteId !== null) {
-      this.snippetService.deleteSnippet(this.snippetToDeleteId).subscribe(
-        () => {
-          console.log("Gruppo eliminato con id : ", this.snippetToDeleteId);
-          this.groups = this.groups.filter((group: { id: number | null; }) => group.id !== this.snippetToDeleteId); // Rimuovi il gruppo
-          this.closeDeleteModal(); // Chiudi la modale
+      this.snippetService.deleteSnippet(this.snippetToDeleteId).subscribe({
+        next: () => {
+          // Rimuovi lo snippet dall'array filtrato
+          this.filteredSnippets = this.filteredSnippets.filter(
+            snippet => snippet.id !== this.snippetToDeleteId
+          );
+          
+          // Chiudi la modale e resetta l'ID
+          this.closeDeleteModal();
+          this.snippetToDeleteId = null;
+          this.updateTotalPages();
+          
+          // Se siamo rimasti senza snippet nella pagina corrente, torna alla pagina precedente
+          if (this.filteredSnippets.length <= (this.currentPage - 1) * this.snippetsPerPage && this.currentPage > 1) {
+            this.currentPage--;
+          }
         },
-        (error: any) => {
-          console.error('Errore durante l\'eliminazione del gruppo:', error);
+        error: (error) => {
+          console.error('Errore durante l\'eliminazione dello snippet:', error);
         }
-      );
+      });
     }
   }
 
@@ -191,7 +242,15 @@ snippetToDeleteName: any;
   }
 
   updateTotalPages() {
-    this.totalPages = Math.ceil(this.filteredSnippets.length / this.snippetsPerPage);
+    this.totalPages = Math.max(
+      1, 
+      Math.ceil(this.filteredSnippets.length / this.snippetsPerPage)
+    );
+    
+    // Se la pagina corrente è maggiore del totale, imposta l'ultima pagina
+    if (this.currentPage > this.totalPages) {
+      this.currentPage = this.totalPages;
+    }
   }
 
 
@@ -261,6 +320,7 @@ snippetToDeleteName: any;
 
     openDeleteModal(snippetsId : number, i : number) {
       this.snippetToDeleteId = snippetsId;
+      console.log("Id snippet da eliminare : ", snippetsId)
       this.snippetToDeleteName = this.snippets[i].title;
       this.isDeleteModalVisible = true;
       console.log(this.isDeleteModalVisible)
