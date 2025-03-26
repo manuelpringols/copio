@@ -155,9 +155,19 @@ snippetToDeleteName: any;
   }
 
 
-  deleteSnippet(){
-
-
+  deleteSnippet(): void {
+    if (this.snippetToDeleteId !== null) {
+      this.snippetService.deleteSnippet(this.snippetToDeleteId).subscribe(
+        () => {
+          console.log("Gruppo eliminato con id : ", this.snippetToDeleteId);
+          this.groups = this.groups.filter((group: { id: number | null; }) => group.id !== this.snippetToDeleteId); // Rimuovi il gruppo
+          this.closeDeleteModal(); // Chiudi la modale
+        },
+        (error: any) => {
+          console.error('Errore durante l\'eliminazione del gruppo:', error);
+        }
+      );
+    }
   }
 
 

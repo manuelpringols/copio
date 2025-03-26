@@ -28,4 +28,8 @@ export class SnippetService {
   getSnippetsByGroup(groupId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${groupId}`);
   }
+
+  deleteSnippet(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

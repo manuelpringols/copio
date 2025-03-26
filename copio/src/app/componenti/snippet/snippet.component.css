@@ -419,6 +419,8 @@ button:hover {
 
 .custom-close:hover {
   color: #e21ca7;
+  border: 1px solid rgba(0, 0, 0, 0.76); ;
+
 }
 
 /* Titolo della modale */
@@ -433,14 +435,16 @@ button {
   background-color: #660066;
   color: white;
   padding: 10px 20px;
-  border: none;
   border-radius: 5px;
   margin-top: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 1px solid rgba(119, 8, 104, 0.753); ;
+
 }
 
 button:hover {
   background-color: #e21ca7bb;
   color: black;
+  border: 1px solid rgba(0, 0, 0, 0.76); ;
 }

@@ -40,4 +40,11 @@ public class SnippetService {
         Optional<Snippet> snippet = snippetRepository.findById(id);
         return snippet.orElseThrow(() -> new RuntimeException("Snippet non trovato con ID: " + id));
     }
+
+    public void deleteSnippet(Integer id) {
+        if (!snippetRepository.existsById(id)) {
+            throw new RuntimeException("Snippet non trovato con ID: " + id);
+        }
+        snippetRepository.deleteById(id);
+    }
 }

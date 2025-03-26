@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,4 +44,12 @@ public class SnippetController {
     public Snippet getSnippetById(@PathVariable Integer id) {
         return snippetService.getSnippetById(id);
     }
+
+     // Metodo per eliminare uno snippet per ID
+    @DeleteMapping("/{id}")
+    public void deleteSnippet(@PathVariable Integer id) {
+        snippetService.deleteSnippet(id);
+    }
+
+    
 }
