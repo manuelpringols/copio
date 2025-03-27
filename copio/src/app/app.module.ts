@@ -11,7 +11,8 @@ import { DocComponent } from './componenti/doc/doc.component';
 import { PageComponent } from './componenti/doc/page/page.component';
 import { QuillModule } from 'ngx-quill';
 import { LoginComponent } from './componenti/login/login.component';
-import { RegisterComponent } from './componenti/login/register/register.component'
+import { RegisterComponent } from './componenti/login/register/register.component';
+import { NotFoundComponent } from './componenti/not-found/not-found.component'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RegisterComponent } from './componenti/login/register/register.componen
     DocComponent,
     PageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
