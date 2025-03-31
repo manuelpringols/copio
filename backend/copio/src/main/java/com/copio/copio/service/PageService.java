@@ -68,13 +68,17 @@ public class PageService {
         return pageRepository.findByUserId(userId);  // Metodo da implementare nel repository
     }
 
-    public void deletePageByUserIdAndId(Long userId, Long idPage) {
+    public void deletePageByUserIdAndId(Long userId, Integer idPage) {
         // Verifica se la pagina esiste per quell'utente
         Page page = pageRepository.findByIdAndUserId(idPage, userId)
                 .orElseThrow(() -> new RuntimeException("Pagina non trovata per l'utente"));
     
         // Elimina la pagina
         pageRepository.delete(page);
+    }
+
+    public Page getPageByIdAndUserId(Integer id, Long userId) {
+        return pageRepository.findByIdAndUserId(id, userId).orElse(null);
     }
 
   

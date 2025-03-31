@@ -17,7 +17,7 @@ public interface PageRepository extends JpaRepository <Page,Integer> {
 
     
     // Trova la pagina per idPage e userId
-    Optional<Page> findByIdAndUserId(Long idPage, Long userId);
+    Optional<Page> findByIdAndUserId(Integer idPage, Long userId);
 
     
 

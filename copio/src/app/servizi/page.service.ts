@@ -60,6 +60,10 @@ export class PageService {
     return this.http.put(`${this.apiUrl}/${id}`, page);
   }
 
+  updatePage(userId: number, pageId: number, pageData: Partial<any>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${userId}/${pageId}`, pageData);
+  }
+
    // Elimina una pagina
    deletePage(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);

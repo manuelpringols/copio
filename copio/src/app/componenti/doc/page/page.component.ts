@@ -125,7 +125,7 @@ formatCode() {
   saveDocument() {
     if (this.page && this.pageId !== undefined) {
       console.log('Salvataggio della pagina con ID:', this.pageId);
-      this.pageService.saveModify(this.pageId, this.page).subscribe(
+      this.pageService.updatePage(this.userId,this.pageId, this.page).subscribe(
         (data) => {
           // Aggiorna la pagina con i dati restituiti
           this.page = data;

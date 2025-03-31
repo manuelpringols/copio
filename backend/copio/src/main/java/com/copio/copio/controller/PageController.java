@@ -60,7 +60,7 @@ public class PageController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPage);
     }
 
-    @PutMapping("/{id}")
+   /*  @PutMapping("/{id}")
     public ResponseEntity<Page> updatePage(@PathVariable Integer id, @RequestBody Page page) {
         logger.info("Request received to update page with ID: {}", id);
         Page updatedPage = pageService.updatePage(id, page);
@@ -72,6 +72,34 @@ public class PageController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+        */
+
+        @PutMapping("/{userId}/{id}")
+public ResponseEntity<Page> updatePage(@PathVariable Integer userId, @PathVariable Integer id, @RequestBody Page page) {
+    logger.info("Request received to update page with ID: {} for user ID: {}", id, userId);
+
+    // Recuperiamo l'utente dal database
+   Optional<UserEntity>  user = userService.findById(userId);
+    if (user == null) {
+        logger.warn("User with ID {} not found", userId);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    // Troviamo la pagina solo se appartiene all'utente specifico
+    Page existingPage = pageService.getPageByIdAndUserId(id, user.get().getId());
+    if (existingPage == null) {
+        logger.warn("Page with ID {} not found or does not belong to user ID {}", id, userId);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    // Aggiorniamo i dati della pagina
+    page.setId(id);  // Manteniamo lo stesso ID
+    page.setUser(user.get());  // Assicuriamoci che resti legata allo stesso utente
+
+    Page updatedPage = pageService.updatePage(id, page);
+    logger.info("Page with ID {} updated successfully for user ID {}", id, userId);
+    return ResponseEntity.ok(updatedPage);
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePage(@PathVariable Integer id) {
@@ -113,7 +141,7 @@ public class PageController {
     }
 
     @DeleteMapping("/user/{userId}/page/{idPage}")
-    public void deletePageByUserIdAndId(@PathVariable Long userId, @PathVariable Long idPage) {
+    public void deletePageByUserIdAndId(@PathVariable Long userId, @PathVariable Integer idPage) {
         pageService.deletePageByUserIdAndId(userId, idPage);
     }
 
