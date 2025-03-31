@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { group } from 'node:console';
 import { Observable } from 'rxjs';
@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SnippetService {
-  private apiUrlLocal = 'https://localhost:8080/api/snippets'; // URL del tuo backend Spring Boot
+  private apiUrl = 'http://localhost:9000/api/snippets'; // URL del tuo backend Spring Boot
 
-  private apiUrl = 'https://copio.online:9000/api/snippets'; // URL del tuo backend Spring >
+  private apiUrlLocal = 'https://copio.online:9000/api/snippets'; // URL del tuo backend Spring >
 
 
   constructor(private http: HttpClient) { }
@@ -32,4 +32,26 @@ export class SnippetService {
   deleteSnippet(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getSnippetsByUserId(userId: number,): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/user/${userId}`);
+  }
+
+  deleteSnippetsByUserId(userId: number, snippetsId: number): Observable<any> {
+    const headers = new HttpHeaders({ // Inserisci il token JWT
+      'Content-Type': 'application/json'
+    });
+    return this.http.delete<any>(`${this.apiUrl}/user/${userId}/snippet/${snippetsId}`,{headers});
+    
+
+  }
+
+
+   // Crea un nuovo snippet associato a un utente e a un gruppo
+   createSnippetByUser(snippet: { title: string; content: string }, userId: number, groupId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user/${userId}/group/${groupId}`, snippet);
+  }
+
+
+  
 }

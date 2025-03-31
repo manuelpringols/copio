@@ -52,4 +52,13 @@ public class GroupService {
         return false;
     }
 
+     // Metodo per ottenere tutti i gruppi per userId
+     public List<Group> getGroupsByUserId(Long userId) {
+        return groupRepository.findByUserId(userId);  // Metodo che troviamo nel repository
+    }
+
+    public void deleteGroupsByUserId(Long userId) {
+        groupRepository.deleteByUserId(userId);
+    }
+
 }

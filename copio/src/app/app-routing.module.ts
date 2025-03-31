@@ -5,7 +5,7 @@ import { SnippetComponent } from './componenti/snippet/snippet.component';
 import { DocComponent } from './componenti/doc/doc.component';
 import { PageComponent } from './componenti/doc/page/page.component';
 import { LoginComponent } from './componenti/login/login.component';
-import { RegisterComponent } from './componenti/login/register/register.component';
+import { RegisterComponent } from './componenti/register/register.component';
 import { authGuard } from './auth.guard';
 import { NotFoundComponent } from './componenti/not-found/not-found.component';
 
@@ -17,7 +17,7 @@ const routes: Routes = [
 
   {
     path: 'snippet',
-    component: SnippetComponent,
+    component: SnippetComponent, canActivate : [authGuard]
   },
   { path: 'doc', component: DocComponent, canActivate : [authGuard] },
 

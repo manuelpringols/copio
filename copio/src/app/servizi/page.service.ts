@@ -6,9 +6,9 @@ import { BehaviorSubject, catchError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PageService {
-  private apiUrlLocal = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
+  private apiUrl = `http://localhost:9000/api/pages`; // Modifica il path se necessario
 
-  private apiUrl = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
+  private apiUrlLocal = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
 
 
   private pagesSubject = new BehaviorSubject<any[]>([]); // BehaviorSubject per i gruppi
@@ -33,7 +33,7 @@ export class PageService {
   }
 
   // Crea una nuova pagina
-  createPage(page: any): Observable<any> {
+  /*createPage(page: any): Observable<any> {
     // Prima inviamo la richiesta per creare la pagina
     return this.http.post<any>(this.apiUrl, page).pipe(
       // Una volta completata, aggiorniamo il BehaviorSubject con la nuova pagina
@@ -44,6 +44,11 @@ export class PageService {
     );
   }
 
+  */
+
+  createPage(userId: number, pageData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${userId}`, pageData);
+  }
 
   // Ottieni le pagine per un dato groupId
   getPagesByGroupId(groupId: number): Observable<any> {
@@ -59,6 +64,18 @@ export class PageService {
    deletePage(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  deletePageByUserId(userId:number,pageId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/user/${userId}/page/${pageId}`);
+
+  }
+
+  getPagesByUser(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/byUser/${userId}`);
+  }
+
+  
+
 
 
 

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupPageService } from '../../servizi/group-page.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../servizi/auth.service';
 
 @Component({
   selector: 'app-doc',
@@ -22,16 +23,19 @@ export class DocComponent {
   private groupPagesSubscription: Subscription = new Subscription(); // Subscription per il listener
   isDeleteModalVisible: boolean = false; // Gestione della visibilità della modale di eliminazione
   groupToDeleteName: any;
+  userId: any;
 
   constructor(
     private groupPageService: GroupPageService, // Servizio per gestire i gruppi
-    private router: Router
+    private router: Router,
+    private authService:AuthService
   ) {}
 
   ngOnInit(): void {
     // Carica i gruppi all'inizio
+    this.userId = this.authService.getUserIdFromToken();
 
-    this.groupPagesSubscription = this.groupPageService.getAllGroupPages().subscribe(groups => {
+    this.groupPagesSubscription = this.groupPageService.getGroupPagesByUser(this.userId).subscribe(groups => {
       this.groups = groups; // Aggiorna i gruppi in tempo reale
       console.log('Gruppi aggiornati:', this.groups); // Verifica i gruppi caricati
     });
@@ -69,7 +73,7 @@ export class DocComponent {
 
   submitGroup(): void {
     const newGroup = { title: this.newGroupName };
-    this.groupPageService.createGroupPage(newGroup).subscribe({
+    this.groupPageService.createGroupPage(newGroup.title,this.userId).subscribe({
       next: (response) => {
         console.log('Nuovo gruppo creato:', response);
         this.groups.push(response); // Aggiungi il nuovo gruppo alla lista

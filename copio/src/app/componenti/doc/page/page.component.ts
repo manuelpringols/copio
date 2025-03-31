@@ -4,6 +4,7 @@ import { PageService } from '../../../servizi/page.service';
 import { GroupsService } from '../../../servizi/groups.service';
 import { GroupPageService } from '../../../servizi/group-page.service';
 import { BehaviorSubject, firstValueFrom } from 'rxjs';
+import { AuthService } from '../../../servizi/auth.service';
 
 @Component({
   selector: 'app-page',
@@ -34,9 +35,11 @@ isConfirmationModalOpen = false;
 newContent = ' ';
 newTitle = '';
 showModal: any;
+userId: any;
 
 private pagesSubject = new BehaviorSubject<any[]>([]);
 pages$ = this.pagesSubject.asObservable(); // Esponi l'Observable
+ 
 
 
   constructor(
@@ -44,12 +47,14 @@ pages$ = this.pagesSubject.asObservable(); // Esponi l'Observable
     private pageService: PageService,
     private groupPageService: GroupPageService,
     private router: Router,
-    private cdr: ChangeDetectorRef
-
+    private cdr: ChangeDetectorRef,
+    private authService : AuthService
   ) {}
 
   ngOnInit(): void {
     // Carica il groupId dalla route
+    this.userId = this.authService.getUserIdFromToken();
+
     this.groupId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadGroupPages();  // Carica le pagine in base al groupId
 
@@ -75,14 +80,14 @@ pages$ = this.pagesSubject.asObservable(); // Esponi l'Observable
   // Funzione per caricare le pagine in base al groupId
   loadGroupPages(): void {
     if (this.groupId !== null) {
-      this.pageService.getPagesByGroupId(this.groupId)
-        .subscribe(data => {
+      this.pageService.getPagesByUser(this.userId)
+        .subscribe((data: any[]) => {
           this.pages = data; // Pagine filtrate dal backend
           this.page = this.pages.length ? this.pages[0] : { content: 'Nessuna pagina disponibile per questo gruppo.' };
           this.pageId = this.page?.id;
           this.cdr.detectChanges();  // Forza la rilevazione dei cambiamenti
           console.log("Pagine caricate dal backend:", this.pages);
-        }, error => {
+        }, (error: any) => {
           this.pages = [];
           this.page = { content: 'Nessuna pagina disponibile per questo gruppo.' };
           console.error('Errore nel recupero delle pagine:', error);
@@ -169,7 +174,7 @@ formatCode() {
   }
 
   deletePage(idPage: number) {
-    this.pageService.deletePage(idPage).subscribe(
+    this.pageService.deletePageByUserId(this.userId,idPage).subscribe(
       (data) => {
         console.log("Pagina eliminata con successo");
         this.pages = this.pages.filter(page => page.id !== idPage); // Rimuove la pagina eliminata
@@ -228,7 +233,7 @@ formatCode() {
             }
           };
 
-          this.pageService.createPage(page).subscribe(
+          this.pageService.createPage(this.userId,page).subscribe(
             (data) => {
               console.log('Pagina creata:', data); // Verifica i dati della nuova pagina
               // Aggiungi la nuova pagina alla lista e aggiorna il BehaviorSubject

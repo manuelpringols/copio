@@ -49,7 +49,7 @@
 
 /* Stile delle card */
 .group-item {
-  padding: 20px;
+  padding: 16px;
   background: linear-gradient(145deg, #ddd9d9, #979797);
   border: 1px solid #000000;
   cursor: pointer;
@@ -57,7 +57,13 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  
+  /* Aggiungi le seguenti righe per centrare il testo */
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center;     /* Centra verticalmente */
 }
+
 
 /* Effetto hover delle card */
 .group-item:hover {
@@ -192,7 +198,7 @@ button:hover {
 .modal-content {
   position: relative;
   background-color: rgba(119, 8, 104, 0.753);
-  padding: 20px;
+  padding : 20px;  
   border-radius: 10px;
   max-width: 500px;
   width: 90%;
@@ -347,17 +353,97 @@ button:hover {
 }
 
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
+  position: relative;
+  left: 14px;
+  bottom: 19px;
+  font-size: 15px;
   color: #888;
   cursor: pointer;
-  transition: color 0.3s ease;
 
   z-index: 10000;
 }
 
 .close-btn:hover {
   color: red; /* Cambia colore al passaggio del mouse per un effetto interattivo */
+}
+
+
+
+/* Aggiungi queste regole al tuo CSS esistente */
+
+/* X nella modale principale */
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 23px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.modal-content .close:hover {
+  color: #5d0b5d;
+  transform: scale(1.1);
+}
+
+/* X nella modale di eliminazione */
+.custom-modal-content .custom-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.custom-modal-content .custom-close:hover {
+  color: #ff0000;
+  transform: scale(1.1);
+}
+
+/* X negli elementi gruppo (sostituisce la regola .close-btn esistente) */
+.group-item {
+  position: relative; /* Necessario per posizionare la X relativa a questo elemento */
+  padding: 20px;
+}
+
+.group-item .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #660066;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.group-item .close-btn:hover {
+  color: #ffffff;
+  background-color: #ff0000;
+  transform: scale(1.1);
+}
+
+/* Miglioramento hover per group-item */
+.group-item:hover .close-btn {
+  color: #ffffff;
+  background-color: #660066;
+}
+
+.group-item:hover .close-btn:hover {
+  background-color: #ff0000;
 }

@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './componenti/home/home.component';
 import { SnippetComponent } from './componenti/snippet/snippet.component';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient,HTTP_INTERCEPTORS, withFetch, withInterceptors } from '@angular/common/http';
 import { DocComponent } from './componenti/doc/doc.component';
 import { PageComponent } from './componenti/doc/page/page.component';
 import { QuillModule } from 'ngx-quill';
 import { LoginComponent } from './componenti/login/login.component';
-import { RegisterComponent } from './componenti/login/register/register.component';
+import { RegisterComponent } from './componenti/register/register.component';
 import { NotFoundComponent } from './componenti/not-found/not-found.component'
+import { tokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,10 +33,11 @@ import { NotFoundComponent } from './componenti/not-found/not-found.component'
     QuillModule.forRoot()
   ],
   providers: [
-    provideClientHydration(withEventReplay(),
+   
+      provideClientHydration(withEventReplay()),
 
-),
-provideHttpClient()
+
+provideHttpClient(withInterceptors([tokenInterceptor]))
   ],
   bootstrap: [AppComponent]
 })

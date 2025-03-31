@@ -1,0 +1,47 @@
+<div class="auth-container">
+  <div class="auth-box">
+    <h2>Registrati a Copio</h2>
+    <p class="intro-text">
+      Crea un account per accedere a tutte le funzionalità di Copio. È veloce, sicuro e ti permette di gestire i tuoi progetti in modo semplice.
+    </p>
+    <p class="sub-text">
+      Non sei ancora registrato? Fallo ora e inizia subito a usare la piattaforma.
+    </p>
+
+    <form *ngIf="showRegister" (submit)="onSubmit()">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="username">Username</label>
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <input type="text" id="username" [(ngModel)]="username" name="username" placeholder="Choose a username" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required />
+      </div>
+
+      <button type="submit" class="auth-btn">
+        <i class="fas fa-user-plus"></i> Register
+      </button>
+
+      <div class="switch-link">
+        <p>Already have an account? <a routerLink="/login">Login here</a></p>
+      </div>
+    </form>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+</div>

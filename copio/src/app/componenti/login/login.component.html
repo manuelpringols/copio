@@ -1,68 +1,34 @@
 <div class="auth-container">
-    <div class="auth-box">
-      <h2 *ngIf="!showRegister">Login</h2>
-      <h2 *ngIf="showRegister">Register</h2>
-  
-      <!-- Form di Login -->
-      <form *ngIf="!showRegister" (submit)="onSubmit()">
-        <div class="input-group">
-          <label for="email">Email</label>
-          <div class="input-icon">
-            <i class="fas fa-envelope"></i> <!-- Icona Email -->
-          </div>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+  <div class="auth-box">
+    <h2>Accedi al tuo account Copio</h2>
+
+    <!-- Form di Login -->
+    <form *ngIf="!showRegister" (submit)="onSubmit()">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
         </div>
-  
-        <div class="input-group">
-          <label for="password">Password</label>
-          <div class="input-icon">
-            <i class="fas fa-lock"></i> <!-- Icona Password -->
-          </div>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Inserisci la tua email" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
         </div>
-  
-        <button type="submit" class="auth-btn">
-          <i class="fas fa-sign-in-alt"></i> Login <!-- Icona di Login -->
-        </button>
-  
-        <div class="switch-link">
-          <p>Don't have an account? <a [routerLink]="['/register']">Register here</a></p>
-        </div>
-      </form>
-  
-      <!-- Form di Registrazione -->
-      <form *ngIf="showRegister" (submit)="onSubmit()">
-        <div class="input-group">
-          <label for="email">Email</label>
-          <div class="input-icon">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required />
-        </div>
-  
-        <div class="input-group">
-          <label for="username">Username</label>
-          <div class="input-icon">
-            <i class="fas fa-user"></i> <!-- Icona Username -->
-          </div>
-          <input type="text" id="username" name="username" placeholder="Choose a username" required />
-        </div>
-  
-        <div class="input-group">
-          <label for="password">Password</label>
-          <div class="input-icon">
-            <i class="fas fa-lock"></i>
-          </div>
-          <input type="password" id="password" name="password" placeholder="Enter your password" required />
-        </div>
-  
-        <button type="submit" class="auth-btn">
-          <i class="fas fa-user-plus"></i> Register <!-- Icona di Registrazione -->
-        </button>
-  
-        <div class="switch-link">
-          <p>Already have an account? <a [routerLink]="['/login']">Login here</a></p>
-        </div>
-      </form>
-    </div>
+        <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Inserisci la tua password" required />
+      </div>
+
+      <button type="submit" class="auth-btn">
+        <i class="fas fa-sign-in-alt"></i> Accedi
+      </button>
+
+      <div class="switch-link">
+        <p>Non hai un account? <a routerLink="/register">Registrati qui</a></p>
+      </div>
+    </form>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
 </div>

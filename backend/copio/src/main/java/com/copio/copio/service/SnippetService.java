@@ -1,6 +1,5 @@
 package com.copio.copio.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.copio.copio.entity.Group;
 import com.copio.copio.entity.Snippet;
+import com.copio.copio.entity.UserEntity;
 import com.copio.copio.repository.GroupRepository;
 import com.copio.copio.repository.SnippetRepository;
-
+import com.copio.copio.repository.UserRepository;
 
 @Service
 public class SnippetService {
@@ -22,12 +22,31 @@ public class SnippetService {
     @Autowired
     private GroupRepository groupRepository;
 
-    public Snippet createSnippet(Snippet snippet, Integer groupId) {
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new RuntimeException("Group not found"));
-        snippet.setIdGroup(group); // Impostiamo il gruppo al nuovo snippet
+    @Autowired
+    private UserRepository userRepository;
+
+    /*
+     * public Snippet createSnippet(Snippet snippet, Integer groupId) {
+     * Group group = groupRepository.findById(groupId).orElseThrow(() -> new
+     * RuntimeException("Group not found"));
+     * snippet.setIdGroup(group); // Impostiamo il gruppo al nuovo snippet
+     * return snippetRepository.save(snippet);
+     * 
+     * 
+     * }
+     */
+
+    public Snippet createSnippet(Snippet snippet, Integer userId, Integer groupId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        snippet.setIdGroup(group); // Imposta il gruppo
+        snippet.setUser(user); // Imposta l'utente
+
         return snippetRepository.save(snippet);
-
-
     }
 
     // Metodo per ottenere tutti gli snippet
@@ -46,5 +65,18 @@ public class SnippetService {
             throw new RuntimeException("Snippet non trovato con ID: " + id);
         }
         snippetRepository.deleteById(id);
+    }
+
+    public List<Snippet> getSnippetsByUserId(Integer userId) {
+        return snippetRepository.findByUserId(userId);
+    }
+
+    // Elimina uno snippet per userId e snippetId
+    public void deleteSnippetByUserIdAndId(Integer userId, Integer id) {
+        Snippet snippet = snippetRepository.findByIdAndUserId(id, userId)
+                .orElseThrow(() -> new RuntimeException(
+                        "Snippet not found for userId: " + userId + " and snippetId: " + id));
+
+        snippetRepository.delete(snippet);
     }
 }

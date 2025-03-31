@@ -7,15 +7,25 @@ import { Observable } from 'rxjs';
 })
 export class GroupsService {
 
-  private apiUrlLocal = "https://copio.online:9000/api/groups"; // URL mini-pc dell'API
+  private apiUrl = "http://localhost:9000/api/groups"; // URL mini-pc dell'API
 
-   private apiUrl = "https://copio.online:9000/api/groups"; // URL base dell'API
+   private apiUrlLocal = "https://copio.online:9000/api/groups"; // URL base dell'API
   constructor(private http: HttpClient) { }
 
-  // Ottieni tutti i gruppi
   getAllGroups(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    // Recupera il token salvato nel localStorage
+    const authToken = localStorage.getItem('auth_token'); 
+  
+    // Aggiungi l'header Authorization con il token
+    const headers = {
+      'Authorization': `Bearer ${authToken}`
+    };
+  
+    // Esegui la richiesta GET con l'header di autorizzazione
+    return this.http.get<any>(this.apiUrl, { headers });
   }
+
+  
 
   // Ottieni un gruppo per ID
   getGroupById(id: number): Observable<any> {
@@ -23,8 +33,13 @@ export class GroupsService {
   }
 
   // Crea un nuovo gruppo
-  createGroup(groupName: string): Observable<any> {
+  /*createGroup(groupName: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/save?groupName=${groupName}`, groupName);
+  }
+    */
+
+  createGroup(groupName: string, userId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/save?groupName=${groupName}&userId=${userId}`, {});
   }
 
   // Aggiorna un gruppo esistente
@@ -36,4 +51,14 @@ export class GroupsService {
   deleteGroup(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getGroupsByUserId(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/user/${userId}`);
+  }
+
+  deleteGroupsByUserId(userId : number,groupId : number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/byUser/${userId}/group/${groupId}`);
+  }
+
+
 }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../servizi/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,16 +9,31 @@ import { Component } from '@angular/core';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  // Variabile per gestire la visualizzazione del modulo Login o Register
   showRegister = false;
 
-  // Metodo che cambia lo stato di showRegister
+  email: string = '';
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
   toggleRegister() {
     this.showRegister = !this.showRegister;
   }
 
   onSubmit() {
-    // Aggiungi la logica per il login qui
-    console.log('Login form submitted');
-  }
+    
+      // Login
+      this.authService.login(this.email, this.password).subscribe({
+        next: (response) => {
+          this.authService.saveToken(response.token);
+          this.router.navigate(['/']); // Reindirizza alla dashboard
+        },
+        error: (err) => {
+          this.errorMessage = err.error || 'Credenziali errate';
+        }
+      });
+    }
+  
 }

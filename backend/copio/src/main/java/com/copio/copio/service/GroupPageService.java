@@ -45,6 +45,22 @@ public class GroupPageService {
         return  groupPageRepository.findGroupNameById(groupId);
     }
 
+    public List<GroupPage> getGroupPagesByUserId(Integer userId) {
+        return groupPageRepository.findByUserId(userId);  // Metodo da implementare nel repository
+    }
+
+    public void deleteGroupPagesByUserId(Integer userId) {
+        groupPageRepository.deleteByUserId(userId);
+    }
+
+      // Metodo per eliminare una GroupPage per userId e groupId
+      public void deleteGroupPageByUserAndGroupId(Integer userId, Integer groupId) {
+        groupPageRepository.deleteByUserIdAndId(userId, groupId);
+    }
+    
+
+    
+
 
    
 }
