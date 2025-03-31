@@ -302,6 +302,7 @@ button:hover {
   border-radius: 10px;
   max-width: 500px;
   width: 90%;
+  z-index: 1000;
   text-align: center;
   box-shadow: 0 4px 10px rgb(185, 10, 92);
   font-family: 'Inconsolata', monospace; /* Font per la modale */
@@ -335,7 +336,7 @@ button {
   color: white;
   padding: 10px 20px;
   border: 1px solid #660066 ;
-
+  z-index: 1000;
   border-radius: 5px;
   margin-top: 20px;
   cursor: pointer;

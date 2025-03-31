@@ -371,8 +371,8 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
 /* Icona del cestino */
 .delete-button {
   position: absolute;
-  top: 30px;  /* Posiziona l'icona in alto */
-  right: 10px;  /* Posiziona l'icona a destra */
+  top: 35px;  /* Posiziona l'icona in alto */
+  right: 16px;  /* Posiziona l'icona a destra */
   background: none;
   border: none;
   cursor: pointer;

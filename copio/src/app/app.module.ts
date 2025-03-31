@@ -14,6 +14,7 @@ import { LoginComponent } from './componenti/login/login.component';
 import { RegisterComponent } from './componenti/register/register.component';
 import { NotFoundComponent } from './componenti/not-found/not-found.component'
 import { tokenInterceptor } from './token.interceptor';
+import { UserComponent } from './componenti/user/user.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { tokenInterceptor } from './token.interceptor';
     PageComponent,
     LoginComponent,
     RegisterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

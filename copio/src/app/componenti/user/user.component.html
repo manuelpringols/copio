@@ -1,0 +1,7 @@
+<div class="logout-container" [class.open]="isMenuOpen">
+    <button class="logout-icon" (click)="toggleMenu()">⚙️</button>
+    <div class="dropdown-menu" *ngIf="isMenuOpen">
+      <button (click)="logout()">Disconnetti Utente</button>
+    </div>
+  </div>
+  
