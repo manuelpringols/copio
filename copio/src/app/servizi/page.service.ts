@@ -6,9 +6,9 @@ import { BehaviorSubject, catchError, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PageService {
-  private apiUrl = `http://localhost:9000/api/pages`; // Modifica il path se necessario
+  private apiUrlLocal = `http://localhost:9000/api/pages`; // Modifica il path se necessario
 
-  private apiUrlLocal = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
+  private apiUrl = `https://copio.online:9000/api/pages`; // Modifica il path se necessario
 
 
   private pagesSubject = new BehaviorSubject<any[]>([]); // BehaviorSubject per i gruppi

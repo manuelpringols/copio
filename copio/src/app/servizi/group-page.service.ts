@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 })
 export class GroupPageService {
 
-  private apiUrl = `http://localhost:9000/api/groupPages`; // Modifica il path se necessario
-  private apiUrlLocal = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
+  private apiUrlLocal = `http://localhost:9000/api/groupPages`; // Modifica il path se necessario
+  private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
 
 
   private groupPagesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);

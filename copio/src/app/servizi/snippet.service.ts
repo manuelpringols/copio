@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SnippetService {
-  private apiUrl = 'http://localhost:9000/api/snippets'; // URL del tuo backend Spring Boot
+  private apiUrlLocal = 'http://localhost:9000/api/snippets'; // URL del tuo backend Spring Boot
 
-  private apiUrlLocal = 'https://copio.online:9000/api/snippets'; // URL del tuo backend Spring >
+  private apiUrl = 'https://copio.online:9000/api/snippets'; // URL del tuo backend Spring >
 
 
   constructor(private http: HttpClient) { }
