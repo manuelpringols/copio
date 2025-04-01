@@ -1,5 +1,92 @@
 const extensionId = chrome.runtime.id;
 
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("jwtToken");
+
+  if (!token) {
+    // Se il token non esiste, mostra la pagina di login
+    showLoginPage();
+  } else {
+    // Se il token esiste, carica la UI per salvare lo snippet
+    loadSnippetUI();
+  }
+});
+
+
+function showLoginPage() {
+  document.body.innerHTML = `
+    <div style:"width: 1000px; min-width: 500px;" id="loginContainer">
+      <h3>Login</h3>
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email" />
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" placeholder="Enter your password" />
+
+      <button id="loginBtn">Login</button>
+      <p id="loginError" style="color: red; display: none;">Invalid credentials</p>
+    </div>
+  `;
+
+  document.getElementById("loginBtn").addEventListener("click", loginUser);
+}
+
+function loginUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  fetch("https://copio.online:9000/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem("jwtToken", data.token);
+        loadSnippetUI(); // Carica la UI per gli snippet
+      } else {
+        document.getElementById("loginError").style.display = "block";
+      }
+    })
+    .catch((error) => console.error("Login error:", error));
+}
+
+
+function loadSnippetUI() {
+  document.body.innerHTML = `
+    <div id="popupContainer">
+      <div class="popup-content">
+        <span id="closeBtn" class="close-btn">&times;</span>
+        <h3>Save Snippet</h3>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter title" />
+
+        <label for="content">Content:</label>
+        <textarea id="content" placeholder="Enter content"></textarea>
+
+        <label for="groupSelect">Group:</label>
+        <select id="groupSelect">
+          <option value="">Select a group</option>
+        </select>
+
+        <button id="saveBtn">Save Snippet</button>
+      </div>
+    </div>
+  `;
+
+  // Ricarica i gruppi
+  fetchGroups();
+
+  // Event listener per salvare snippet
+  document.getElementById("saveBtn").addEventListener("click", saveSnippet);
+}
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
   // Recupera il testo selezionato dal background script
 // Quando il popup si apre, inserisci il testo selezionato nella textarea

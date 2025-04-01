@@ -50,7 +50,7 @@ input, textarea, select {
   color: white;
 }
 
-textarea {F
+textarea {
   resize: vertical;
   height: 80px;
 }
@@ -117,3 +117,10 @@ button:hover {
   margin-bottom: 10px;
 }
 
+
+#loginContainer{
+  width: 1000px;
+  max-width: 500px;
+  border: 1px solid rgb(0, 26, 83);
+  border-radius: 1vw;
+}

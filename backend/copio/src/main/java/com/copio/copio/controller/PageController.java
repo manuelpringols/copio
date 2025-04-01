@@ -127,18 +127,23 @@ public ResponseEntity<Page> updatePage(@PathVariable Integer userId, @PathVariab
         }
     }
 
-    @GetMapping("/byUser/{userId}")
-    public ResponseEntity<List<Page>> getPagesByUser(@PathVariable Integer userId) {
-        logger.info("Request received to get pages for userId: {}", userId);
-        List<Page> pages = pageService.getPagesByUserId(userId);
-        if (pages.isEmpty()) {
-            logger.warn("No pages found for userId: {}", userId);
-            return ResponseEntity.notFound().build();
-        } else {
-            logger.info("Found {} pages for userId: {}", pages.size(), userId);
-            return ResponseEntity.ok(pages);
-        }
+    @GetMapping("/byUserAndGroup/{userId}/{groupPageId}")
+public ResponseEntity<List<Page>> getPagesByUserAndGroup(
+        @PathVariable Integer userId, 
+        @PathVariable Integer groupPageId) {
+    
+    logger.info("Request received to get pages for userId: {} and groupPageId: {}", userId, groupPageId);
+    
+    List<Page> pages = pageService.getPagesByUserIdAndGroupPageId(userId, groupPageId);
+    
+    if (pages.isEmpty()) {
+        logger.warn("No pages found for userId: {} and groupPageId: {}", userId, groupPageId);
+        return ResponseEntity.notFound().build();
+    } else {
+        logger.info("Found {} pages for userId: {} and groupPageId: {}", pages.size(), userId, groupPageId);
+        return ResponseEntity.ok(pages);
     }
+}
 
     @DeleteMapping("/user/{userId}/page/{idPage}")
     public void deletePageByUserIdAndId(@PathVariable Long userId, @PathVariable Integer idPage) {

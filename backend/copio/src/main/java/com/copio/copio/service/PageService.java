@@ -81,6 +81,10 @@ public class PageService {
         return pageRepository.findByIdAndUserId(id, userId).orElse(null);
     }
 
+    public List<Page> getPagesByUserIdAndGroupPageId(Integer userId, Integer groupPageId) {
+        return pageRepository.findByUserIdAndGroupPageId(userId, groupPageId);
+    }
+
   
 
 
