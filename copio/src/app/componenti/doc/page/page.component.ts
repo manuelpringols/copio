@@ -39,7 +39,7 @@ userId: any;
 
 private pagesSubject = new BehaviorSubject<any[]>([]);
 pages$ = this.pagesSubject.asObservable(); // Esponi l'Observable
- 
+
 
 
   constructor(
@@ -80,7 +80,7 @@ pages$ = this.pagesSubject.asObservable(); // Esponi l'Observable
   // Funzione per caricare le pagine in base al groupId
   loadGroupPages(): void {
     if (this.groupId !== null) {
-      this.pageService.getPagesByUser(this.userId)
+      this.pageService.getPagesByUserAndGroup(this.userId,this.groupId)
         .subscribe((data: any[]) => {
           this.pages = data; // Pagine filtrate dal backend
           this.page = this.pages.length ? this.pages[0] : { content: 'Nessuna pagina disponibile per questo gruppo.' };

@@ -74,11 +74,12 @@ export class PageService {
 
   }
 
-  getPagesByUser(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/byUser/${userId}`);
+  getPagesByUserAndGroup(userId: number, groupPageId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/byUserAndGroup/${userId}/${groupPageId}`);
   }
 
-  
+
+
 
 
 
