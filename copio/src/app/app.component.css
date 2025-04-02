@@ -1,5 +1,5 @@
 app-user{
-    position: absolute;
+    position: fixed;
     top: 40px;
     right: 80px;
 }
