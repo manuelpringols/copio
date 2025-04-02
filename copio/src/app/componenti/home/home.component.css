@@ -186,3 +186,89 @@
   font-weight: bold;
   border-radius: 5px;
 }
+
+.extension-banner {
+  background: linear-gradient(135deg, rgba(102, 0, 102, 0.8) 0%, rgba(36, 6, 105, 0.8) 100%);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(179, 161, 201, 0.3);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.extension-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.extension-icon {
+  font-size: 2.5rem;
+  color: #b3a1c9;
+}
+
+.extension-text h3 {
+  margin: 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.extension-text p {
+  margin: 5px 0 0;
+  color: #d9cfe8;
+  font-size: 0.9rem;
+}
+
+.extension-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.extension-button:hover {
+  background-color: #751475;
+  color: #e21ca7;
+  border-color: #e21ca7;
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.extension-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .extension-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .extension-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+a{ 
+  cursor: pointer;
+}

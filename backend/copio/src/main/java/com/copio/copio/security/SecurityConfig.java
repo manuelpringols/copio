@@ -54,7 +54,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://copio.online","http://localhost:4200","chrome-extension://gnhilbcfgcmijodligldffdohkkakcoo")); // Modifica l'origine se necessario
+        configuration.setAllowedOrigins(List.of("https://copio.online","http://localhost:4200","chrome-extension://kmgclaebnbboaofefadmliagoaogekpen" //
+                        )); // Modifica l'origine se necessario
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); // Necessario per inviare i cookie o token con credenziali

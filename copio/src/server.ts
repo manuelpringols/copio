@@ -3,6 +3,7 @@ import { CommonEngine, isMainModule } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import fs from 'fs';
 import AppServerModule from './main.server';
 
 const serverDistFolder = dirname(fileURLToPath(import.meta.url));
@@ -12,17 +13,23 @@ const indexHtml = join(serverDistFolder, 'index.server.html');
 const app = express();
 const commonEngine = new CommonEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// Aggiungi questo prima dei middleware statici
+app.get('/assets/copiextension.crx', (req, res) => {
+  const filePath = join(browserDistFolder, 'copiextension.crx');
+  
+  // Verifica se il file esiste
+  if (fs.existsSync(filePath)) {
+    // Imposta gli header corretti per il download
+    res.setHeader('Content-Type', 'application/x-chrome-extension');
+    res.setHeader('Content-Disposition', 'attachment; filename=CopioExtension.crx');
+    
+    // Crea uno stream del file e lo invia
+    const fileStream = fs.createReadStream(filePath);
+    fileStream.pipe(res);
+  } else {
+    res.status(404).send('File not found');
+  }
+});
 
 /**
  * Serve static files from /browser
@@ -55,7 +62,6 @@ app.get('**', (req, res, next) => {
 
 /**
  * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
