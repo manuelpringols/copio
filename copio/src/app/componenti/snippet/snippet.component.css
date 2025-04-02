@@ -63,7 +63,21 @@
   border-radius: 0.5vh;
   cursor: pointer;
   font-size: 18px;
-  transition: background-color 0.3s;
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: slideInLeft 0.5s ease-out forwards;
+  animation-delay: calc(var(--item-index) * 0.1s + 0.3s);
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .sidebar ul li:hover {
@@ -80,6 +94,8 @@
   font-weight: 200;
   font-style: italic;
   box-sizing: border-box;
+  perspective: 1000px; /* Aggiunto per l'effetto 3D */
+
 }
 
 .main-content h2 {
@@ -97,7 +113,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(63, 7, 36, 0.129);
   z-index: 5;
   animation: fadeInOverlay 0.3s ease;
 }
@@ -112,8 +128,9 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  border: 0.5px solid #151515;
   transform: translate(-50%, -50%);
-  background-color: #313131;
+  background-color: rgba(60, 0, 60, 0.704);
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -161,7 +178,7 @@
   border-radius: 5px;
   cursor: pointer;
   position: absolute;
-  top: 10px;
+  top: -5px;
   right: 10px;
 }
 
@@ -180,6 +197,22 @@
   position: relative;
   overflow: auto;
   max-height: 500px;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: cardEntrance 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: calc(var(--item-index) * 0.08s);
+  transition: all 0.3s ease;
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .snippet-card h3 {
@@ -324,10 +357,24 @@ button {
   margin-right: 0.5vw;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   margin-bottom: 1vh;
+  position: relative; /* Mantiene il flusso del documento */
+  animation: buttonEntrance 0.5s ease-out both;
+  animation-delay: 0.8s;
 }
 
 button:hover {
   background-color: #660066bb;
+}
+
+@keyframes buttonEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(10px); /* Leggero movimento dal basso */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Media Query per schermi piccoli */

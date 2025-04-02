@@ -45,6 +45,8 @@
   max-width: 1200px;
   padding: 10px;
   font-family: 'Quicksand', sans-serif; /* Font moderno per i gruppi */
+  perspective: 1000px; /* Aggiunto per l'effetto 3D */
+
 }
 
 /* Stile delle card */
@@ -62,8 +64,32 @@
   display: flex;
   justify-content: center; /* Centra orizzontalmente */
   align-items: center;     /* Centra verticalmente */
+  opacity: 0;
+  transform: translateY(20px) rotateX(-30deg);
+  animation: fadeInUp 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+  animation-delay: calc(var(--item-index) * 0.1s);
+  transform-origin: center bottom;
+
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotateX(-30deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+/* Aggiungi questa regola per gestire il delay progressivo */
+.group-item:nth-child(1) { animation-delay: 0.1s; }
+.group-item:nth-child(2) { animation-delay: 0.2s; }
+.group-item:nth-child(3) { animation-delay: 0.3s; }
+.group-item:nth-child(4) { animation-delay: 0.4s; }
+.group-item:nth-child(5) { animation-delay: 0.5s; }
+.group-item:nth-child(6) { animation-delay: 0.6s; }
 
 /* Effetto hover delle card */
 .group-item:hover {

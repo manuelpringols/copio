@@ -1,74 +1,108 @@
 .logout-container {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .logout-icon {
-    background: var(--primary-color, #1e1e2f); /* Usa il colore primario del tuo progetto */
-    color: var(--text-color, #fff);
-    border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .logout-icon:hover {
-    background: var(--secondary-color, #29293d);
-    transform: scale(1.1);
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    top: 50px;
-    right: 50%;
-    transform: translateX(50%);
-    background: var(--primary-color, #1e1e2f);
-    border-radius: 10px;
-    padding: 10px;
-    min-width: 100px;
-    text-align: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-  }
-  
-  .logout-container.open .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(50%) translateY(5px);
-  }
-  
-  .dropdown-menu::before {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid var(--primary-color, #1e1e2f);
-  }
-  
-  .dropdown-menu button {
-    background: none;
-    border: none;
-    color: var(--text-color, #fff);
-    font-size: 0.3 rem;
-    padding: 8px 15px;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 5px;
-    transition: background 0.2s ease;
-  }
-  
-  .dropdown-menu button:hover {
-    background: var(--secondary-color, #29293d);
-  }
-  
+  position: absolute;
+  display: inline-block;
+}
+
+/* Stile dell'ingranaggio con animazione di rotazione */
+.logout-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 16px;
+  border: none;
+  background: #1e042a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Assicura che l'icona sia centrata */
+  font-size: 20px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 101;
+  position: relative;
+  color: white;
+}
+
+.logout-icon:hover {
+  transform: rotate(45deg);
+  background:  #9a07aa;
+}
+
+/* Stile del menu dropdown con animazione */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% - 25px);
+  right: 0;
+  width: 40px;
+  height: 0px; /* Altezza iniziale uguale all'ingranaggio */
+  background: #1e042a;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 100;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.8) translateY(-10px);
+  transform-origin: top right;
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  height: auto; /* Altezza automatica quando aperto */
+  min-height: 40px;
+  border-radius: 16px;
+}
+
+.menu-content {
+  padding: 15px 0 10px 0;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 10px 20px;
+  text-align: left;
+  padding-top: 25px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centra l'icona verticalmente */
+  justify-content: center; /* Centra l'icona orizzontalmente */
+  gap: 12px;
+  white-space: nowrap;
+  color: white;
+  opacity: 0;
+  transform: translateX(-15px);
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+}
+
+.dropdown-menu.open .menu-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.menu-item:hover {
+  color: red;
+}
+
+/* Icona di logout */
+.menu-item i {
+  width: 20px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.menu-item:hover i {
+  transform: scale(1.1);
+}
+
+/* Animazione per ogni voce del menu */
+.menu-item:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.menu-item:nth-child(2) {
+  transition-delay: 0.15s;
+}
+
+

@@ -1,7 +1,13 @@
-<div class="logout-container" [class.open]="isMenuOpen">
-    <button class="logout-icon" (click)="toggleMenu()">⚙️</button>
-    <div class="dropdown-menu" *ngIf="isMenuOpen">
-      <button (click)="logout()">Disconnetti Utente</button>
+<div class="logout-container">
+  <button class="logout-icon" (click)="toggleMenu()">⚙️</button>
+  <div class="dropdown-menu" [class.open]="isMenuOpen">
+    <div class="menu-content">
+      <button class="menu-item" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> 
+      </button>
+      <button class="menu-item" (click)="someAction()">
+        <i class="fas fa-user"></i> 
+      </button>
     </div>
   </div>
-  
+</div>
