@@ -24,7 +24,11 @@ body {
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 500px; /* Il popup non supererà mai i 500px */
+  max-width: 500px;
+}
+.popup-content{
+  min-width: 360px; /* Il popup non supererà mai i 500px */
+  border-radius: 1vw;
 }
 
 

@@ -225,11 +225,12 @@
   border: 1px solid #333;
   box-shadow: 2px 2px 2px 4px #111;
   border-radius: 5px;
-  white-space: pre-wrap;
-  word-wrap: break-word;
   color: yellowgreen;
   font-size: 1.5rem;
   position: relative;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .delete-icon {
@@ -342,6 +343,12 @@ button.create-snippet-btn:hover {
 pre.expanded {
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.snippet-card pre code {
+  display: block;
+  text-align: left;
+  overflow-x: auto;
 }
 
 /* Button styling */

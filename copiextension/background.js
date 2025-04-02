@@ -87,7 +87,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const groupId = message.groupId;
 
     // Correzione del link nel fetch
-    fetch(`https://copio.online:9000/*/api/snippets/create?groupId=${groupId}`, {
+   /* fetch(`https://copio.online:9000/api/snippets/user/{userId}/group/{groupId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,5 +102,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     .catch(error => {
       console.error('Errore durante la creazione dello snippet', error);
     });
+    */
+
   }
+  
 });
+
+

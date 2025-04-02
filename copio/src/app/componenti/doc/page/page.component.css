@@ -4,13 +4,23 @@
 background: rgb(102,0,102);
 background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   border-radius: 1vw;
+  transition: background 0.8s ease-in-out;
+
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 
 
 .docs-container {
   max-width: 1200px;
   margin: 0 auto;
+  animation: fadeIn 0.6s ease-out forwards;
+
 
 }
 
@@ -22,7 +32,20 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   font-size: 3rem;
   margin-bottom: 20px;
   padding: 10px;
+  animation: textFadeIn 1s ease-out 0.2s both;
 
+
+}
+
+@keyframes textFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .content-container {
@@ -47,6 +70,13 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
     /* Miglioramento scrollbar Chrome/Safari */
     scrollbar-width: thin;
     scrollbar-color: #660066 #333;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: slideInLeft 0.5s ease-out;
+  }
+
+  @keyframes slideInLeft {
+    from { transform: translateX(-30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
   }
 
   /* Scroll personalizzato per Chrome/Safari */
@@ -89,6 +119,8 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   padding: 5px 0;
   transition: 0.3s;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linea sottile e semi-trasparente */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 
 /* Rimuoviamo la linea dall'ultimo elemento per estetica */
@@ -117,10 +149,22 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   max-height: 80vh; /* Limita l'altezza del contenitore al 80% della viewport */
   z-index: 1;
   border-top-left-radius: 0;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+  transition: box-shadow 0.3s ease;
 
 
 }
 
+@keyframes fadeInUp {
+  from { 
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .group-content h2 {
   font-family: 'Quicksand', sans-serif;
   font-style: italic;
@@ -184,7 +228,8 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   outline: none; /* Rimuove l'effetto di outline di default al focus */
   text-align: left; /* Allinea il testo a sinistra */
   box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.795);
-   /* Disabilita il controllo ortografico e rimuove il trattino rosso */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Disabilita il controllo ortografico e rimuove il trattino rosso */
 }
 
 .group-content textarea:focus {
@@ -284,6 +329,8 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   z-index: 1002; /* Assicurati che la modale sia sopra l'overlay */
   animation: modalFadeIn 0.5s ease-out; /* Aggiungi un'animazione di fade-in */
   border: 1px solid #660066 ;
+  animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+
 }
 
 @keyframes modalFadeIn {
@@ -294,6 +341,17 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   100% {
     transform: scale(1); /* Ritorna alla dimensione originale */
     opacity: 1; /* Diventa completamente visibile */
+  }
+}
+
+@keyframes modalAppear {
+  0% {
+    transform: scale(0.95) translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
   }
 }
 
@@ -370,15 +428,20 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
 
 /* Icona del cestino */
 .delete-button {
-  position: absolute;
-  top: 35px;  /* Posiziona l'icona in alto */
-  right: 16px;  /* Posiziona l'icona a destra */
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
   color: #ff0000;  /* Colore rosso per il cestino */
   font-size: 24px;  /* Dimensione dell'icona */
-  transition: transform 0.2s, color 0.2s; /* Effetto di transizione */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .delete-button:hover {
@@ -475,3 +538,53 @@ pre {
   padding: 10px;
   border-radius: 5px;
 }
+
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Animazione per lo scroll */
+.group-content::-webkit-scrollbar-thumb {
+  transition: background-color 0.3s ease;
+}
+
+/* Animazione per i placeholder */
+.group-content textarea::placeholder {
+  transition: color 0.3s ease;
+}
+
+/* Animazione per i bordi */
+.group-content textarea, .modal input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animazione per il modal di conferma */
+.modal-confirmation-content {
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Animazione per i gradienti */
+.pagina-div, .modal {
+  transition: background 0.8s ease;
+}
+
+/* Animazione per il caricamento del contenuto */
+@keyframes contentLoad {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.group-content h2, .group-content p, .group-content pre {
+  animation: contentLoad 0.6s ease-out forwards;
+}
+
+/* Ritardi differenziati per gli elementi di contenuto */
+.group-content h2 { animation-delay: 0.1s; }
+.group-content p { animation-delay: 0.2s; }
+.group-content pre { animation-delay: 0.3s; }
+.group-content button { animation-delay: 0.4s; }

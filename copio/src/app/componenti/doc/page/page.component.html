@@ -36,9 +36,7 @@
           <h2>{{ page.pageTitle }}</h2>
           <div class="textarea-container">
             <!-- Icona del cestino -->
-            <button (click)="openConfirmationModal()" class="delete-button" >
-              <i class="fas fa-trash-alt"></i> <!-- Icona del cestino -->
-            </button>
+           
             <!-- Textarea -->
             <textarea  #codeTextArea
               spellcheck="false"
@@ -52,6 +50,9 @@
           <!-- Pulsante salva documento -->
           <button *ngIf="isModified" (click)="saveDocument()">Salva Documento</button>
           <button (click)="goBack()">Torna indietro</button>
+          <button (click)="openConfirmationModal()" class="delete-button" >
+            <i class="fas fa-trash-alt"></i> <!-- Icona del cestino -->
+          </button>
         </div>
 
         <div *ngIf="isConfirmationModalOpen" class="modal-confirmation">
