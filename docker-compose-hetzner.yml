@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  postgresql:
+    image: bitnami/postgresql:15
+    environment:
+      POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
+      POSTGRESQL_USERNAME: ${POSTGRESQL_USERNAME}
+      POSTGRESQL_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRESQL_POSTGRES_PASSWORD: ${POSTGRESQL_POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - copioDb:/bitnami/postgresql
+    
+
+  backend:
+    network_mode: "custom-bridge"  # Usa la rete host
+    build:
+      context: ./backend/copio  # Sostituisci con il path giusto per il tuo backend
+    ports:
+      - "9000:9000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/${POSTGRESQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRESQL_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRESQL_PASSWORD}
+      SPRING_APPLICATION_NAME: ${SPRING_APPLICATION_NAME}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      SPRING_JPA_SHOW_SQL: ${SPRING_JPA_SHOW_SQL}
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL}
+      SERVER_PORT: ${SERVER_PORT}
+    depends_on:
+      - postgresql
+
+  frontend:
+    image: copio-fe:1.0  # Usa l'immagine che hai buildato per il frontend
+    network_mode: "custom-bridge"  # Usa la rete host
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - backend
+
+
+
+
+volumes:
+  copioDb:

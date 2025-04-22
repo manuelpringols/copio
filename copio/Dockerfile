@@ -1,20 +1,37 @@
-# Usa l'immagine ufficiale di Node.js per costruire l'app
-FROM node:18 AS build
+# Usa l'immagine node per la build
+FROM node:18 as build
 
 # Imposta la directory di lavoro
 WORKDIR /app
 
-# Copia i file package.json e package-lock.json
+# Copia solo i file necessari per installare le dipendenze
 COPY package*.json ./
 
-# Installa le dipendenze dell'app
-RUN npm install --legacy-peer-deps
+# Installa le dipendenze senza interazioni di rete non necessarie
+RUN npm install --legacy-peer-deps --verbose
 
-# Copia il codice sorgente dell'app Angular
+# Copia il resto dei file sorgenti nel container
 COPY . .
 
-# Costruisci l'app Angular in modalità produzione
+# Esegui il build in modalità di produzione
 RUN npm run build --prod
 
-# Avvia il server di sviluppo Angular sulla porta 3000
-CMD ["npm", "start"]
+# Usa l'immagine Apache per servire i file statici
+FROM bitnami/apache:latest
+
+# Copia i file di build nella directory htdocs di Apache
+COPY --from=build /app/dist/copio/* /opt/bitnami/apache/htdocs/
+
+# Espone la porta 80
+EXPOSE 80
+
+
+
+
+
+#/app/dist/project_name
+FROM bitnami/apache:latest
+COPY --chown=1001:1001 --from=build /app/dist/copio/* /opt/bitnami/apache/htdocs 
+#COPY --chown=1001:1001 certss /opt/bitnami/apache/conf/bitnami/certs
+COPY --chown=1001:1001 config/bitnami.conf /opt/bitnami/apache/conf/bitnami
+COPY --chown=1001:1001 config/httpd.conf /opt/bitnami/apache/conf
