@@ -6,7 +6,7 @@ services:
    # networks:
      # - copio-net
     ports:
-      - "5433:5432"
+      - "127.0.0.1:5433:5432"
     environment:
       POSTGRESQL_DATABASE: ${POSTGRESQL_DATABASE}
       POSTGRESQL_USERNAME: ${POSTGRESQL_USERNAME}
@@ -37,6 +37,11 @@ services:
 
   frontend:
     image: copio-fe:1.0
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
    # networks:
    #   - copio-net
     ports:
