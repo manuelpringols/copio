@@ -1,0 +1,16 @@
+FROM eclipse-temurin:17-jdk-alpine
+
+# Installa Maven e dipendenze
+RUN apk update && apk add --no-cache maven
+
+# Crea la directory dell'app
+WORKDIR /app
+
+# Copia tutto il progetto
+COPY . .
+
+# (Opzionale: build se vuoi usare jar direttamente)
+# RUN mvn clean package -DskipTests
+
+# Esegui l'app
+CMD ["mvn", "spring-boot:run"]

@@ -35,6 +35,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL}
       SERVER_PORT: ${SERVER_PORT}
 
+
   frontend:
     image: copio-fe:1.0
     deploy:
