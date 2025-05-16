@@ -15,8 +15,8 @@ public class JwtService {
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
     private static final String JWT_SECRET = "IQ67Gq5vyhu2ZyvY4oHh5y30NXbuAAhO79V50TLNQ7He2z5nr3irsi1bfOt6VbZL6NsIWFdooXCg3xIZj1wF5XYFLhI0i2djGsgqpNVhiL7+v1XvZjE5APznRZW6XfVxa0IUmiTcSqWpHBS4dyoptTJDg3lhdJ/Kd3eNgOQRJ1Mu/TYCX3h34BWY7rpw3EUGvKzaAjztOsf595eJLssIlaQSNIFzAmWjSjwzO02i+f7hlkF0WrIhhLDKlrFdtp4u/eGlPGgrNbCJW3rxTyFs11N8D2RyKLE/x7p1Cp4R4YO+h/OlQjX8EFWAr6PPqjrWokgUL8Ix9a/zRYGTcSjdDBUeF1JMFTXSmMC7P1XV3u58oxjpPsrNfJbr1Rfn/4H2dKEqnfpDCyOyYvoX0fEXcMY4kmLucFHb53S0NWa0f1oEaOrUQzdjeyrLtn3oQyTJgxavT+IieX7oVtYnQMcawjQGWHUtgyeZsvvYFuuCNqPYhzqHiGMO/YoObi93XT/BKjXGCh9Yf5zeVRvXkRTLdEHxaTPelYYlygEj/O8LvSY=";
     
-    private static final long ACCESS_TOKEN_EXPIRATION = 3600000L; // 1 ora
-    private static final long REFRESH_TOKEN_EXPIRATION = 604800000L; // 7 giorni
+    private static final long ACCESS_TOKEN_EXPIRATION = 3600000L;        // 1 ora in millisecondi
+    private static final long REFRESH_TOKEN_EXPIRATION = 604800000L;
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(JWT_SECRET.getBytes());

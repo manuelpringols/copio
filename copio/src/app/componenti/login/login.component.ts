@@ -15,6 +15,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
+  rememberMe: boolean = false; 
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -23,17 +24,20 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    
-      // Login
-      this.authService.login(this.email, this.password).subscribe({
-        next: (response) => {
-          this.authService.saveToken(response.token);
-          this.router.navigate(['/']); // Reindirizza alla dashboard
-        },
-        error: (err) => {
-          this.errorMessage = err.error || 'Credenziali errate';
-        }
-      });
-    }
+    this.authService.login(this.email, this.password, this.rememberMe).subscribe({
+      next: (response) => {
+        // Salvo i token
+        this.authService.saveTokens(response.token, response.refreshToken || null);
+        
+        // Salvo il valore di rememberMe nel localStorage
+        localStorage.setItem('rememberMe', this.rememberMe ? 'true' : 'false');
+  
+        this.router.navigate(['/']); // Reindirizza alla dashboard
+      },
+      error: (err) => {
+        this.errorMessage = err.error || 'Credenziali errate';
+      }
+    });
+  }
   
 }

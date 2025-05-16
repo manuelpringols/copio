@@ -7,6 +7,8 @@ public class AuthDTO {
     private String username;
     private String email;
     private String password;
+    private boolean rememberMe;  // aggiunto per "rimani connesso"
+
 
     public AuthDTO() {
     }
@@ -21,6 +23,16 @@ public class AuthDTO {
     public AuthDTO(String username, String email) {
         this.username = username;
         this.email = email;
+    }
+
+      // Getter
+      public boolean isRememberMe() {
+        return rememberMe;
+    }
+
+    // Setter
+    public void setRememberMe(boolean rememberMe) {
+        this.rememberMe = rememberMe;
     }
 
     // Getter and Setter

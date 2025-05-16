@@ -6,6 +6,8 @@ import lombok.Data;
 public class AuthResponseDTO {
     private String email;
     private String token;
+    private String refreshToken;  // aggiunto
+
 
     // Costruttore
     public AuthResponseDTO(String email, String token) {
@@ -13,5 +15,10 @@ public class AuthResponseDTO {
         this.token = token;
     }
 
-    // Getter and Setter
+  public AuthResponseDTO(String email, String accessToken, String refreshToken) {
+        this.email = email;
+        this.token = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
 }

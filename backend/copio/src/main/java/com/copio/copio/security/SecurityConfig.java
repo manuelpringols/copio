@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.Customizer;
 
 @Configuration
 @EnableWebSecurity
@@ -36,8 +37,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
@@ -54,11 +54,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://copio.online","http://localhost:4200","chrome-extension://kmgclaebnbboaofefadmliagoaogekpe","chrome-extension://mejpgfafdagodaiohehhajinllkpgfop" //
+        configuration.setAllowedOrigins(List.of("https://copio.online","http://localhost:4200","http://localhost:3000","chrome-extension://kmgclaebnbboaofefadmliagoaogekpe","chrome-extension://mejpgfafdagodaiohehhajinllkpgfop" //
                         )); // Modifica l'origine se necessario
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true); // Necessario per inviare i cookie o token con credenziali
+        logger.info("CORS Configuration loaded");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -80,4 +81,6 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
+ 
 }
