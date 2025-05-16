@@ -10,7 +10,7 @@ import {jwtDecode} from 'jwt-decode';
 export class AuthService {
   private apiUrlLocal = 'http://localhost:9000/api/auth'; // Cambia con il tuo backend
 
-  private apiUrl = 'http://copio.online:9000/api/auth'; // Cambia con il tuo backend
+  private apiUrl = 'https://copio.online:9000/api/auth'; // Cambia con il tuo backend
 
 
   constructor(private http: HttpClient) {}
