@@ -2,7 +2,7 @@
   <div class="pagina-doc">
     <div class="docs-container">
       <div class="doc-header">
-        <h1>{{this.groupName}}</h1>
+        <h1>{{ groupName }}</h1>
       </div>
 
       <div class="content-container">
@@ -11,47 +11,64 @@
           <h3>Altre Pagine</h3>
           <button class="openModalButton" (click)="openModal()">+</button>
           <ul>
-            <li (click)="changePage(i)" *ngFor="let g of pages; index as i">
+            <li *ngFor="let g of pages; index as i" (click)="changePage(i)">
               {{ g.pageTitle }}
             </li>
-
           </ul>
         </div>
 
-
         <!-- Modal -->
-<div *ngIf="isModalOpen" class="modal-overlay">
-  <div class="modal">
-    <h3>Aggiungi Contenuto</h3>
-    <input [(ngModel)]="newTitle" placeholder="Inserisci il Titolo " />
-    <button (click)="saveNewContent()">Salva</button>
-    <button (click)="closeModal()">Chiudi</button>
-  </div>
-</div>
-
-
+        <div *ngIf="isModalOpen" class="modal-overlay">
+          <div class="modal">
+            <h3>Aggiungi Contenuto</h3>
+            <input [(ngModel)]="newTitle" placeholder="Inserisci il Titolo" />
+            <button (click)="saveNewContent()">Salva</button>
+            <button (click)="closeModal()">Chiudi</button>
+          </div>
+        </div>
 
         <!-- Contenuto del documento -->
         <div class="group-content" *ngIf="groupName">
-          <h2>{{ page.pageTitle }}</h2>
-          <div class="textarea-container">
-            <!-- Icona del cestino -->
-           
-            <!-- Textarea -->
-            <textarea  #codeTextArea
-              spellcheck="false"
-              [(ngModel)]="page.content"
-              [style.height]="'400px'"
-              (input)="onTextChange()"
-            ></textarea>
+          <div class="title-container">
+            <ng-container *ngIf="!isEditingTitle; else editMode">
+              <h2>{{ page.pageTitle }}</h2>
+              <button
+                class="edit-button"
+                style="background: none; border: none"
+                (click)="editTitle()"
+                aria-label="Modifica titolo"
+              >
+                ✏️
+              </button>
+            </ng-container>
 
+            <ng-template #editMode>
+              <div class="edit-container">
+                <input
+                  [(ngModel)]="editableTitle"
+                  class="title-input"
+                  placeholder="Modifica titolo"
+                />
+                <button class="save-button" (click)="saveTitle()">💾</button>
+                <button class="cancel-button" (click)="cancelEdit()">❌</button>
+              </div>
+            </ng-template>
           </div>
 
-          <!-- Pulsante salva documento -->
+          <div class="textarea-container">
+            <textarea
+              #codeTextArea
+              spellcheck="false"
+              [(ngModel)]="page.content"
+              style="height: 400px;"
+              (input)="onTextChange()"
+            ></textarea>
+          </div>
+
           <button *ngIf="isModified" (click)="saveDocument()">Salva Documento</button>
           <button (click)="goBack()">Torna indietro</button>
-          <button (click)="openConfirmationModal()" class="delete-button" >
-            <i class="fas fa-trash-alt"></i> <!-- Icona del cestino -->
+          <button (click)="openConfirmationModal()" class="delete-button" aria-label="Elimina pagina">
+            <i class="fas fa-trash-alt"></i>
           </button>
         </div>
 
@@ -61,8 +78,7 @@
             <button (click)="deletePage(pageId)">Elimina</button>
             <button (click)="closeConfirmModal()">Annulla</button>
           </div>
-
-
+        </div>
       </div>
     </div>
   </div>
