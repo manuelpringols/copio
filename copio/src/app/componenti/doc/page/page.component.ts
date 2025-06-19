@@ -36,7 +36,7 @@ export class PageComponent implements OnInit {
   isEditingGroupName: any;
   editedGroupName: any;
   isEditingTitle: boolean = false;
-  editableTitle: string = ''
+  editableTitle: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -73,6 +73,10 @@ export class PageComponent implements OnInit {
     } else {
       console.error('Errore: groupId non valido');
     }
+  }
+
+  codeBlockWrapper(content: string): string {
+    return '```typescript\n' + content + '\n```';
   }
 
   // Funzione per caricare le pagine in base al groupId

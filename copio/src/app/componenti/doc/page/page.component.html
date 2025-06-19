@@ -4,6 +4,8 @@
       <div class="doc-header">
         <h1>{{ groupName }}</h1>
       </div>
+        <button class="go_back" (click)="goBack()">Torna indietro</button>
+
 
       <div class="content-container">
         <!-- Side navigation -->
@@ -55,7 +57,7 @@
             </ng-template>
           </div>
 
-          <div class="textarea-container">
+          <!-- <div class="textarea-container">
             <textarea
               #codeTextArea
               spellcheck="false"
@@ -63,14 +65,37 @@
               style="height: 400px;"
               (input)="onTextChange()"
             ></textarea>
-          </div>
+          </div> -->
+          <div class="textarea-container">
+            <textarea
+              #codeTextArea
+              spellcheck="false"
+              [(ngModel)]="page.content"
+              (input)="onTextChange()"
+            ></textarea>
 
-          <button *ngIf="isModified" (click)="saveDocument()">Salva Documento</button>
+            <!-- Preview evidenziata
+            <div class="markdown-preview">
+              <markdown [data]="codeBlockWrapper(page.content)"></markdown>
+            </div>
+          </div> -->
+
+          <button *ngIf="isModified" (click)="saveDocument()">
+            Salva Documento
+          </button>
           <button (click)="goBack()">Torna indietro</button>
-          <button (click)="openConfirmationModal()" class="delete-button" aria-label="Elimina pagina">
+          <button
+            (click)="openConfirmationModal()"
+            class="delete-button"
+            aria-label="Elimina pagina"
+          >
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
+
+        
+
+      
 
         <div *ngIf="isConfirmationModalOpen" class="modal-confirmation">
           <div class="modal-confirmation-content">
@@ -80,6 +105,23 @@
           </div>
         </div>
       </div>
+
+        <div
+          class="preview-container"
+          style="
+            flex: 1;
+            background: #2d2d2d;
+            color: #eee;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-y: auto;
+            max-height: 80vh;
+            font-family: 'Source Code Pro', monospace;
+          "
+        >
+          <h3>Preview</h3>
+          <markdown [data]="codeBlockWrapper(page.content)"></markdown>
+        </div>
     </div>
   </div>
 </div>

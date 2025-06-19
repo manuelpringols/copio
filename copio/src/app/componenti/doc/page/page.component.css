@@ -1,31 +1,35 @@
 /* Impostazioni generali per la pagina */
 .pagina-div {
   height: 100vh;
-background: rgb(102,0,102);
-background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
+  background: rgb(102, 0, 102);
+  background: linear-gradient(
+    0deg,
+    rgba(102, 0, 102, 1) 0%,
+    rgb(36, 6, 105) 100%
+  );
   border-radius: 1vw;
   transition: background 0.8s ease-in-out;
-
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-
-
 
 .docs-container {
   max-width: fit-content;
   margin: 0 auto;
   animation: fadeIn 0.6s ease-out forwards;
-
-
 }
 
 .doc-header h1 {
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-weight: 200;
   font-style: italic;
   text-align: center;
@@ -33,8 +37,6 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   margin-bottom: 20px;
   padding: 10px;
   animation: textFadeIn 1s ease-out 0.2s both;
-
-
 }
 
 @keyframes textFadeIn {
@@ -50,7 +52,6 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 
 .content-container {
   display: flex;
-
 }
 /* Side navigation */
 .sidenav {
@@ -66,47 +67,46 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   margin-right: -0.2vw;
   overflow: auto;
 
+  /* Miglioramento scrollbar Chrome/Safari */
+  scrollbar-width: thin;
+  scrollbar-color: #660066 #333;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: slideInLeft 0.5s ease-out;
+}
 
-    /* Miglioramento scrollbar Chrome/Safari */
-    scrollbar-width: thin;
-    scrollbar-color: #660066 #333;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    animation: slideInLeft 0.5s ease-out;
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-30px);
+    opacity: 0;
   }
-
-  @keyframes slideInLeft {
-    from { transform: translateX(-30px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
+}
 
-  /* Scroll personalizzato per Chrome/Safari */
-  .sidenav::-webkit-scrollbar {
-    width: 8px;
-  }
+/* Scroll personalizzato per Chrome/Safari */
+.sidenav::-webkit-scrollbar {
+  width: 8px;
+}
 
-  .sidenav::-webkit-scrollbar-thumb {
-    background-color: #b3a1c9;
-    border-radius: 10px;
-  }
+.sidenav::-webkit-scrollbar-thumb {
+  background-color: #b3a1c9;
+  border-radius: 10px;
+}
 
-  .sidenav::-webkit-scrollbar-track {
-    background: #333;
+.sidenav::-webkit-scrollbar-track {
+  background: #333;
+}
 
-  }
-
-
-
-
-.sidenav:hover{
+.sidenav:hover {
   box-shadow: 3px 3px 14px 3px rgba(0, 0, 0, 0.541);
-
 }
 
 .sidenav h3 {
   font-size: 1.2rem;
   margin-bottom: 10px;
-  font-family: "Titillium Web", sans-serif;
-
+  font-family: 'Titillium Web', sans-serif;
 }
 
 .sidenav ul {
@@ -120,14 +120,12 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   transition: 0.3s;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linea sottile e semi-trasparente */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
 }
 
 /* Rimuoviamo la linea dall'ultimo elemento per estetica */
 .sidenav li:last-child {
   border-bottom: none;
 }
-
 
 .sidenav li:hover {
   color: #fff;
@@ -138,7 +136,7 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 
 /* Contenuto principale */
 .group-content {
-  width: 1200px;
+  width: 900px;
   max-height: fit-content;
   padding: 15px;
   background-color: #9b85adb0;
@@ -151,17 +149,14 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   border-top-left-radius: 0;
   animation: fadeInUp 0.6s ease-out 0.2s both;
   transition: box-shadow 0.3s ease;
-
-
 }
 
-
 @keyframes fadeInUp {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(30px);
   }
-  to { 
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -215,7 +210,6 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 .group-content textarea {
   width: 100%; /* Rende il textarea largo quanto il suo contenitore */
   height: auto; /* L'altezza si adatterà automaticamente */
-  min-height: 200px; /* Imposta un'altezza minima per evitare che diventi troppo piccolo */
   padding: 12px; /* Aumenta il padding per una spaziatura più confortevole */
   font-size: 1rem; /* Mantenimento della dimensione del font */
   line-height: 1.6; /* Aumenta la spaziatura tra le righe per una lettura migliore */
@@ -239,16 +233,12 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   border-color: #660066; /* Colore del bordo quando il textarea è in focus */
   box-shadow: 0 0 10px rgba(102, 0, 102, 0.6); /* Effetto di focus */
   background-color: #b6adad9a; /* Colore di sfondo chiaro */
-
 }
-
 
 .group-content textarea::placeholder {
   color: #aaa; /* Colore del placeholder */
   font-style: italic; /* Rende il testo del placeholder in corsivo */
 }
-
-
 
 /* Per Chrome, Safari e Edge */
 .group-content::-webkit-scrollbar {
@@ -273,7 +263,6 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   scrollbar-color: #660066 rgba(255, 255, 255, 0.2); /* Imposta il colore della parte attiva (pollice) e della traccia */
 }
 
-
 /* Modale - Overlay */
 .modal-overlay {
   position: fixed;
@@ -286,32 +275,29 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Assicurati che sia sopra gli altri contenuti */
-  transform: translateY(-50px); /* La modale inizia leggermente sopra la visualizzazione */
-  transition: opacity 0.4s ease, transform 0.4s ease; /* Aggiungi transizione per opacità e trasformazione */
-
-
+  transform: translateY(
+    -50px
+  ); /* La modale inizia leggermente sopra la visualizzazione */
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease; /* Aggiungi transizione per opacità e trasformazione */
 }
-
 
 .modal-overlay.show {
   opacity: 1; /* Aumenta l'opacità a 1 quando la modale appare */
   transform: translateY(0); /* Riposiziona la modale nella posizione corretta */
 }
 
-.openModalButton{
+.openModalButton {
   z-index: 1000;
   border: 1px solid #3b013b;
   width: 100%;
   background-color: #660066;
   border-radius: 0.3vw;
-  height: 2.7vh;
+  margin: 0;
   box-shadow: 0 4px 12px rgba(61, 0, 70, 0.6); /* Aggiungi una sfumatura più accentuata */
-
-
-
-
 }
-.openModalButton:hover{
+.openModalButton:hover {
   cursor: pointer;
   background-color: #751475; /* Sfuma il colore di background durante l'hover */
   color: #e21ca7; /* Colore del testo al passaggio del mouse */
@@ -322,7 +308,12 @@ background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(36, 6, 105) 100%);
 /* Modale */
 .modal {
   background: rgb(40, 0, 85);
-background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121, 0.575) 56%, rgba(124, 0, 173, 0.541) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(22, 15, 54, 0.582) 19%,
+    rgba(41, 9, 121, 0.575) 56%,
+    rgba(124, 0, 173, 0.541) 100%
+  );
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Ombra più forte */
@@ -331,9 +322,8 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   text-align: center;
   z-index: 1002; /* Assicurati che la modale sia sopra l'overlay */
   animation: modalFadeIn 0.5s ease-out; /* Aggiungi un'animazione di fade-in */
-  border: 1px solid #660066 ;
+  border: 1px solid #660066;
   animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-
 }
 
 @keyframes modalFadeIn {
@@ -358,15 +348,12 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   }
 }
 
-
-
 /* Modale - Titolo */
 .modal h3 {
   font-size: 1.5rem;
   margin-bottom: 15px;
   color: #7e037e; /* Colore personalizzato per il titolo */
   font-family: 'Source Code Pro', monospace;
-
 }
 
 /* Modale - Input */
@@ -380,8 +367,6 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   box-sizing: border-box;
   transition: border-color 0.3s ease;
   background-color: #444;
-
-
 }
 
 /* Cambia colore al focus dell'input */
@@ -417,7 +402,6 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
 .modal button:active {
   transform: scale(0.95); /* Effetto di riduzione al click */
   box-shadow: 0 2px 6px rgba(225, 0, 255, 0.89); /* Ombra accentuata */
-
 }
 
 /* Stato disabilitato */
@@ -428,32 +412,37 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   box-shadow: none;
 }
 
-
 /* Icona del cestino */
 .delete-button {
   position: relative;
   background: none;
   border: none;
   cursor: pointer;
-  color: #ff0000;  /* Colore rosso per il cestino */
-  font-size: 24px;  /* Dimensione dell'icona */
+  color: #ff0000; /* Colore rosso per il cestino */
+  font-size: 24px; /* Dimensione dell'icona */
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .delete-button:hover {
-  color: #e60000;  /* Colore rosso più intenso al passaggio del mouse */
+  color: #e60000; /* Colore rosso più intenso al passaggio del mouse */
   transform: scale(1.2); /* Effetto di ingrandimento */
 }
 
 .delete-button i {
-  pointer-events: none;  /* Evita che il clic venga intercettato dall'icona */
+  pointer-events: none; /* Evita che il clic venga intercettato dall'icona */
 }
 
 /* Aggiungi un'animazione di fade-in per l'icona */
@@ -467,12 +456,12 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
 }
 
 .delete-button {
-  animation: fadeIn 0.5s ease-out;  /* Aggiungi l'animazione */
+  animation: fadeIn 0.5s ease-out; /* Aggiungi l'animazione */
 }
 
 .textarea-container textarea {
   width: 100%;
-  height: 400px;
+  height: 100vh;
   padding-right: 30px; /* Aggiunge spazio per l'icona */
 }
 /* Modale di conferma */
@@ -491,7 +480,11 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
 }
 
 .modal-confirmation-content {
-  background: linear-gradient(135deg, #5e0844bb, #9c1b68d5); /* sfumatura tra due tonalità */
+  background: linear-gradient(
+    135deg,
+    #5e0844bb,
+    #9c1b68d5
+  ); /* sfumatura tra due tonalità */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -499,10 +492,8 @@ background: linear-gradient(90deg, rgba(22, 15, 54, 0.582) 19%, rgba(41, 9, 121,
   width: 100%;
   text-align: center;
   border: solid 1px #290707;
-
 }
-doc
-.modal-confirmation h3 {
+doc .modal-confirmation h3 {
   font-size: 1.5rem;
   margin-bottom: 20px;
   color: #fff; /* Colore del testo per maggiore contrasto */
@@ -516,16 +507,26 @@ doc
   border: 1px solid #250318;
   box-shadow: 1px 1px 5px 5px #7e037e;
   border-radius: 5px;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .modal-confirmation button {
-  background: linear-gradient(135deg, #ff22e2, #680902); /* sfumatura per il pulsante 'Elimina' */
+  background: linear-gradient(
+    135deg,
+    #ff22e2,
+    #680902
+  ); /* sfumatura per il pulsante 'Elimina' */
   color: white;
 }
 
 .modal-confirmation button:nth-child(2) {
-  background: linear-gradient(135deg, #096345, #757575); /* sfumatura per il pulsante 'Annulla' */
+  background: linear-gradient(
+    135deg,
+    #096345,
+    #757575
+  ); /* sfumatura per il pulsante 'Annulla' */
   color: white;
 }
 
@@ -533,9 +534,8 @@ doc
   opacity: 0.8;
 }
 
-
 pre {
-/* Aggiungi il ritorno a capo se la linea è troppo lunga */
+  /* Aggiungi il ritorno a capo se la linea è troppo lunga */
   font-family: monospace; /* Font per il codice */
   background-color: #f4f4f4; /* Colore di sfondo per una visualizzazione migliore */
   padding: 10px;
@@ -557,8 +557,11 @@ button {
 }
 
 /* Animazione per i bordi */
-.group-content textarea, .modal input {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.group-content textarea,
+.modal input {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 /* Animazione per il modal di conferma */
@@ -567,31 +570,53 @@ button {
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Animazione per i gradienti */
-.pagina-div, .modal {
+.pagina-div,
+.modal {
   transition: background 0.8s ease;
 }
 
 /* Animazione per il caricamento del contenuto */
 @keyframes contentLoad {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.group-content h2, .group-content p, .group-content pre {
+.group-content h2,
+.group-content p,
+.group-content pre {
   animation: contentLoad 0.6s ease-out forwards;
 }
 
 /* Ritardi differenziati per gli elementi di contenuto */
-.group-content h2 { animation-delay: 0.1s; }
-.group-content p { animation-delay: 0.2s; }
-.group-content pre { animation-delay: 0.3s; }
-.group-content button { animation-delay: 0.4s; }
-
+.group-content h2 {
+  animation-delay: 0.1s;
+}
+.group-content p {
+  animation-delay: 0.2s;
+}
+.group-content pre {
+  animation-delay: 0.3s;
+}
+.group-content button {
+  animation-delay: 0.4s;
+}
 
 .title-container {
   display: flex;
@@ -609,7 +634,7 @@ button {
   background-color: #b521da5d;
   background: none;
   box-shadow: 0 2px 4px rgba(123, 0, 123, 0.1);
-  transition: 
+  transition:
     background-color 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease,
@@ -617,8 +642,8 @@ button {
   outline: none;
   margin-bottom: 10px;
   border-bottom-left-radius: 0;
-  border-top-right-radius: 0;  animation: fadeSlideIn 0.5s ease-out forwards;
-
+  border-top-right-radius: 0;
+  animation: fadeSlideIn 0.5s ease-out forwards;
 }
 
 .title-input:focus {
@@ -627,8 +652,6 @@ button {
   background-color: #fff0ffb4;
   transform: scale(1.01);
 }
-
-
 
 .edit-button,
 .save-button,
@@ -640,12 +663,11 @@ button {
   margin: 5px;
   margin-bottom: 10px;
 
-  transition: 
+  transition:
     color 0.3s ease,
     transform 0.2s ease,
     background-color 0.3s ease;
   animation: fadeSlideIn 0.5s ease-out forwards;
-    
 }
 
 .edit-button:hover,
@@ -655,9 +677,7 @@ button {
   transform: scale(1.1);
   background-color: rgba(174, 39, 174, 0.1);
   border-radius: 5px;
-  
 }
-
 
 @keyframes fadeSlideIn {
   0% {
@@ -669,4 +689,106 @@ button {
   50% {
     transform: scale(1);
   }
+}
+
+/* Colonna preview Markdown */
+.preview-container {
+  transform-origin: top left; /* Mantiene l'ancoraggio in alto a sinistra */
+  flex: unset !important;
+
+  /* Mantieni anche le proprietà precedenti */
+  width: 80vw;
+  max-width: 100%;
+
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  font-family: 'Source Code Pro', monospace;
+  animation: fadeInRight 0.4s ease-out;
+  overflow-x: hidden;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* Per rendere il markdown leggibile */
+.preview-container h1,
+.preview-container h2,
+.preview-container h3 {
+  margin-top: 20px;
+  color: #ffdf8e;
+}
+
+.preview-container p {
+  line-height: 1.6;
+}
+
+.preview-container code {
+  background: #333;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+.preview-container pre code {
+  display: block;
+  padding: 12px;
+  background: #2d2d2d;
+  overflow-x: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+  color: #f8f8f2;
+}
+
+/* Optional: animazione di entrata */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.language-typescript {
+  width: fit-content;
+}
+/* Animazione salto */
+@keyframes jump {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-10px); }
+  50%  { transform: translateY(0); }
+  70%  { transform: translateY(-6px); }
+  85%  { transform: translateY(0); }
+  92%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+
+button {
+  background-color: #660066;
+  color: #b3a1c9;
+  border: 1px solid #b3a1c9;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  justify-self: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.4vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  font-family: 'Quicksand', sans-serif;
+  will-change: transform;
+}
+
+button:hover {
+  background-color: #660066;
+  color: #e21ca7;
+  border-color: #e21ca7;
+  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
+  animation: jump 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
