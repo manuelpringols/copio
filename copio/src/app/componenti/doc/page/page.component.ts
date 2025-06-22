@@ -13,6 +13,8 @@ import { AuthService } from '../../../servizi/auth.service';
   styleUrls: ['./page.component.css'],
 })
 export class PageComponent implements OnInit {
+
+
   codeContent: string = '';
   formattedCode: string = '';
   namePages: any[] = []; // Lista completa dei gruppi
@@ -37,6 +39,7 @@ export class PageComponent implements OnInit {
   editedGroupName: any;
   isEditingTitle: boolean = false;
   editableTitle: string = '';
+isFullscreen: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +49,12 @@ export class PageComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private authService: AuthService
   ) {}
+
+
+
+  toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+}
 
   ngOnInit(): void {
     // Carica il groupId dalla route
@@ -274,4 +283,10 @@ export class PageComponent implements OnInit {
     this.isEditingTitle = false;
     this.editableTitle = '';
   }
+
+  editTextArea() {
+    this.isModified=!this.isModified;
+  }
+
+  
 }

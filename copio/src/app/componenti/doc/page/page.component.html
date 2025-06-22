@@ -4,8 +4,7 @@
       <div class="doc-header">
         <h1>{{ groupName }}</h1>
       </div>
-        <button class="go_back" (click)="goBack()">Torna indietro</button>
-
+      <button class="go_back" (click)="goBack()">Torna indietro</button>
 
       <div class="content-container">
         <!-- Side navigation -->
@@ -30,7 +29,13 @@
         </div>
 
         <!-- Contenuto del documento -->
-        <div class="group-content" *ngIf="groupName">
+        <div
+          [ngStyle]="{
+            width: isFullscreen ? '100%' : '60vw',
+          }"
+          class="group-content"
+          *ngIf="groupName"
+        >
           <div class="title-container">
             <ng-container *ngIf="!isEditingTitle; else editMode">
               <h2>{{ page.pageTitle }}</h2>
@@ -57,6 +62,40 @@
             </ng-template>
           </div>
 
+          <div *ngIf="isModified" class="textarea-container">
+            <textarea
+              #codeTextArea
+              spellcheck="false"
+              [(ngModel)]="page.content"
+              style="height: 400px; width: 100%"
+              (input)="onTextChange()"
+            ></textarea>
+          </div>
+
+          <!-- Anteprima Markdown -->
+          <div class="preview-container">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+              "
+            >
+              <h3 style="margin: 0">Preview</h3>
+              <button (click)="toggleFullscreen()" style="font-size: 1.1em">
+                {{ isFullscreen ? 'Riduci Preview' : 'Espandi Preview' }}
+                {{ isFullscreen ? '🔽' : '🔼' }}
+              </button>
+            </div>
+
+            <markdown [data]="codeBlockWrapper(page.content)"></markdown>
+
+            <button (click)="editTextArea()" style="font-size: 1.2em">
+              Modifica Preview ✏️
+            </button>
+          </div>
+
           <!-- <div class="textarea-container">
             <textarea
               #codeTextArea
@@ -66,15 +105,15 @@
               (input)="onTextChange()"
             ></textarea>
           </div> -->
-          <div class="textarea-container">
+          <!-- <div class="textarea-container">
             <textarea
               #codeTextArea
               spellcheck="false"
               [(ngModel)]="page.content"
               (input)="onTextChange()"
-            ></textarea>
+            ></textarea> -->
 
-            <!-- Preview evidenziata
+          <!-- Preview evidenziata
             <div class="markdown-preview">
               <markdown [data]="codeBlockWrapper(page.content)"></markdown>
             </div>
@@ -93,10 +132,6 @@
           </button>
         </div>
 
-        
-
-      
-
         <div *ngIf="isConfirmationModalOpen" class="modal-confirmation">
           <div class="modal-confirmation-content">
             <h3>Sei sicuro di voler eliminare questa pagina?</h3>
@@ -106,7 +141,7 @@
         </div>
       </div>
 
-        <div
+      <!-- <div
           class="preview-container"
           style="
             flex: 1;
@@ -121,7 +156,7 @@
         >
           <h3>Preview</h3>
           <markdown [data]="codeBlockWrapper(page.content)"></markdown>
-        </div>
+        </div> -->
     </div>
   </div>
 </div>
