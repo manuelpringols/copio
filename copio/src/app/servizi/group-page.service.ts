@@ -8,7 +8,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class GroupPageService {
 
   private apiUrlLocal = `http://localhost:9000/api/groupPages`; // Modifica il path se necessario
-  private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
+  //private apiUrl = `https://copio.online:9000/api/groupPages`; // Modifica il path se necessario
 
 
   private groupPagesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
@@ -28,7 +28,7 @@ export class GroupPageService {
   // Crea un nuovo GroupPage e aggiorna la lista dei gruppi
    // Crea un nuovo GroupPage e aggiorna la lista dei gruppi
    /*createGroupPage(groupPage: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, groupPage, {
+    return this.http.post<any>(`${this.apiUrlLocal}`, groupPage, {
       headers: { 'Content-Type': 'application/json' },
     }).pipe(
       tap(() => {
@@ -40,7 +40,7 @@ export class GroupPageService {
     */
 
   createGroupPage(groupPageTitle: any, userId: number): Observable<any> {
-    const url = `${this.apiUrl}/create/${userId}`; // Aggiungi l'ID dell'utente come parametro di query
+    const url = `${this.apiUrlLocal}/create/${userId}`; // Aggiungi l'ID dell'utente come parametro di query
     return this.http.post<any>(url, groupPageTitle, {
       headers: { 'Content-Type': 'application/json' },
     }).pipe(
@@ -54,7 +54,7 @@ export class GroupPageService {
 
     // Carica la lista dei gruppi e aggiorna il BehaviorSubject
     private loadGroupPages(): void {
-      this.http.get<any[]>(this.apiUrl).subscribe(
+      this.http.get<any[]>(this.apiUrlLocal).subscribe(
         (groupPages) => {
           this.groupPagesSubject.next(groupPages); // Aggiorna il BehaviorSubject
         },
@@ -66,12 +66,12 @@ export class GroupPageService {
 
   // Ottieni un gruppo specifico per ID
   getGroupById(groupId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/groups/${groupId}`);
+    return this.http.get<any>(`${this.apiUrlLocal}/groups/${groupId}`);
   }
 
   // Ottieni il nome di un gruppo per ID
   getGroupNameById(groupId: number): Observable<string> {
-    return this.http.get<string>(`${this.apiUrl}/getGroupName/${groupId}`, {
+    return this.http.get<string>(`${this.apiUrlLocal}/getGroupName/${groupId}`, {
       responseType: 'text' as 'json'  // Specifica che la risposta è di tipo testo
     });
   }
@@ -79,7 +79,7 @@ export class GroupPageService {
 
    // Metodo per eliminare un GroupPage
    deleteGroupPage(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.delete<void>(`${this.apiUrlLocal}/${id}`).pipe(
       tap(() => {
         // Dopo aver eliminato il gruppo, ricarica la lista dei gruppi
         this.loadGroupPages();
@@ -89,7 +89,7 @@ export class GroupPageService {
 
 
   getGroupPagesByUser(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/byUser/${userId}`);
+    return this.http.get<any[]>(`${this.apiUrlLocal}/byUser/${userId}`);
   }
 
 

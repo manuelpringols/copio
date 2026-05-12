@@ -9,7 +9,7 @@ export class GroupsService {
 
   private apiUrlLocal = "http://localhost:9000/api/groups"; // URL mini-pc dell'API
 
-   private apiUrl = "https://copio.online:9000/api/groups"; // URL base dell'API
+   //private apiUrl = "https://copio.online:9000/api/groups"; // URL base dell'API
   constructor(private http: HttpClient) { }
 
   getAllGroups(): Observable<any> {
@@ -22,42 +22,42 @@ export class GroupsService {
     };
   
     // Esegui la richiesta GET con l'header di autorizzazione
-    return this.http.get<any>(this.apiUrl, { headers });
+    return this.http.get<any>(this.apiUrlLocal, { headers });
   }
 
   
 
   // Ottieni un gruppo per ID
   getGroupById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrlLocal}/${id}`);
   }
 
   // Crea un nuovo gruppo
   /*createGroup(groupName: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/save?groupName=${groupName}`, groupName);
+    return this.http.post<any>(`${this.apiUrlLocal}/save?groupName=${groupName}`, groupName);
   }
     */
 
   createGroup(groupName: string, userId: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/save?groupName=${groupName}&userId=${userId}`, {});
+    return this.http.post<any>(`${this.apiUrlLocal}/save?groupName=${groupName}&userId=${userId}`, {});
   }
 
   // Aggiorna un gruppo esistente
   updateGroup(id: number, group: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, group);
+    return this.http.put<any>(`${this.apiUrlLocal}/${id}`, group);
   }
 
   // Elimina un gruppo
   deleteGroup(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrlLocal}/${id}`);
   }
 
   getGroupsByUserId(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/user/${userId}`);
+    return this.http.get<any>(`${this.apiUrlLocal}/user/${userId}`);
   }
 
   deleteGroupsByUserId(userId : number,groupId : number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/byUser/${userId}/group/${groupId}`);
+    return this.http.delete<any>(`${this.apiUrlLocal}/byUser/${userId}/group/${groupId}`);
   }
 
 

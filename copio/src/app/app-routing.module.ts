@@ -10,26 +10,15 @@ import { authGuard } from './auth.guard';
 import { NotFoundComponent } from './componenti/not-found/not-found.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
-
-  {
-    path: 'snippet',
-    component: SnippetComponent, canActivate : [authGuard]
-  },
-  { path: 'doc', component: DocComponent, canActivate : [authGuard] },
-
-  { path: 'doc/page/:id', component: PageComponent, canActivate : [authGuard] },
-
-  { path: 'login', component: LoginComponent },
-
-  { path: 'register', component: RegisterComponent },
-
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', component:NotFoundComponent }, // fallback route
-
+  { path: '',          component: HomeComponent },
+  { path: 'snippet',   component: SnippetComponent, canActivate: [authGuard] },
+  { path: 'doc',       component: DocComponent,     canActivate: [authGuard] },
+  { path: 'doc/page/:id', component: PageComponent, canActivate: [authGuard] },
+  { path: 'login',     component: LoginComponent },
+  { path: 'register',  component: RegisterComponent },
+  { path: '**',        component: NotFoundComponent },
+  // RIMOSSA: { path: '', redirectTo: '/login', pathMatch: 'full' }
+  // Era irraggiungibile — la route '' sopra la intercettava sempre prima.
 ];
 
 @NgModule({

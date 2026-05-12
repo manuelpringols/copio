@@ -1,15 +1,39 @@
-
-
+<!-- Fullscreen Overlay -->
+<div *ngIf="fullscreenSnippet" class="fullscreen-overlay" (keydown.escape)="closeFullscreen()">
+  <div class="fullscreen-header">
+    <span class="fullscreen-title">
+      <i class="fas fa-code" style="margin-right:8px; color: var(--teal-soft)"></i>
+      {{ fullscreenSnippet.title }}
+      <span class="snippet-lang-badge" style="margin-left:10px">{{ fullscreenSnippet.language }}</span>
+    </span>
+    <div style="display:flex; gap:10px; align-items:center">
+      <button class="icon-btn copy-btn" (click)="copyCode(fullscreenSnippet._index)" title="Copia">
+        <i class="fas fa-copy"></i>
+      </button>
+      <button class="fullscreen-close-btn" (click)="closeFullscreen()">
+        <i class="fas fa-compress"></i> Chiudi
+      </button>
+    </div>
+  </div>
+  <div class="fullscreen-code-wrapper">
+    <pre><code [id]="'codeBlock-fs-' + fullscreenSnippet._index" [innerHTML]="fullscreenSnippet.content"></code></pre>
+  </div>
+</div>
 
 <div class="container">
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
       <h3>Groupy</h3>
-      <button (click)="openCreateGroupModal()">Aggiungi Gruppo</button>
+      <button (click)="openCreateGroupModal()">+ Aggiungi Gruppo</button>
     </div>
     <ul>
-      <li *ngFor="let group of groups" (click)="selectGroup(group)">
+      <li
+        *ngFor="let group of groups; let i = index"
+        [style.--item-index]="i"
+        [class.active]="selectedGroup?.idGroup === group.idGroup"
+        (click)="selectGroup(group)"
+      >
         <span>{{ group.name }}</span>
       </li>
     </ul>
@@ -17,14 +41,15 @@
 
   <!-- Contenuto principale -->
   <div class="main-content">
-    <!-- Overlay quando la modale è aperta -->
+
+    <!-- Overlay modali -->
     <div
       *ngIf="showCreateGroupModal || showCreateSnippetModal"
       class="overlay"
       (click)="closeAllModals()"
     ></div>
 
-    <!-- Modale per la creazione di un gruppo -->
+    <!-- Modale crea gruppo -->
     <div *ngIf="showCreateGroupModal" class="create-group-modal">
       <div class="modal-content">
         <h2>Crea Gruppo</h2>
@@ -34,123 +59,116 @@
       </div>
     </div>
 
-
-
-
-
-
-    <div *ngIf="isDeleteModalVisible" class="custom-modal" >
+    <!-- Modale elimina snippet -->
+    <div *ngIf="isDeleteModalVisible" class="custom-modal">
       <div class="custom-modal-content">
         <span class="custom-close" (click)="closeDeleteModal()">&times;</span>
-        <h2>Sei sicuro di voler eliminare lo snippet "{{snippetToDeleteName}}"  ?</h2>
+        <h2>Eliminare lo snippet<br><strong>"{{ snippetToDeleteName }}"</strong>?</h2>
         <button (click)="deleteSnippet()">Conferma</button>
         <button (click)="closeDeleteModal()">Annulla</button>
       </div>
     </div>
 
-    <!-- Visualizza gli snippet del gruppo selezionato -->
-    <div *ngIf="selectedGroup" class="snippet-section">
-      <h2>Snippet di {{ selectedGroup?.name || 'Gruppo non selezionato' }}</h2>
+    <!-- Sezione snippet -->
+    <div *ngIf="selectedGroup; else noGroupSelected">
 
-      <button (click)="goBack()">Torna indietro</button>
-
-      <div
-        *ngIf="filteredSnippets.length > 0; else noSnippets"
-        class="snippet-list"
-      >
-        <div
-          *ngFor="
-            let snippet of filteredSnippets
-              | slice
-                : (currentPage - 1) * snippetsPerPage
-                : currentPage * snippetsPerPage;
-            index as i
-          "
-          class="snippet-card"
-          [ngClass]="{ expanded: isExpanded(i) }"
-        >
-          <h3
-            style="
-              font-family: 'Quicksand', sans-serif;
-              color: #15bb15e3;
-              font-size: 1.9rem;
-              font-weight: 700;
-            "
-          >
-            <u></u>
-            <span
-              style="
-                display: inline-flex;
-                align-items: center;
-                margin-left: 8px;
-              "
-            >
-              {{ snippet.title }} :
-              <!-- <img [ngClass]="{'copied': isCopied}"   style="border: 1.5px solid #444; box-shadow: 1px 1px 4px 3px #333; border-radius: 50%;" src="https://img.icons8.com/color/48/copy.png" alt="Copia" class="copy-icon" (click)="copyToClipboard(snippet.content)"> -->
-            </span>
-          </h3>
-
-          <pre [class.expanded]="isExpanded(i)">
-            <code id="codeBlock-{{i}}" [class]="'language-' + snippet.language" [innerHTML]="snippet.content"></code>
-
-            <img src="https://img.icons8.com/ios-filled/50/000000/expand-arrow.png"
-                 alt="Toggle Overflow"
-                 class="toggle-icon"
-                 (click)="toggleOverflow(i)">
-             <!-- Icona per Copiare il Codice -->
-      <i class="fas fa-copy copy-icon" style="font-size: 24px;" (click)="copyCode(i)" aria-label="Copia codice"></i>
-
-<!-- Icona per Eliminare lo Snippet -->
-<i class="fas fa-trash-alt delete-icon" style="font-size: 24px;" (click)="openDeleteModal(snippet.id, i)" aria-label="Elimina snippet"></i>
-
-
-          </pre>
-          <hr/>
-        </div>
-      </div>
-
-      <!-- Template in caso di nessuno snippet -->
-      <ng-template #noSnippets>
-        <p style="color: brown">No snippets found for the selected group.</p>
-      </ng-template>
-
-      <!-- Navigazione tra pagine -->
-      <div class="pagination">
-        <button (click)="changePage('prev')" [disabled]="currentPage === 1">
-          ◀
-        </button>
-        <span>{{ currentPage }} / {{ totalPages }}</span>
-        <button
-          (click)="changePage('next')"
-          [disabled]="currentPage === totalPages"
-        >
-          ▶
-        </button>
-      </div>
-
-      <!-- Pulsante "Crea Snippet" -->
-      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">
-        Crea Snippet
+      <button class="back-btn" (click)="goBack()">
+        <i class="fas fa-arrow-left"></i> Indietro
       </button>
 
-      <!-- Modale per la creazione dello snippet -->
+      <h2>
+        <i class="fas fa-layer-group" style="color:var(--teal-soft); margin-right:8px; font-size:1.3rem"></i>
+        {{ selectedGroup?.name || 'Gruppo' }}
+      </h2>
+
+      <!-- Lista snippet -->
+      <div *ngIf="paginatedSnippets().length > 0; else noSnippets" class="snippet-section">
+
+        <div
+          *ngFor="let snippet of paginatedSnippets(); let i = index"
+          class="snippet-card"
+        >
+          <!-- Header card -->
+          <div class="snippet-header">
+            <div style="display:flex; align-items:center; gap:10px; flex:1; min-width:0">
+              <span class="snippet-title">{{ snippet.title }}</span>
+              <span class="snippet-lang-badge">{{ snippet.language }}</span>
+            </div>
+            <div class="snippet-actions">
+              <!-- Copia -->
+              <button
+                class="icon-btn copy-btn"
+                [class.copied]="copiedIndex === i"
+                (click)="copyCode(i)"
+                [title]="copiedIndex === i ? 'Copiato!' : 'Copia codice'"
+              >
+                <i [class]="copiedIndex === i ? 'fas fa-check' : 'fas fa-copy'"></i>
+              </button>
+              <!-- Fullscreen -->
+              <button
+                class="icon-btn fullscreen-btn"
+                (click)="openFullscreen(snippet, i)"
+                title="Schermo intero"
+              >
+                <i class="fas fa-expand"></i>
+              </button>
+              <!-- Elimina -->
+              <button
+                class="icon-btn delete-btn"
+                (click)="openDeleteModal(snippet.id, i)"
+                title="Elimina snippet"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Codice scrollabile -->
+          <div class="snippet-code-wrapper">
+            <pre><code [id]="'codeBlock-' + i" [innerHTML]="snippet.content"></code></pre>
+          </div>
+        </div>
+
+        <!-- Paginazione -->
+        <div class="pagination">
+          <button (click)="changePage('prev')" [disabled]="currentPage === 1">◀ Prec</button>
+          <span>{{ currentPage }} / {{ totalPages }}</span>
+          <button (click)="changePage('next')" [disabled]="currentPage === totalPages">Succ ▶</button>
+        </div>
+
+      </div>
+
+      <!-- Nessuno snippet -->
+      <ng-template #noSnippets>
+        <div class="no-snippets">
+          <i class="fas fa-code" style="font-size:2rem; margin-bottom:12px; display:block; color:var(--violet-soft)"></i>
+          Nessuno snippet in questo gruppo.<br>Creane uno!
+        </div>
+      </ng-template>
+
+      <!-- Modale crea snippet -->
       <div *ngIf="showCreateSnippetModal" class="create-snippet-modal">
         <div class="modal-content">
-          <h2>Crea Snippet</h2>
-          <input
-            [(ngModel)]="newSnippet.title"
-            placeholder="Titolo dello snippet"
-          />
-          <textarea
-            [(ngModel)]="newSnippet.content"
-            placeholder="Codice dello snippet"
-          ></textarea>
-          <button (click)="createSnippet()">Crea Snippet</button>
-          <button class="close" (click)="closeCreateSnippetModal()">
-            Annulla
-          </button>
+          <h2><i class="fas fa-plus" style="margin-right:6px"></i>Nuovo Snippet</h2>
+          <input [(ngModel)]="newSnippet.title" placeholder="Titolo" />
+          <textarea [(ngModel)]="newSnippet.content" placeholder="Incolla il codice qui..."></textarea>
+          <button (click)="createSnippet()">Salva Snippet</button>
+          <button class="close" (click)="closeCreateSnippetModal()">Annulla</button>
         </div>
       </div>
+
+      <button class="create-snippet-btn" (click)="openCreateSnippetModal()">
+        <i class="fas fa-plus"></i> Crea Snippet
+      </button>
+
     </div>
+
+    <ng-template #noGroupSelected>
+      <div class="no-snippets" style="margin-top:60px">
+        <i class="fas fa-layer-group" style="font-size:2rem; display:block; margin-bottom:12px; color:var(--violet-soft)"></i>
+        Seleziona un gruppo dalla sidebar
+      </div>
+    </ng-template>
+
   </div>
 </div>

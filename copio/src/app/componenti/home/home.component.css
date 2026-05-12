@@ -1,201 +1,66 @@
-/* Stile del titolo */
+/* ══════════════════════════════════════════════════════════════
+   HOME PAGE
+   FIX: il body aveva padding:20px e gradient viola-teal che affiorava
+   intorno al componente. Ora il background è su .home-page che copre
+   l'intera viewport; body è trasparente (styles.css).
+══════════════════════════════════════════════════════════════ */
+
+.home-page {
+  min-height: 100vh;
+  padding: 0 24px 60px;
+  background:
+    radial-gradient(ellipse at 20% 10%,  rgba(110, 0, 140, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 85%,  rgba(50,  0, 110, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 40%,  rgba(80,  0, 100, 0.08) 0%, transparent 40%),
+    linear-gradient(180deg, #080010 0%, #060010 100%);
+}
+
+/* ── Titolo ──────────────────────────────────────────────────── */
 .title {
-  font-size: 10.5rem;
   text-align: center;
-  color: #18bbbb;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Leggero ombreggiamento per migliorare la visibilità */
-  background: linear-gradient(125deg, #ff0000, #631fbd); /* Gradient dal lilla al blu */
-  background-clip: text;
-  color: transparent;
-  font-family: "Titillium Web", sans-serif;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: clamp(5rem, 14vw, 11rem);
   font-weight: 200;
   font-style: italic;
+  letter-spacing: -2px;
+  line-height: 1;
+  padding-top: clamp(32px, 6vh, 64px);
+  margin-bottom: 0;
+  background: linear-gradient(135deg,
+    #c084fc 0%,
+    #a855f7 30%,
+    #e21ca7 65%,
+    #b3a1c9 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 40px rgba(162, 0, 255, 0.25));
+  animation: titleIn 0.9s cubic-bezier(0.25, 0.8, 0.25, 1) both;
 }
 
-/* Contenitore delle card */
-.home-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Auto-fit e colonna minima di 250px */
-  gap: 20px;
-  justify-items: center;
-  margin-top: 30px;
-  padding: 10px;
+@keyframes titleIn {
+  from { opacity: 0; transform: translateY(-18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Stile delle card */
-.card {
-  background: linear-gradient(125deg, #000000, #0e0a8d); /* Gradient dal lilla al blu */
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra per dare profondità */
-  padding: 60px;
-  width: 100%;
-  max-width: 320px;
-  min-height: 250px; /* Card più lunghe */
-  cursor: pointer;
-  text-align: center;
-  position: relative; /* Per gestire l'overlay */
-  overflow: hidden; /* Nasconde l'overlay che esce fuori */
-  transition: transform 3.4s ease, box-shadow 0.4s ease; /* Transizione graduale senza background */
-}
-
-/* Un overlay semi-trasparente */
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #444444; /* Colore di base */
-  opacity: 0.4;
-  transition: opacity 0.4s ease; /* Cambia l'opacità dolcemente */
-  border-radius: 15px;
-}
-
-/* Hover effetti delle card */
-.card:hover {
-  transform: translateY(-15px); /* Leggera animazione in traslazione */
-  box-shadow: 0 10px 14px #630191ab; /* Ombra più evidenti durante l'hover */
-}
-
-.card:hover::before {
-  opacity: 0.8;
-  background: linear-gradient(135deg, #15025a75, #330101);
-}
-
-/* Icona della card */
-.card-icon {
-  font-size: 40px;
-  color: #4CAF50; /* Colore iniziale verde rilassante per l'icona */
-  transition: color 0.4s ease; /* Transizione morbida per il colore dell'icona */
-}
-
-/* Titolo della card */
-.card-title {
-  font-family: "Titillium Web", sans-serif;
-  font-size: 1.9rem;
-  margin: 10px 0;
-  font-weight: bold;
-  font-style: italic;
-  color: #3d3d3d; /* Colore chiaro per il titolo (grigio chiaro) */
-  transition: color 0.4s ease; /* Transizione morbida per il colore del titolo */
-}
-
-/* Descrizione della card */
-.card-description {
-  font-size: 1.5rem;
-  color: #e0e0e0; /* Grigio chiaro per la descrizione */
-}
-
-/* Cambiamenti morbidi su hover per l'icona, il titolo e la descrizione */
-.card:hover .card-icon {
-  color: #81C784; /* Cambia lentamente il colore dell'icona */
-}
-
-.card:hover .card-title {
-  color: #ffffff; /* Cambia il colore del titolo lentamente */
-}
-
-.card:hover .card-description {
-  color: #eeeeee; /* Cambia il colore della descrizione lentamente */
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  .title {
-    font-size: 2rem; /* Riduce la dimensione del titolo sui dispositivi più piccoli */
-  }
-
-  .home-container {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonne più strette sui dispositivi più piccoli */
-  }
-
-  .card {
-    padding: 20px; /* Riduce il padding delle card per adattarsi meglio su schermi piccoli */
-    max-width: 280px; /* Limita la larghezza massima delle card */
-    min-height: 200px; /* Riduce l'altezza minima delle card */
-  }
-
-  .card-icon {
-    font-size: 30px; /* Riduce la dimensione dell'icona su schermi più piccoli */
-  }
-
-  .card-title {
-    font-size: 1.2rem; /* Riduce la dimensione del titolo */
-  }
-
-  .card-description {
-    font-size: 0.9rem; /* Riduce la dimensione della descrizione */
-  }
-}
-
-@media (max-width: 480px) {
-  .title {
-    font-size: 1.8rem; /* Ulteriore riduzione della dimensione del titolo per dispositivi molto piccoli */
-  }
-
-  .card {
-    max-width: 100%; /* Le card occuperanno tutta la larghezza disponibile */
-    min-height: 220px; /* Altezza minima maggiore per visibilità */
-  }
-
-  .card-icon {
-    font-size: 28px; /* Riduce l'icona ulteriormente */
-  }
-
-  .card-title {
-    font-size: 1rem; /* Riduce ulteriormente la dimensione del titolo */
-  }
-
-  .card-description {
-    font-size: 0.8rem; /* Riduce ulteriormente la descrizione */
-  }
-}
-
-
-.unavailable-card {
-  position: relative;
-  filter: grayscale(100%) brightness(0.6); /* Effetto "disabilitato" */
-  pointer-events: none; /* Impedisce interazioni */
-  background: linear-gradient(125deg, #ad5c5c, #0e0a8d); /* Gradient dal lilla al blu */
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra per dare profondità */
-  padding: 60px;
-  width: 100%;
-  max-width: 320px;
-  min-height: 250px; /* Card più lunghe */
-  cursor: pointer;
-  text-align: center;
-  position: relative; /* Per gestire l'overlay */
-  overflow: hidden; /* Nasconde l'overlay che esce fuori */
-  transition: transform 3.4s ease, box-shadow 0.4s ease;
-}
-
-.unavailable-card::after {
-  content: "Coming Soon";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
-  padding: 10px 15px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
+/* ── Extension banner ────────────────────────────────────────── */
 .extension-banner {
-  background: linear-gradient(135deg, rgba(102, 0, 102, 0.8) 0%, rgba(36, 6, 105, 0.8) 100%);
-  border-radius: 10px;
-  padding: 15px;
-  margin: 20px auto;
   max-width: 800px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(179, 161, 201, 0.3);
-  animation: fadeIn 0.6s ease-out;
+  margin: 32px auto 0;
+  padding: 18px 24px;
+  background: rgba(22, 4, 38, 0.7);
+  border: 1px solid rgba(180, 100, 210, 0.3);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4),
+              inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: bannerIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) 0.2s both;
+}
+
+@keyframes bannerIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .extension-content {
@@ -206,69 +71,179 @@
 }
 
 .extension-icon {
-  font-size: 2.5rem;
-  color: #b3a1c9;
+  font-size: 2.2rem;
+  color: #9b6fcc;
+  flex-shrink: 0;
+  opacity: 0.85;
 }
 
 .extension-text h3 {
-  margin: 0;
+  margin: 0 0 4px;
   font-family: 'Titillium Web', sans-serif;
   font-weight: 400;
-  color: white;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
+  color: #ddd0ee;
 }
 
 .extension-text p {
-  margin: 5px 0 0;
-  color: #d9cfe8;
-  font-size: 0.9rem;
+  margin: 0;
+  color: #7a6390;
+  font-size: 0.88rem;
 }
 
 .extension-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #660066;
+  background: rgba(80, 0, 110, 0.35);
   color: #b3a1c9;
-  border: 1px solid #b3a1c9;
-  padding: 10px 20px;
-  border-radius: 30px;
+  border: 1px solid rgba(180, 100, 210, 0.45);
+  padding: 10px 22px;
+  border-radius: 20px;
   text-decoration: none;
   font-family: 'Quicksand', sans-serif;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
   white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .extension-button:hover {
-  background-color: #751475;
-  color: #e21ca7;
-  border-color: #e21ca7;
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.4);
+  background: rgba(120, 0, 160, 0.5);
+  color: #e8dff5;
+  border-color: rgba(220, 80, 255, 0.6);
+  box-shadow: 0 0 20px rgba(160, 0, 220, 0.25);
   transform: translateY(-2px);
 }
 
-.extension-button:active {
-  transform: translateY(0);
+.extension-button:active { transform: translateY(0); }
+
+/* ── Grid card ───────────────────────────────────────────────── */
+.home-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 40px auto 0;
+  padding: 0 8px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .extension-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .extension-button {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-a{ 
+/* ── Card attiva ─────────────────────────────────────────────── */
+.card {
+  position: relative;
+  background: rgba(20, 4, 34, 0.72);
+  border: 1px solid rgba(102, 0, 140, 0.3);
+  border-radius: 18px;
+  padding: 48px 32px 40px;
   cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 28px rgba(0,0,0,0.45),
+              inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: transform 0.32s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.32s ease,
+              border-color 0.32s ease;
+  opacity: 0;
+  animation: cardIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
+
+.card:nth-child(1) { animation-delay: 0.35s; }
+.card:nth-child(2) { animation-delay: 0.48s; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1); }
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(200, 80, 230, 0.5);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55),
+              0 0 32px rgba(140, 0, 200, 0.2),
+              inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+.card-icon {
+  font-size: 2.8rem;
+  color: #7a4d96;
+  margin-bottom: 14px;
+  display: block;
+  transition: color 0.3s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card:hover .card-icon {
+  color: #c084fc;
+  transform: scale(1.12) translateY(-4px);
+}
+
+.card-title {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 300;
+  font-style: italic;
+  color: #b3a1c9;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+}
+.card:hover .card-title { color: #e8dff5; }
+
+.card-description {
+  font-size: 0.95rem;
+  color: #5c4870;
+  line-height: 1.6;
+  transition: color 0.3s ease;
+}
+.card:hover .card-description { color: #9b80b8; }
+
+/* ── Card coming soon ────────────────────────────────────────── */
+.unavailable-card {
+  position: relative;
+  background: rgba(14, 4, 22, 0.5);
+  border: 1px solid rgba(80, 0, 100, 0.15);
+  border-radius: 18px;
+  padding: 48px 32px 40px;
+  text-align: center;
+  overflow: hidden;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  opacity: 0;
+  animation: cardIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) 0.61s forwards;
+}
+
+.unavailable-card::after {
+  content: "Coming Soon";
+  position: absolute;
+  top: 18px;
+  right: -30px;
+  background: rgba(50, 0, 70, 0.85);
+  color: #5a3475;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 5px 44px;
+  transform: rotate(35deg);
+  border-top: 1px solid rgba(100, 0, 140, 0.25);
+  border-bottom: 1px solid rgba(100, 0, 140, 0.25);
+  width: 140px;
+  text-align: center;
+}
+
+.unavailable-card .card-icon    { font-size: 2.8rem; color: #2e1640; margin-bottom: 14px; display: block; }
+.unavailable-card .card-title   { font-family: 'Titillium Web', sans-serif; font-size: 1.7rem; font-weight: 300; font-style: italic; color: #2e1640; margin-bottom: 12px; }
+.unavailable-card .card-description { font-size: 0.95rem; color: #1e0e2e; line-height: 1.6; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .extension-content { flex-direction: column; text-align: center; }
+  .extension-button  { width: 100%; justify-content: center; }
+  .home-container    { grid-template-columns: 1fr; max-width: 420px; }
+}
+
+@media (max-width: 480px) {
+  .card, .unavailable-card { padding: 36px 24px 32px; }
+}
+
+a { cursor: pointer; }

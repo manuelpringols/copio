@@ -1,798 +1,480 @@
-/* Impostazioni generali per la pagina */
+/* ══════════════════════════════════════════════════════════════
+   PAGE COMPONENT — Editor Markdown
+══════════════════════════════════════════════════════════════ */
+
 .pagina-div {
-  height: 100vh;
-  background: rgb(102, 0, 102);
-  background: linear-gradient(
-    0deg,
-    rgba(102, 0, 102, 1) 0%,
-    rgb(36, 6, 105) 100%
-  );
-  border-radius: 1vw;
-  transition: background 0.8s ease-in-out;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 15% 10%, rgba(100, 0, 130, 0.2) 0%, transparent 50%),
+              radial-gradient(ellipse at 85% 90%, rgba(40, 0, 100, 0.18) 0%, transparent 50%),
+              linear-gradient(180deg, #0a0014 0%, #060010 100%);
+  padding: 0;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.pagina-doc {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .docs-container {
-  max-width: fit-content;
-  margin: 0 auto;
-  animation: fadeIn 0.6s ease-out forwards;
+  width: 100%;
+  animation: fadeIn 0.5s ease-out both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.doc-header {
+  padding: 20px 32px 16px;
+  border-bottom: 1px solid rgba(102, 0, 140, 0.2);
+  background: rgba(12, 2, 20, 0.8);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .doc-header h1 {
   font-family: 'Titillium Web', sans-serif;
   font-weight: 200;
   font-style: italic;
-  text-align: center;
-  font-size: 3rem;
-  margin-bottom: 20px;
-  padding: 10px;
-  animation: textFadeIn 1s ease-out 0.2s both;
+  font-size: 2rem;
+  color: #b3a1c9;
+  margin: 0;
+  text-shadow: 0 0 24px rgba(180, 120, 220, 0.3);
 }
 
-@keyframes textFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Bottoni globali ─────────────────────────────────────────── */
+button,
+.go_back {
+  background: transparent;
+  border: 1px solid rgba(102, 0, 140, 0.35);
+  color: #b3a1c9;
+  padding: 8px 18px;
+  font-size: 0.88rem;
+  font-family: 'Quicksand', sans-serif;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 4px;
+  will-change: transform;
 }
 
+button:hover {
+  background: rgba(102, 0, 140, 0.22);
+  border-color: rgba(200, 80, 220, 0.5);
+  color: #e8dff5;
+  box-shadow: 0 0 16px rgba(140, 0, 200, 0.2);
+}
+
+button:active { transform: scale(0.97); }
+
+.go_back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 16px 32px;
+}
+
+/* ── Layout principale ───────────────────────────────────────── */
 .content-container {
   display: flex;
+  padding: 0;
+  min-height: calc(100vh - 80px);
 }
-/* Side navigation */
-.sidenav {
-  width: 200px; /* Larghezza fissa per la sidenav */
-  background-color: #333;
-  color: #b3a1c9;
-  max-height: 500px;
-  padding: 15px;
-  border-radius: 5px;
-  flex-shrink: 0; /* Evita che la sidenav si riduca in larghezza */
-  box-shadow: 2px 2px 12px 3px rgba(35, 83, 74, 0.747);
-  border-top-right-radius: 0;
-  margin-right: -0.2vw;
-  overflow: auto;
 
-  /* Miglioramento scrollbar Chrome/Safari */
+/* ── Sidenav ─────────────────────────────────────────────────── */
+.sidenav {
+  width: 210px;
+  flex-shrink: 0;
+  background: rgba(14, 3, 24, 0.8);
+  border-right: 1px solid rgba(102, 0, 140, 0.22);
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: calc(100vh - 80px);
+  overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #660066 #333;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  animation: slideInLeft 0.5s ease-out;
+  scrollbar-color: rgba(102, 0, 140, 0.5) transparent;
+  animation: slideInLeft 0.4s ease-out both;
 }
 
 @keyframes slideInLeft {
-  from {
-    transform: translateX(-30px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Scroll personalizzato per Chrome/Safari */
-.sidenav::-webkit-scrollbar {
-  width: 8px;
-}
-
+.sidenav::-webkit-scrollbar { width: 4px; }
 .sidenav::-webkit-scrollbar-thumb {
-  background-color: #b3a1c9;
-  border-radius: 10px;
-}
-
-.sidenav::-webkit-scrollbar-track {
-  background: #333;
-}
-
-.sidenav:hover {
-  box-shadow: 3px 3px 14px 3px rgba(0, 0, 0, 0.541);
+  background: rgba(102, 0, 140, 0.5);
+  border-radius: 4px;
 }
 
 .sidenav h3 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
   font-family: 'Titillium Web', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: #7a6390;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(102, 0, 140, 0.2);
+  margin: 0;
+}
+
+.openModalButton {
+  align-self: flex-start;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  background: rgba(80, 0, 110, 0.3);
+  border-color: rgba(160, 80, 200, 0.4);
+}
+
+.openModalButton:hover {
+  transform: rotate(90deg) scale(1.1);
+  background: rgba(110, 0, 150, 0.5);
 }
 
 .sidenav ul {
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .sidenav li {
+  padding: 9px 10px;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 5px 0;
-  transition: 0.3s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Linea sottile e semi-trasparente */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Rimuoviamo la linea dall'ultimo elemento per estetica */
-.sidenav li:last-child {
-  border-bottom: none;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.85rem;
+  color: #7a6390;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sidenav li:hover {
-  color: #fff;
-  background-color: #75147569;
-  padding: 10px;
-  border-radius: 0.3vw;
-}
-
-/* Contenuto principale */
-.group-content {
-  width: 900px;
-  max-height: fit-content;
-  padding: 15px;
-  background-color: #9b85adb0;
-  border-radius: 5px;
-  box-shadow: 3px 3px 16px 5px rgba(0, 0, 0, 0.6);
-  position: relative;
-  overflow-y: auto; /* Attiva lo scroll verticale quando necessario */
-  max-height: 80vh; /* Limita l'altezza del contenitore al 80% della viewport */
-  z-index: 1;
-  border-top-left-radius: 0;
-  animation: fadeInUp 0.6s ease-out 0.2s both;
-  transition: box-shadow 0.3s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.group-content h2 {
-  font-family: 'Quicksand', sans-serif;
-  font-style: italic;
-  font-weight: 200;
-  font-size: 2rem;
-}
-
-/* Pulsante */
-.group-content button {
-  background-color: #660066;
+  background: rgba(80, 0, 110, 0.25);
+  border-color: rgba(102, 0, 140, 0.3);
   color: #b3a1c9;
-  border: 1px solid #b3a1c9;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding-left: 14px;
+}
 
-  border-radius: 10px;
+/* ── Contenuto del documento ─────────────────────────────────── */
+.group-content {
+  flex: 1;
+  padding: 24px 32px;
+  background: rgba(18, 5, 30, 0.72);  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(102, 0, 140, 0.4) transparent;
+  animation: fadeIn 0.4s ease-out 0.1s both;
+}
 
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1.5vh;
-  margin-right: 0.5vw;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  background: none;
+.group-content::-webkit-scrollbar { width: 5px; }
+.group-content::-webkit-scrollbar-thumb {
+  background: rgba(102, 0, 140, 0.4);
+  border-radius: 4px;
+}
+
+/* ── Titolo pagina ───────────────────────────────────────────── */
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(102, 0, 140, 0.2);
+}
+
+.title-container h2 {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: #b3a1c9;
+  margin: 0;
+}
+
+.edit-button {
+  background: transparent;
   border: none;
-}
-
-.group-content button:hover {
-  background-color: #660066;
-  color: #e21ca7;
-  border-color: #e21ca7;
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
-}
-
-.group-content button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 6px rgba(225, 0, 255, 0.89);
-}
-
-.group-content button:disabled {
-  background-color: #444;
-  color: #888;
-  cursor: not-allowed;
+  padding: 4px;
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.2s;
   box-shadow: none;
 }
+.edit-button:hover { opacity: 1; transform: scale(1.15); box-shadow: none; }
 
-/* Contenuto del gruppo */
-.group-content textarea {
-  width: 100%; /* Rende il textarea largo quanto il suo contenitore */
-  height: auto; /* L'altezza si adatterà automaticamente */
-  padding: 12px; /* Aumenta il padding per una spaziatura più confortevole */
-  font-size: 1rem; /* Mantenimento della dimensione del font */
-  line-height: 1.6; /* Aumenta la spaziatura tra le righe per una lettura migliore */
-  border: 1px solid #ccc; /* Colore del bordo del textarea */
-  border-radius: 5px;
-  background-color: rgba(190, 114, 171, 0.527); /* Colore di sfondo chiaro */
-  color: #ebebeb; /* Colore del testo */
-  resize: vertical; /* Permette all'utente di ridimensionare solo in verticale */
-  box-sizing: border-box; /* Include il padding e il bordo nel calcolo della larghezza */
-  transition: all 0.3s ease; /* Transizione fluida */
-  font-family: 'Source Code Pro', monospace;
-  font-weight: 350;
-  outline: none; /* Rimuove l'effetto di outline di default al focus */
-  text-align: left; /* Allinea il testo a sinistra */
-  box-shadow: 1px 1px 14px 2px rgba(0, 0, 0, 0.795);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Disabilita il controllo ortografico e rimuove il trattino rosso */
-}
-
-.group-content textarea:focus {
-  border-color: #660066; /* Colore del bordo quando il textarea è in focus */
-  box-shadow: 0 0 10px rgba(102, 0, 102, 0.6); /* Effetto di focus */
-  background-color: #b6adad9a; /* Colore di sfondo chiaro */
-}
-
-.group-content textarea::placeholder {
-  color: #aaa; /* Colore del placeholder */
-  font-style: italic; /* Rende il testo del placeholder in corsivo */
-}
-
-/* Per Chrome, Safari e Edge */
-.group-content::-webkit-scrollbar {
-  width: 12px; /* Larghezza della scrollbar */
-  border-radius: 10px;
-}
-
-.group-content::-webkit-scrollbar-thumb {
-  background-color: #660066; /* Colore del pollice della scrollbar */
-  border-radius: 6px; /* Rende il pollice della scrollbar arrotondato */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Aggiunge un'ombra al pollice */
-}
-
-.group-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.2); /* Colore di sfondo della traccia */
-  border-radius: 6px; /* Rende la traccia arrotondata */
-}
-
-/* Per Firefox */
-.group-content {
-  scrollbar-width: thick; /* Imposta la larghezza della scrollbar a "sottile" */
-  scrollbar-color: #660066 rgba(255, 255, 255, 0.2); /* Imposta il colore della parte attiva (pollice) e della traccia */
-}
-
-/* Modale - Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Maggiore opacità per l'overlay */
+.edit-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000; /* Assicurati che sia sopra gli altri contenuti */
-  transform: translateY(
-    -50px
-  ); /* La modale inizia leggermente sopra la visualizzazione */
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease; /* Aggiungi transizione per opacità e trasformazione */
+  gap: 8px;
+  flex: 1;
 }
 
-.modal-overlay.show {
-  opacity: 1; /* Aumenta l'opacità a 1 quando la modale appare */
-  transform: translateY(0); /* Riposiziona la modale nella posizione corretta */
-}
-
-.openModalButton {
-  z-index: 1000;
-  border: 1px solid #3b013b;
-  width: 100%;
-  background-color: #660066;
-  border-radius: 0.3vw;
-  margin: 0;
-  box-shadow: 0 4px 12px rgba(61, 0, 70, 0.6); /* Aggiungi una sfumatura più accentuata */
-}
-.openModalButton:hover {
-  cursor: pointer;
-  background-color: #751475; /* Sfuma il colore di background durante l'hover */
-  color: #e21ca7; /* Colore del testo al passaggio del mouse */
-  border-color: #e21ca7a9; /* Colore del bordo durante l'hover */
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.5); /* Aggiungi una sfumatura più accentuata */
-}
-
-/* Modale */
-.modal {
-  background: rgb(40, 0, 85);
-  background: linear-gradient(
-    90deg,
-    rgba(22, 15, 54, 0.582) 19%,
-    rgba(41, 9, 121, 0.575) 56%,
-    rgba(124, 0, 173, 0.541) 100%
-  );
-  padding: 30px;
+.title-input {
+  flex: 1;
+  padding: 8px 12px;
+  background: rgba(40, 8, 60, 0.6);
+  border: 1px solid rgba(160, 80, 200, 0.45);
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Ombra più forte */
-  width: 400px; /* Imposta una larghezza fissa per la modale */
-  max-width: 90%; /* Evita che diventi troppo larga su schermi piccoli */
-  text-align: center;
-  z-index: 1002; /* Assicurati che la modale sia sopra l'overlay */
-  animation: modalFadeIn 0.5s ease-out; /* Aggiungi un'animazione di fade-in */
-  border: 1px solid #660066;
-  animation: modalAppear 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-}
-
-@keyframes modalFadeIn {
-  0% {
-    transform: scale(0.9); /* Inizia la modale leggermente ridotta */
-    opacity: 0; /* Inizia completamente invisibile */
-  }
-  100% {
-    transform: scale(1); /* Ritorna alla dimensione originale */
-    opacity: 1; /* Diventa completamente visibile */
-  }
-}
-
-@keyframes modalAppear {
-  0% {
-    transform: scale(0.95) translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Modale - Titolo */
-.modal h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #7e037e; /* Colore personalizzato per il titolo */
-  font-family: 'Source Code Pro', monospace;
-}
-
-/* Modale - Input */
-.modal input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-  background-color: #444;
-}
-
-/* Cambia colore al focus dell'input */
-.modal input:focus {
-  border-color: #660066;
+  color: #ddd0ee;
+  font-size: 1.1rem;
+  font-family: 'Quicksand', sans-serif;
   outline: none;
 }
 
-/* Bottoni della modale */
-.modal button {
-  background-color: #660066; /* Colore principale */
-  color: #b3a1c9; /* Colore del testo, simile alla tua palette */
-  border: 1px solid #b3a1c9; /* Colore del bordo */
-  padding: 10px 20px;
-  border-radius: 10px; /* Rende il bordo arrotondato */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 10px 5px;
-  font-size: 1rem;
-  width: 120px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Aggiungi ombra per profondità */
+.save-button, .cancel-button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
-/* Hover */
-.modal button:hover {
-  background-color: #751475; /* Sfuma il colore di background durante l'hover */
-  color: #e21ca7; /* Colore del testo al passaggio del mouse */
-  border-color: #e21ca7; /* Colore del bordo durante l'hover */
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6); /* Aggiungi una sfumatura più accentuata */
-}
-
-/* Stato attivo */
-.modal button:active {
-  transform: scale(0.95); /* Effetto di riduzione al click */
-  box-shadow: 0 2px 6px rgba(225, 0, 255, 0.89); /* Ombra accentuata */
-}
-
-/* Stato disabilitato */
-.modal button:disabled {
-  background-color: #444;
-  color: #888;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-/* Icona del cestino */
 .delete-button {
-  position: relative;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ff0000; /* Colore rosso per il cestino */
-  font-size: 24px; /* Dimensione dell'icona */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: pulse 2s infinite;
+  border-color: rgba(200, 50, 50, 0.4);
+  color: #e05c5c;
 }
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 .delete-button:hover {
-  color: #e60000; /* Colore rosso più intenso al passaggio del mouse */
-  transform: scale(1.2); /* Effetto di ingrandimento */
+  background: rgba(160, 0, 0, 0.2);
+  border-color: rgba(220, 60, 60, 0.6);
+  box-shadow: 0 0 14px rgba(200, 0, 0, 0.2);
+  color: #ff9090;
 }
 
-.delete-button i {
-  pointer-events: none; /* Evita che il clic venga intercettato dall'icona */
-}
-
-/* Aggiungi un'animazione di fade-in per l'icona */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.delete-button {
-  animation: fadeIn 0.5s ease-out; /* Aggiungi l'animazione */
+/* ── Textarea editing ────────────────────────────────────────── */
+.textarea-container {
+  margin-bottom: 20px;
+  animation: fadeIn 0.3s ease-out both;
 }
 
 .textarea-container textarea {
   width: 100%;
-  height: 100vh;
-  padding-right: 30px; /* Aggiunge spazio per l'icona */
-}
-/* Modale di conferma */
-/* Modale di conferma */
-.modal-confirmation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* sfondo semi-trasparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.modal-confirmation-content {
-  background: linear-gradient(
-    135deg,
-    #5e0844bb,
-    #9c1b68d5
-  ); /* sfumatura tra due tonalità */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  border: solid 1px #290707;
-}
-doc .modal-confirmation h3 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #fff; /* Colore del testo per maggiore contrasto */
-}
-
-.modal-confirmation button {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  border: 1px solid #250318;
-  box-shadow: 1px 1px 5px 5px #7e037e;
-  border-radius: 5px;
-  transition:
-    background-color 0.3s ease,
-    opacity 0.3s ease;
-}
-
-.modal-confirmation button {
-  background: linear-gradient(
-    135deg,
-    #ff22e2,
-    #680902
-  ); /* sfumatura per il pulsante 'Elimina' */
-  color: white;
-}
-
-.modal-confirmation button:nth-child(2) {
-  background: linear-gradient(
-    135deg,
-    #096345,
-    #757575
-  ); /* sfumatura per il pulsante 'Annulla' */
-  color: white;
-}
-
-.modal-confirmation button:hover {
-  opacity: 0.8;
-}
-
-pre {
-  /* Aggiungi il ritorno a capo se la linea è troppo lunga */
-  font-family: monospace; /* Font per il codice */
-  background-color: #f4f4f4; /* Colore di sfondo per una visualizzazione migliore */
-  padding: 10px;
-  border-radius: 5px;
-}
-
-button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-/* Animazione per lo scroll */
-.group-content::-webkit-scrollbar-thumb {
-  transition: background-color 0.3s ease;
-}
-
-/* Animazione per i placeholder */
-.group-content textarea::placeholder {
-  transition: color 0.3s ease;
-}
-
-/* Animazione per i bordi */
-.group-content textarea,
-.modal input {
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-/* Animazione per il modal di conferma */
-.modal-confirmation-content {
-  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Animazione per i gradienti */
-.pagina-div,
-.modal {
-  transition: background 0.8s ease;
-}
-
-/* Animazione per il caricamento del contenuto */
-@keyframes contentLoad {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.group-content h2,
-.group-content p,
-.group-content pre {
-  animation: contentLoad 0.6s ease-out forwards;
-}
-
-/* Ritardi differenziati per gli elementi di contenuto */
-.group-content h2 {
-  animation-delay: 0.1s;
-}
-.group-content p {
-  animation-delay: 0.2s;
-}
-.group-content pre {
-  animation-delay: 0.3s;
-}
-.group-content button {
-  animation-delay: 0.4s;
-}
-
-.title-container {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.title-input {
-  font-size: 1.5rem;
-  font-style: italic;
-  padding: 10px 20px;
-  height: 50px;
-  border: 1px solid #3b063b !important;
-  color: #751475;
+  height: 380px;
+  padding: 16px;
+  background: rgba(10, 2, 18, 0.8);
+  border: 1px solid rgba(102, 0, 140, 0.3);
   border-radius: 10px;
-  background-color: #b521da5d;
-  background: none;
-  box-shadow: 0 2px 4px rgba(123, 0, 123, 0.1);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    transform 0.2s ease;
+  color: #c8f0d0;
+  font-family: 'Source Code Pro', 'Consolas', monospace;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  resize: vertical;
   outline: none;
-  margin-bottom: 10px;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 0;
-  animation: fadeSlideIn 0.5s ease-out forwards;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(102, 0, 140, 0.4) transparent;
 }
 
-.title-input:focus {
-  border-color: #ae27ae;
-  box-shadow: 2px 2px 10px 4px rgba(99, 4, 99, 0.295);
-  background-color: #fff0ffb4;
-  transform: scale(1.01);
+.textarea-container textarea:focus {
+  border-color: rgba(180, 80, 220, 0.5);
+  box-shadow: 0 0 16px rgba(120, 0, 180, 0.15);
 }
 
-.edit-button,
-.save-button,
-.cancel-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  margin: 5px;
-  margin-bottom: 10px;
-
-  transition:
-    color 0.3s ease,
-    transform 0.2s ease,
-    background-color 0.3s ease;
-  animation: fadeSlideIn 0.5s ease-out forwards;
-}
-
-.edit-button:hover,
-.save-button:hover,
-.cancel-button:hover {
-  color: #ae27ae;
-  transform: scale(1.1);
-  background-color: rgba(174, 39, 174, 0.1);
-  border-radius: 5px;
-}
-
-@keyframes fadeSlideIn {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1);
-  }
-}
-
-/* Colonna preview Markdown */
+/* ── Preview Markdown ────────────────────────────────────────── */
 .preview-container {
-  transform-origin: top left; /* Mantiene l'ancoraggio in alto a sinistra */
-  flex: unset !important;
-
-  /* Mantieni anche le proprietà precedenti */
-  width: 80vw;
-  max-width: 100%;
-
-  padding: 20px;
-  background-color: #1e1e1e;
-  color: #f1f1f1;
-  border-radius: 8px;
-  overflow-y: auto;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  background: rgba(14, 4, 24, 0.7);
+  border: 1px solid rgba(102, 0, 140, 0.22);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 8px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.35),
+              inset 0 1px 0 rgba(255,255,255,0.03);
   font-family: 'Source Code Pro', monospace;
-  animation: fadeInRight 0.4s ease-out;
+  color: #e0d4f5;
   overflow-x: hidden;
-  white-space: normal;
   word-break: break-word;
+  animation: fadeIn 0.4s ease-out both;
 }
 
-/* Per rendere il markdown leggibile */
 .preview-container h1,
 .preview-container h2,
 .preview-container h3 {
+  color: #d4a8f0;
   margin-top: 20px;
-  color: #ffdf8e;
+  margin-bottom: 10px;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
 }
 
-.preview-container p {
-  line-height: 1.6;
-}
+.preview-container p { line-height: 1.7; color: #c4b5d8; }
 
-.preview-container button{
-
-}
+.preview-container a { color: #9b72cf; text-decoration: underline; }
 
 .preview-container code {
-  background: #333;
-  padding: 2px 6px;
+  background: rgba(25, 11, 31, 0.5);
+  border: 1px solid rgba(102, 0, 140, 0.3);
+  padding: 2px 7px;
   border-radius: 4px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  color: #c8f0d0;
+}
+
+.preview-container pre {
+  background: rgba(139, 113, 164, 0.7);
+  border: 1px solid rgba(102, 0, 140, 0.25);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(102, 0, 140, 0.4) transparent;
 }
 
 .preview-container pre code {
-  display: block;
-  padding: 12px;
-  background: #2d2d2d;
-  overflow-x: auto;
-  border-radius: 6px;
-  margin-top: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85rem;
   color: #f8f8f2;
+  display: block;
 }
 
-/* Optional: animazione di entrata */
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.preview-container blockquote {
+  border-left: 3px solid rgba(160, 80, 200, 0.5);
+  margin: 12px 0;
+  padding: 8px 16px;
+  background: rgba(60, 0, 80, 0.15);
+  border-radius: 0 6px 6px 0;
+  color: #a090c0;
 }
 
-.language-typescript {
-  width: fit-content;
-}
-/* Animazione salto */
-@keyframes jump {
-  0%   { transform: translateY(0); }
-  25%  { transform: translateY(-10px); }
-  50%  { transform: translateY(0); }
-  70%  { transform: translateY(-6px); }
-  85%  { transform: translateY(0); }
-  92%  { transform: translateY(-3px); }
-  100% { transform: translateY(0); }
+.preview-container hr {
+  border: none;
+  border-top: 1px solid rgba(102, 0, 140, 0.25);
+  margin: 20px 0;
 }
 
+/* Header preview row */
+.preview-container > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(102, 0, 140, 0.2);
+}
 
-button {
-  background-color: #660066;
+.preview-container h3 { margin-top: 0; font-size: 0.9rem; color: #7a6390; }
+
+/* ── Modali ──────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 0, 12, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: linear-gradient(145deg, rgba(28, 6, 45, 0.97), rgba(16, 3, 28, 0.97));
+  border: 1px solid rgba(180, 100, 210, 0.45);
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(120, 0, 180, 0.18);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal h3 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
   color: #b3a1c9;
-  border: 1px solid #b3a1c9;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  justify-self: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 0.4vw;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  font-family: 'Quicksand', sans-serif;
-  will-change: transform;
+  margin-bottom: 18px;
 }
 
-button:hover {
-  background-color: #660066;
-  color: #e21ca7;
-  border-color: #e21ca7;
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
-  animation: jump 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.modal input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(50, 10, 72, 0.6);
+  border: 1px solid rgba(102, 0, 140, 0.35);
+  border-radius: 8px;
+  color: #ddd0ee;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  outline: none;
+  transition: border-color 0.2s;
 }
+.modal input:focus { border-color: rgba(200, 80, 220, 0.55); }
+
+.modal button { border-radius: 20px; padding: 9px 20px; }
+
+.modal-confirmation {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 0, 12, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-confirmation-content {
+  background: linear-gradient(145deg, rgba(28, 6, 45, 0.97), rgba(16, 3, 28, 0.97));
+  border: 1px solid rgba(200, 50, 50, 0.35);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: center;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.modal-confirmation-content h3 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  color: #ddd0ee;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.modal-confirmation-content button:first-of-type {
+  background: rgba(160, 0, 0, 0.3);
+  border-color: rgba(220, 60, 60, 0.5);
+  color: #ff9090;
+}
+.modal-confirmation-content button:first-of-type:hover {
+  background: rgba(180, 0, 0, 0.5);
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .content-container { flex-direction: column; }
+  .sidenav { width: 100%; min-height: auto; }
+  .group-content { padding: 16px; }
+  .doc-header { padding: 16px; }
+}
+
+

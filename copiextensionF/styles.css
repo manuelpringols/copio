@@ -1,88 +1,205 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #444; /* Grigio scuro per lo sfondo */
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
+/* ── Palette ── */
+:root {
+  --bg:          #0e0116;
+  --surface:     #180222;
+  --border:      #2e1440;
+  --border-h:    #3d1d52;
+  --accent:      #8c6fa8;
+  --text:        #c4b5d8;
+  --text-muted:  #7a6390;
+  --input-bg:    #3d1260;
+  --code-bg:     #1a0830;
+  --placeholder: #6b4880;
+  --btn-bg:      #3b0050;
+  --btn-bdr:     #7a4d96;
+  --btn-h-bg:    #5a0078;
+  --success:     #4ecb8a;
+  --error:       #c47a7a;
 }
 
-.popup-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  background: #2d2d2d; /* Grigio scuro */
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 500px;
-  display: block;
-  border: 2px solid #ff9800; /* Aggiungi un bordo arancione */
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  width: 380px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  min-height: 200px;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px 11px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-bdr);
+  flex-shrink: 0;
+}
+
+.logo-txt {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 2px;
 }
 
 .close-btn {
-  font-size: 24px;
-  color: #ff9800; /* Arancione per il pulsante di chiusura */
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-.close-btn:hover {
-  color: #ff5722; /* Arancione scuro quando si passa sopra */
-}
-
-h3 {
-  text-align: center;
-  color: #ff9800; /* Arancione caldo */
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  margin-top: 10px;
-  color: #bbb; /* Grigio chiaro per il testo */
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: none;
-  border-radius: 5px;
-  background: #333; /* Grigio scuro per gli input */
-  color: white;
-}
-
-textarea {
-  resize: vertical;
-  height: 80px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 5px;
-  background: #007bff; /* Blu moderno per il pulsante */
-  color: white;
+  color: var(--text-muted);
   font-size: 16px;
   cursor: pointer;
-  transition: 0.3s;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+.close-btn:hover { color: var(--error); }
+
+/* ── Body ── */
+.body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
-button:hover {
-  background: #0056b3; /* Blu più scuro al passaggio del mouse */
+/* ── Labels ── */
+.lbl {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  margin-top: 12px;
+}
+.lbl:first-child { margin-top: 0; }
+
+/* ── Campi ── */
+.field {
+  width: 100%;
+  padding: 8px 10px;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  appearance: none;
 }
 
-button:focus {
-  outline: none; /* Rimuovi il bordo blu di focus */
+.field::placeholder { color: var(--placeholder); }
+.field:hover  { border-color: var(--border-h); }
+.field:focus  { border-color: var(--btn-bdr); background: #461878; }
+
+/* Textarea codice */
+.code-field {
+  background: var(--code-bg);
+  font-family: 'Courier New', 'Consolas', monospace;
+  font-size: 12px;
+  color: #a8d8b8;
+  resize: none;
+  height: 92px;
+  line-height: 1.55;
+}
+.code-field::placeholder { color: #3d6b52; }
+.code-field:hover { border-color: var(--border-h); }
+.code-field:focus { border-color: var(--btn-bdr); background: #1f0a38; }
+
+/* Select arrow custom */
+.select-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%237a6390' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+/* ── Bottone ── */
+.btn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 10px 0;
+  background: var(--btn-bg);
+  border: 1px solid var(--btn-bdr);
+  border-radius: 20px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn:hover  { background: var(--btn-h-bg); border-color: var(--accent); color: var(--text); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Status message ── */
+.msg {
+  min-height: 20px;
+  margin-top: 8px;
+  font-size: 11px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.msg.visible { opacity: 1; }
+.msg.success { color: var(--success); }
+.msg.error   { color: var(--error); }
+
+/* ── Login ── */
+.login-wrap { padding: 28px 24px 24px; }
+
+.login-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border-h);
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.login-sub {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 22px;
 }

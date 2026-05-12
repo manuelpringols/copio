@@ -25,52 +25,58 @@ import org.springframework.security.config.Customizer;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
-        private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+    @Autowired private CustomUserDetailsService customUserDetailsService;
+    @Autowired private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
-    @Autowired
-    private  JwtAuthenticationFilter jwtAuthenticationFilter;
-
+    
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/snippets/**").authenticated()
-                        .requestMatchers("/api/groups/**").authenticated()
-                        .anyRequest().authenticated())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // solo questo
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/api/snippets/**").authenticated()
+                    .requestMatchers("/api/groups/**").authenticated()
+                    .anyRequest().authenticated())
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+    return http.build();
+}
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://copio.online","http://localhost:4200","http://localhost:3000","chrome-extension://kmgclaebnbboaofefadmliagoaogekpe","chrome-extension://mejpgfafdagodaiohehhajinllkpgfop" //
-                        )); // Modifica l'origine se necessario
+
+        // FIX: prima usava setAllowedOrigins con ID estensione hardcoded.
+        // Ogni volta che l'estensione viene ricaricata in developer mode Chrome
+        // assegna un ID diverso → CORS bloccava tutte le chiamate dell'estensione.
+        //
+        // setAllowedOriginPatterns supporta i wildcard, a differenza di setAllowedOrigins.
+        // "chrome-extension://*" copre qualsiasi ID estensione senza bisogno di aggiornare il codice.
+        configuration.setAllowedOriginPatterns(List.of(
+            "https://copio.online",
+            "http://localhost:*",
+            "chrome-extension://*"
+        ));
+
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(true); // Necessario per inviare i cookie o token con credenziali
-        logger.info("CORS Configuration loaded");
+        configuration.setAllowCredentials(true);
+
+        logger.info("CORS configuration loaded");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-
         return source;
     }
-    
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Usa BCrypt per codificare le password
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -81,6 +87,4 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
-
- 
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../servizi/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -8,30 +9,23 @@ import { Router } from '@angular/router';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-someAction() {
-throw new Error('Method not implemented.');
-}
   isMenuOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-    
-    // Animazione aggiuntiva per l'icona
-    const icon = document.querySelector('.logout-icon');
-    if (icon) {
-      if (this.isMenuOpen) {
-        icon.classList.add('active');
-      } else {
-        icon.classList.remove('active');
-      }
-    }
   }
 
+  // Richiesto dal template — aggiungere logica reale se necessario
+  someAction(): void {}
+
   logout() {
-    localStorage.removeItem('auth_Token'); // Rimuove il token
+    // FIX: prima rimuoveva 'auth_Token' (T maiuscola) ma il token è salvato
+    // come 'auth_token' → removeItem non trovava mai la chiave
+    // e l'utente sembrava loggato anche dopo il logout.
+    this.authService.logout();
     this.isMenuOpen = false;
-    this.router.navigate(['/login']); // Reindirizza alla pagina di login
+    this.router.navigate(['/login']);
   }
 }

@@ -1,478 +1,359 @@
-/* Stile per la pagina di documentazione */
+/* ══════════════════════════════════════════════════════════════
+   DOC COMPONENT
+══════════════════════════════════════════════════════════════ */
+
 .pagina-doc {
-  height: 100vh;
-  background: rgb(102,0,102);
-  background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgb(70, 1, 49) 100%);
-  padding: 5px;
-  border-radius: 1vw;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 30% 0%,  rgba(100, 0, 120, 0.22) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 80%, rgba(50,  0, 100, 0.18) 0%, transparent 55%),
+              linear-gradient(180deg, #0a0014 0%, #060010 100%);
+  padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  gap: 20px;
-  font-family: 'Roboto', sans-serif; /* Font principale per il corpo */
+  gap: 32px;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Header centrato */
+/* ── Header ──────────────────────────────────────────────────── */
 .doc-header {
   text-align: center;
-  background-color: #333;
-  border-radius: 1vw;
+  background: rgba(20, 4, 36, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(102, 0, 140, 0.3);
+  border-radius: 16px;
   width: 60%;
-  max-width: 750px;
-  height: 150px;
+  max-width: 720px;
+  height: 130px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  margin-top: 20px;
-  animation: fadeInDown 0.8s ease-in-out;
-  font-family: 'Pacifico', cursive; /* Font per il titolo */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5),
+              0 0 40px rgba(80,0,120,0.15),
+              inset 0 1px 0 rgba(255,255,255,0.05);
+  margin-top: 8px;
+  animation: fadeInDown 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) both;
 }
 
-/* Testo del titolo */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .doc-header h1 {
-  font-size: 2.5rem;
+  font-family: 'Pacifico', cursive;
+  font-size: 2.4rem;
   color: #b3a1c9;
+  letter-spacing: 1px;
+  text-shadow: 0 0 30px rgba(180, 100, 220, 0.4);
 }
 
-/* Container dei gruppi con stile a griglia */
+/* ── Bottone torna indietro ──────────────────────────────────── */
+button {
+  background: transparent;
+  border: 1px solid rgba(102, 0, 140, 0.35);
+  color: #b3a1c9;
+  padding: 9px 22px;
+  font-size: 0.9rem;
+  font-family: 'Quicksand', sans-serif;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover {
+  background: rgba(102, 0, 140, 0.25);
+  border-color: rgba(200, 80, 220, 0.55);
+  color: #e8dff5;
+  box-shadow: 0 0 18px rgba(140, 0, 200, 0.22);
+}
+
+/* ── Pulsante + (add group) ──────────────────────────────────── */
+.addGroup {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(80, 0, 110, 0.45);
+  border: 1px solid rgba(180, 100, 210, 0.45);
+  color: #b3a1c9;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(120, 0, 180, 0.2), 0 4px 16px rgba(0,0,0,0.4);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  align-self: flex-end;
+  line-height: 1;
+}
+
+.addGroup:hover {
+  transform: scale(1.12) rotate(90deg);
+  background: rgba(110, 0, 150, 0.6);
+  box-shadow: 0 0 32px rgba(200, 0, 255, 0.3), 0 6px 20px rgba(0,0,0,0.5);
+  border-color: rgba(220, 100, 255, 0.6);
+  color: #e8dff5;
+}
+
+/* ── Griglia gruppi ──────────────────────────────────────────── */
 .group-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 20px;
   width: 90%;
   max-width: 1200px;
-  padding: 10px;
-  font-family: 'Quicksand', sans-serif; /* Font moderno per i gruppi */
-  perspective: 1000px; /* Aggiunto per l'effetto 3D */
-
+  padding: 4px;
+  perspective: 1000px;
 }
 
-/* Stile delle card */
+/* ── Card gruppo ─────────────────────────────────────────────── */
 .group-item {
-  padding: 16px;
-  background: linear-gradient(145deg, #ddd9d9, #979797);
-  border: 1px solid #000000;
+  position: relative;
+  padding: 28px 20px;
+  background: rgba(22, 4, 38, 0.72);
+  border: 1px solid rgba(102, 0, 140, 0.28);
+  border-radius: 14px;
   cursor: pointer;
-  border-radius: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
-  
-  /* Aggiungi le seguenti righe per centrare il testo */
   display: flex;
-  justify-content: center; /* Centra orizzontalmente */
-  align-items: center;     /* Centra verticalmente */
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4),
+              inset 0 1px 0 rgba(255,255,255,0.04);
   opacity: 0;
-  transform: translateY(20px) rotateX(-30deg);
-  animation: fadeInUp 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
-  animation-delay: calc(var(--item-index) * 0.1s);
-  transform-origin: center bottom;
-
+  transform: translateY(20px);
+  animation: fadeInCard 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  animation-delay: calc(var(--item-index, 0) * 0.08s);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) rotateX(-30deg);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotateX(0);
-  }
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Aggiungi questa regola per gestire il delay progressivo */
-.group-item:nth-child(1) { animation-delay: 0.1s; }
-.group-item:nth-child(2) { animation-delay: 0.2s; }
-.group-item:nth-child(3) { animation-delay: 0.3s; }
-.group-item:nth-child(4) { animation-delay: 0.4s; }
-.group-item:nth-child(5) { animation-delay: 0.5s; }
-.group-item:nth-child(6) { animation-delay: 0.6s; }
-
-/* Effetto hover delle card */
 .group-item:hover {
-  background: linear-gradient(145deg, #b6b4b4, #bdbcbc);
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(200, 80, 220, 0.5);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55),
+              0 0 24px rgba(140, 0, 200, 0.22),
+              inset 0 1px 0 rgba(255,255,255,0.07);
+  background: rgba(36, 8, 56, 0.85);
 }
 
-/* Testo delle card */
 .group-item h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-/* Animazione per l'header */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Pulsante */
-button {
-  background-color: #660066;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
   color: #b3a1c9;
-  border: 1px solid #b3a1c9;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1.5vh;
-  margin-right: 0.5vw;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  font-family: 'Quicksand', sans-serif; /* Font per i pulsanti */
+  margin: 0;
+  transition: color 0.2s ease;
 }
 
-button:hover {
-  background-color: #660066;
-  color: #e21ca7;
-  border-color: #e21ca7;
-  box-shadow: 0 4px 12px rgba(225, 0, 255, 0.6);
-}
+.group-item:hover h3 { color: #ddd0ee; }
 
-/* Stile per il pulsante di aggiunta del gruppo */
-.addGroup {
-  width: 100px;
-  height: 100px;
-  background-color: #660066;
-  color: #fff;
-  font-size: 2rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  margin-top: 20px;
-  position: relative;
-  font-family: 'Pacifico', cursive; /* Font distintivo per il pulsante */
-}
-
-/* Aggiungi hover per l'effetto */
-.addGroup:hover {
-  background-color: #e21ca7;
-  box-shadow: 0 6px 15px rgba(225, 0, 255, 0.6);
-  transform: scale(1.1);
-}
-
-/* Animazione di rimbalzo al passaggio del mouse */
-.addGroup:active {
-  animation: bounce 0.3s ease-out;
-}
-
-/* Animazione di rimbalzo */
-@keyframes bounce {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(1.2);
-  }
-  50% {
-    transform: scale(1);
-  }
-}
-
-/* Per il simbolo "+" */
-.addGroup::before {
-  content: "+";
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-}
-
-/* Per includere un'immagine (opzionale) */
-.addGroup img {
-  width: 60%;
-  height: 60%;
-  object-fit: contain;
-}
-
-/* Stile per la modale */
-.modal {
-  display: none; /* Nascondi per default */
-  position: fixed;
-  z-index: 1; /* Sotto gli altri elementi */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Sfondo grigio trasparente */
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Stile per quando la modale è visibile */
-.modal.show {
-  display: flex; /* Mostra la modale */
-}
-
-/* Contenuto della modale */
-.modal-content {
-  position: relative;
-  background-color: rgba(119, 8, 104, 0.753);
-  padding : 20px;  
-  border-radius: 10px;
-  max-width: 500px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 4px 10px rgb(185, 10, 92);
-  font-family: 'Inconsolata', monospace; /* Font per la modale */
-}
-
-/* Bottone di chiusura */
-.close {
-  font-size: 2rem;
-  color: #660066;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: all 0.3s ease;
-}
-
-.close:hover {
-  color: #e21ca7;
-}
-
-/* Titolo della modale */
-.modal-content h2 {
-  font-size: 1.8rem;
-  color: white;
-  font-family: 'Jersey 15', serif; /* Font distintivo per il titolo della modale */
-}
-
-/* Campo di input */
-input[type="text"] {
-  width: 80%;
-  padding: 10px;
-  margin-top: 15px;
-  border-radius: 5px;
-  border: 1px solid #9616518c;
-  font-size: 1rem;
-  color: #660066;
-  font-family: 'Inconsolata', monospace; /* Font per gli input */
-}
-
-/* Pulsante di invio nella modale */
-button {
-  background-color: #660066;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: 'Quicksand', sans-serif; /* Font per i pulsanti nella modale */
-}
-
-button:hover {
-  background-color: #e21ca7bb;
-  color: black;
-}
-
-/* X per chiudere la modale */
-.close {
-  font-size: 2rem;
-  color: #000000;
-  cursor: pointer;
-  position: absolute;
-
-  transition: all 0.3s ease;
-}
-
-.close:hover {
-  color: #e21ca7;
-}
-
-
-/* Modale personalizzata */
-.custom-modal {
-  display: flex; /* Usa Flexbox per il layout */
-  position: fixed;
-  z-index: 1; /* Sotto gli altri elementi */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Sfondo grigio trasparente */
-  justify-content: center; /* Centra orizzontalmente */
-  align-items: center; /* Centra verticalmente */
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-/* Modale visibile */
-.custom-modal.visible {
-  display: flex; /* Mostra la modale */
-}
-
-/* Contenuto della modale personalizzato */
-.custom-modal-content {
-  position: relative;
-  background-color: rgba(119, 8, 104, 0.753);
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 90%;
-  z-index: 1000;
-  text-align: center;
-  box-shadow: 0 4px 10px rgb(185, 10, 92);
-  font-family: 'Inconsolata', monospace; /* Font per la modale */
-}
-
-/* Bottone di chiusura personalizzato */
-.custom-close {
-  font-size: 2rem;
-  color: #660066;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  transition: all 0.3s ease;
-}
-
-.custom-close:hover {
-  color: #e21ca7;
-}
-
-/* Titolo della modale personalizzato */
-.custom-modal-content h2 {
-  font-size: 1.8rem;
-  color: white;
-  font-family: 'Jersey 15', serif; /* Font distintivo per il titolo della modale */
-}
-
-/* Pulsante di invio nella modale */
-button {
-  background-color: #660066;
-  color: white;
-  padding: 10px 20px;
-  border: 1px solid #660066 ;
-  z-index: 1000;
-  border-radius: 5px;
-  margin-top: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: 'Quicksand', sans-serif; /* Font per i pulsanti nella modale */
-
-}
-
-button:hover {
-  background-color: #e21ca7bb;
-  color: black;
- border: 1px solid ;
- border-color: #5d0a46;
-
-}
-
-.close-btn {
-  position: relative;
-  left: 14px;
-  bottom: 19px;
-  font-size: 15px;
-  color: #888;
-  cursor: pointer;
-
-  z-index: 10000;
-}
-
-.close-btn:hover {
-  color: red; /* Cambia colore al passaggio del mouse per un effetto interattivo */
-}
-
-
-
-/* Aggiungi queste regole al tuo CSS esistente */
-
-/* X nella modale principale */
-.modal-content .close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 23px;
-  font-weight: bold;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.modal-content .close:hover {
-  color: #5d0b5d;
-  transform: scale(1.1);
-}
-
-/* X nella modale di eliminazione */
-.custom-modal-content .custom-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.custom-modal-content .custom-close:hover {
-  color: #ff0000;
-  transform: scale(1.1);
-}
-
-/* X negli elementi gruppo (sostituisce la regola .close-btn esistente) */
-.group-item {
-  position: relative; /* Necessario per posizionare la X relativa a questo elemento */
-  padding: 20px;
-}
-
+/* X elimina gruppo */
 .group-item .close-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  font-size: 13px;
-  font-weight: bold;
-  color: #660066;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.7);
-  width: 16px;
-  height: 16px;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
+  background: rgba(80, 0, 100, 0.3);
+  border: 1px solid rgba(102, 0, 140, 0.3);
+  color: #7a6390;
+  font-size: 11px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
 }
+
+.group-item:hover .close-btn { opacity: 1; }
 
 .group-item .close-btn:hover {
-  color: #ffffff;
-  background-color: #ff0000;
-  transform: scale(1.1);
+  background: rgba(180, 0, 0, 0.4);
+  border-color: rgba(220, 60, 60, 0.6);
+  color: #ff6b6b;
 }
 
-/* Miglioramento hover per group-item */
-.group-item:hover .close-btn {
-  color: #ffffff;
-  background-color: #660066;
+/* ── Modale aggiungi gruppo ──────────────────────────────────── */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 0, 12, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
-.group-item:hover .close-btn:hover {
-  background-color: #ff0000;
+.modal.show {
+  opacity: 1;
+  pointer-events: all;
 }
 
+.modal-content {
+  background: linear-gradient(145deg, rgba(28, 6, 45, 0.97), rgba(16, 3, 28, 0.97));
+  border: 1px solid rgba(180, 100, 210, 0.45);
+  border-radius: 16px;
+  padding: 36px 30px;
+  width: 100%;
+  max-width: 380px;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.7),
+              0 0 40px rgba(120, 0, 180, 0.18),
+              inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
 
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-content h2 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  font-size: 1.3rem;
+  color: #b3a1c9;
+  margin-bottom: 22px;
+}
+
+.modal-content label {
+  display: block;
+  font-size: 0.8rem;
+  color: #7a6390;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(50, 10, 72, 0.6);
+  border: 1px solid rgba(102, 0, 140, 0.35);
+  border-radius: 8px;
+  color: #ddd0ee;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-content input:focus {
+  border-color: rgba(200, 80, 220, 0.55);
+  box-shadow: 0 0 12px rgba(140, 0, 200, 0.18);
+}
+
+.modal-content button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background: rgba(102, 0, 140, 0.4);
+  border: 1px solid rgba(180, 100, 210, 0.5);
+  border-radius: 20px;
+  color: #b3a1c9;
+  font-size: 0.95rem;
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+}
+
+.modal-content button[type="submit"]:hover {
+  background: rgba(140, 0, 180, 0.55);
+  box-shadow: 0 0 20px rgba(180, 0, 240, 0.28);
+  color: #e8dff5;
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 14px; right: 16px;
+  font-size: 1.3rem;
+  color: #7a6390;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.modal-content .close:hover { color: #e05c5c; box-shadow: none; }
+
+/* ── Modale elimina gruppo ───────────────────────────────────── */
+.custom-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 0, 12, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal-content {
+  background: linear-gradient(145deg, rgba(28, 6, 45, 0.97), rgba(16, 3, 28, 0.97));
+  border: 1px solid rgba(200, 50, 50, 0.35);
+  border-radius: 16px;
+  padding: 36px 30px;
+  max-width: 380px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(160, 0, 0, 0.1);
+  animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.custom-modal-content h2 {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+  font-size: 1.1rem;
+  color: #ddd0ee;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.custom-modal-content button {
+  margin: 4px;
+  padding: 9px 24px;
+  border-radius: 20px;
+}
+
+.custom-modal-content button:first-of-type {
+  background: rgba(160, 0, 0, 0.3);
+  border-color: rgba(220, 60, 60, 0.5);
+  color: #ff9090;
+}
+.custom-modal-content button:first-of-type:hover {
+  background: rgba(180, 0, 0, 0.5);
+  box-shadow: 0 0 16px rgba(200, 0, 0, 0.25);
+}
+
+.custom-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  color: #7a6390;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.custom-close:hover { color: #e05c5c; }
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pagina-doc { padding: 20px 16px; }
+  .doc-header { width: 100%; }
+  .group-list { width: 100%; grid-template-columns: 1fr 1fr; }
+}

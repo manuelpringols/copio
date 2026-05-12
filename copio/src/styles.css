@@ -1,49 +1,45 @@
-/* You can add global styles to this file, and also import other style files
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-/* Importa il font simpatico per il titolo */
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&display=swap');
-@import 'prism-themes/themes/prism-xonokai.css';
+@import 'prism-themes/themes/prism-night-owl.css';
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
-body {
-  display: block;
-  background: rgb(102,0,102);
-  background: linear-gradient(0deg, rgba(102,0,102,1) 0%, rgba(6,50,52,1) 100%);
 
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  padding: 20px;
+/* ── Reset globale ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  /* FIX: era background-color: #333 commentato e html non aveva background.
+     Ora il background di base è il nero viola profondo del design system. */
+  background: #080010;
+  scrollbar-width: thin;
+  scrollbar-color: #660066 #0e0116;
+}
+
+html::-webkit-scrollbar       { width: 6px; background: #0e0116; }
+html::-webkit-scrollbar-thumb { background: #660066; border-radius: 6px; }
+html::-webkit-scrollbar-track { background: #0a0014; }
+
+body {
+  min-height: 100%;
+  /* FIX: era gradient viola-teal con padding:20px che affiorava intorno
+     a tutti i componenti. Ora il body è trasparente — ogni componente
+     gestisce il proprio sfondo internamente, coerente con il design system. */
+  background: transparent;
+  margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
   color: #fff;
-  margin: 0;
-
-  scrollbar-width: thin;
-  scrollbar-color: #660066 #333;
-}
-/* Scroll personalizzato per Chrome/Safari 
-html {
-  background-color: #333;
-  height: 100%;
-}
-  */
-
-/* Scroll personalizzato per Chrome/Safari */
-html::-webkit-scrollbar {
-  width: 8px;
-  background-color: rgba(6,50,52,1);
 }
 
-html::-webkit-scrollbar-thumb {
-  background-color: #9f7bca;
-  border-radius: 10px;
+/* Selezione testo */
+::selection {
+  background: rgba(102, 0, 140, 0.4);
+  color: #e8dff5;
 }
 
-html::-webkit-scrollbar-track {
-  background: #333;
-  border-radius: 10px;
-
+/* styles.css — aggiungilo in fondo */
+.preview-container pre[class*="language-"],
+.preview-container pre[class*="language-"]  {
+  background: rgba(45, 10, 55, 0.553) !important;
 }
-
-
-
-

@@ -1,57 +1,45 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { group } from 'node:console';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnippetService {
-  private apiUrlLocal = 'http://localhost:9000/api/snippets'; // URL del tuo backend Spring Boot
+  // FIX: rimossa apiUrlLocal — era dead code mai usata
 
-  private apiUrl = 'https://copio.online:9000/api/snippets'; // URL del tuo backend Spring >
+    private apiUrlLocal = "http://localhost:9000/api/snippets"; // URL mini-pc dell'API
+    //private apiUrl = 'https://copio.online:9000/api/snippets';
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  // Crea un nuovo snippet
-  createSnippet(snippet: { title: string, content: string, groupId:any }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create?groupId=${snippet.groupId}`, snippet,);
+  // FIX: rimosso createSnippet() con endpoint vecchio /create?groupId=
+  // Ora esiste un solo metodo per creare snippet, quello corretto.
+  createSnippetByUser(
+    snippet: { title: string; content: string },
+    userId: number,
+    groupId: number
+  ): Observable<any> {
+    return this.http.post(`${this.apiUrlLocal}/user/${userId}/group/${groupId}`, snippet);
   }
 
-  // Ottieni tutti gli snippet
   getSnippets(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/all`);
+    return this.http.get(`${this.apiUrlLocal}/all`);
   }
 
-  // Ottieni gli snippet di un gruppo specifico
   getSnippetsByGroup(groupId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${groupId}`);
+    return this.http.get(`${this.apiUrlLocal}/${groupId}`);
+  }
+
+  getSnippetsByUserId(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlLocal}/user/${userId}`);
   }
 
   deleteSnippet(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  getSnippetsByUserId(userId: number,): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/user/${userId}`);
+    return this.http.delete<void>(`${this.apiUrlLocal}/${id}`);
   }
 
   deleteSnippetsByUserId(userId: number, snippetsId: number): Observable<any> {
-    const headers = new HttpHeaders({ // Inserisci il token JWT
-      'Content-Type': 'application/json'
-    });
-    return this.http.delete<any>(`${this.apiUrl}/user/${userId}/snippet/${snippetsId}`,{headers});
-    
-
+    return this.http.delete<any>(`${this.apiUrlLocal}/user/${userId}/snippet/${snippetsId}`);
   }
-
-
-   // Crea un nuovo snippet associato a un utente e a un gruppo
-   createSnippetByUser(snippet: { title: string; content: string }, userId: number, groupId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/user/${userId}/group/${groupId}`, snippet);
-  }
-
-
-  
 }
